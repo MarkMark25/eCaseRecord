@@ -98,16 +98,17 @@
             <div class="card-body">
               <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                  <thead>
+                                    <thead>
                     <tr>
                         <th>CAR Case Number</th>
                         <th>CCN</th>
-                        <th>Subject</th>
+                        <th>ACMO</th>
                         <th>Complainant</th>
                         <th>Case Nature</th>
                         <th>Date Assigned</th>
                         <th>Status</th>
                         <th>Agent</th>
+                        <th>Details</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -128,12 +129,13 @@
                     <tr>
                         <th>CAR Case Number</th>
                         <th>CCN</th>
-                        <th>Subject</th>
+                        <th>ACMO</th>
                         <th>Complainant</th>
                         <th>Case Nature</th>
                         <th>Date Assigned</th>
                         <th>Status</th>
                         <th>Agent</th>
+                        <th>Details</th>
                     </tr>
                   </tfoot>
                   <tbody>

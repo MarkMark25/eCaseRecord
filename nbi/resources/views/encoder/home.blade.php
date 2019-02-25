@@ -112,12 +112,13 @@
                     <tr>
                         <th>CAR Case Number</th>
                         <th>CCN</th>
-                        <th>Subject</th>
+                        <th>ACMO</th>
                         <th>Complainant</th>
                         <th>Case Nature</th>
                         <th>Date Assigned</th>
                         <th>Status</th>
                         <th>Agent</th>
+                        <th>Details</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -131,6 +132,11 @@
                             <td>{{ $showData->address_line }}</td>
                             <td>{{ $showData->city }}</td>
                             <td>{{ $showData->province }}</td>
+                            <td>
+                                <button class="btn btn-secondary btn-add" type="button">
+                                    <span class="fas">More</span>
+                                </button>
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>
@@ -138,17 +144,15 @@
                     <tr>
                         <th>CAR Case Number</th>
                         <th>CCN</th>
-                        <th>Subject</th>
+                        <th>ACMO</th>
                         <th>Complainant</th>
                         <th>Case Nature</th>
                         <th>Date Assigned</th>
                         <th>Status</th>
                         <th>Agent</th>
+                        <th>Details</th>
                     </tr>
                   </tfoot>
-                  <tbody>
-
-                  </tbody>
                 </table>
               </div>
             </div>

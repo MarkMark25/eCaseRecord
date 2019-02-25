@@ -22,6 +22,7 @@ route::resource('/agentChangePassword','agent\changePasswordController');
 route::resource('/encoderHome','encoder\HomeController');
 route::resource('/encoderProfile','encoder\userProfileController');
 route::resource('/encoderCCN','encoder\ccnController');
+route::resource('/addCase','encoder\addCaseController');
 route::resource('/encoderChangePassword','encoder\changePasswordController');
 route::resource('/complaintSheet','encoder\ComplaintSheetController');
 

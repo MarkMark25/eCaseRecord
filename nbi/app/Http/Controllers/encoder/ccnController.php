@@ -4,9 +4,19 @@ namespace App\Http\Controllers\encoder;
 use DB; //DATABASE CONNECTION TAG
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
+
+use \App\Cases;
+use \App\Logs;
+use phpDocumentor\Reflection\Types\Null_;
+
 
 class ccnController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,16 +24,26 @@ class ccnController extends Controller
      */
     public function index()
     {
-        //$showData = DB::select('select * from administrator');
-        //Select concat(a.firstname,' ',a.lastname) as 'admin', b.description, b.rental_price, b.product_code,
-        //b.availability from product b join administrator a on a.admin_id = b.admin_id where a.role = 'admin'
-        //ORDER BY a.firstname
-        $showData = DB::table('product')
-                    ->join('administrator','product.admin_id','=','administrator.admin_id')
-                    ->where('administrator.role','=','admin')
-                    ->select('administrator.firstname','administrator.lastname','product.description','product.rental_price','product.product_code','product.availability')
-                    ->get();
-        return view('encoder.ccnUpdate',['showData'=>$showData]);
+            $showData = DB::table('nature')
+            ->join('casenature','nature.natureid','=','casenature.natureid')
+            ->join('caseagent','casenature.caseid','=','caseagent.caseid')
+            ->join('users','users.userid','=','caseagent.userid')
+            ->join('cases','caseagent.caseid','=','cases.caseid')
+            ->join('agent','caseagent.userid','=','agent.userid')
+            ->join('case_suspects','case_suspects.caseid','=','cases.caseid')
+            ->join('case_status','case_status.statusid','=','cases.statusid')
+            ->join('case_victims','case_victims.caseid','=','cases.caseid')
+            ->select('nature.*','case_status.*','caseagent.*','users.*','agent.*','cases.*','case_suspects.*','case_victims.*'
+            ,DB::raw("GROUP_CONCAT(DISTINCT CONCAT (agent.position, ' ', users.firstName,' ',users.lastName) SEPARATOR ' and ') as full_name")
+            ,DB::raw("GROUP_CONCAT(DISTINCT CONCAT (nature.nature) SEPARATOR ' and ') as natureName")
+            ,DB::raw("GROUP_CONCAT(DISTINCT CONCAT(case_suspects.suspect_name) SEPARATOR ' and ') as suspectName"))
+            ->groupBy(DB::raw('caseagent.caseid'),
+            DB::raw('case_victims.caseid'),
+            DB::raw('case_suspects.caseid'))
+            ->orderby('cases.docketnumber','ASC')
+            ->whereNull('ccn')
+            ->get();
+            return view ('encoder.ccnUpdate',['showData'=>$showData]);
     }
 
     /**
@@ -55,7 +75,7 @@ class ccnController extends Controller
      */
     public function show($id)
     {
-        //
+
     }
 
     /**
@@ -76,9 +96,27 @@ class ccnController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'ccn' => 'required|unique:cases|max:255',
+        ]);
+        if ($validator->fails()){
+            $request->session()->flash('alert-danger', 'CCN was already taken!');
+            return redirect()->back();
+        }else {
+            $cases = Cases::findOrFail($request->caseid);
+            $cases->update($request->all());
+
+            Logs::create([
+                'userid' => $request['userid'],
+                'action' => $request['action'],
+                'description' => $request['description'],
+            ]);
+            $request->session()->flash('alert-success', 'CCN was successful inserted!');
+            return redirect()->back();
+        }
+
     }
 
     /**

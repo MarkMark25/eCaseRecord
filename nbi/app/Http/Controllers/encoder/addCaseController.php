@@ -1,12 +1,27 @@
 <?php
 
 namespace App\Http\Controllers\encoder;
-
+use DB;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
+use App\Nature;
+use \App\Cases;
+use App\Users;
+use \App\Logs;
+use \App\CaseAgent;
+use \App\CaseNature;
+use \App\CaseSuspect;
+use \App\CaseVictims;
+use Carbon\Carbon;
+
 
 class addCaseController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +29,20 @@ class addCaseController extends Controller
      */
     public function index()
     {
-        return view('encoder.addCase');
+        $agent = DB::table('users')
+        ->where('role','=','Agent')
+        ->get();
+        $agent2 = DB::table('users')
+        ->where('role','=','Agent')
+        ->get();
+
+        $nature = Nature::all();
+        $nature2 = Nature::all();
+
+        $status = DB::table('case_status')
+        ->get();
+
+        return view('encoder.addCase', compact('agent','nature','status','agent2','nature2'));
     }
 
     /**
@@ -24,7 +52,7 @@ class addCaseController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -35,7 +63,71 @@ class addCaseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'ccn' => 'unique:cases|max:255',
+            'docketnumber' => 'required|unique:cases|max:255',
+            'acmo' => 'required|unique:cases|max:255',
+        ]);
+        if ($validator->fails()){
+            $request->session()->flash('alert-danger', 'Error: Adding of case records was unsucessful, maybe some records was already added like CCN, Docketnumber or ACMO.');
+            return redirect()->back();
+        }else {
+        $data=$request->all();
+        $cases = Cases::create([
+            'docketnumber' => $request['caseNumber'],
+            'ccn' => $request['ccn'],
+            'acmo' => $request['acmo'],
+            'complainantname' => $request['complainant'],
+            'dateTerminated' =>  $request['dateTerminated'],
+            'statusid' => $request['status'],
+        ])->caseid;
+        $lastid = $cases;
+
+        if(count($request->fld_val2)>0) {
+            foreach($request->fld_val2 as $item => $v){
+                $data2 = array(
+                    'caseid' => $lastid,
+                    'userid' => $request->fld_val2[$item],
+                    'dateassigned'=> $request->dateAssigned,
+                );
+                CaseAgent::create($data2);
+            }
+        }
+        if(count($request->fld_val1)>0) {
+            foreach($request->fld_val1 as $item => $v){
+                $data3 = array(
+                    'caseid' => $lastid,
+                    'natureid' => $request->fld_val1[$item],
+                );
+                CaseNature::create($data3);
+            }
+        }
+        if(count($request->subject)>0) {
+            foreach($request->subject as $item => $v){
+                $data4 = array(
+                    'caseid' => $lastid,
+                    'suspect_name' => $request->subject[$item],
+                );
+                CaseSuspect::create($data4);
+            }
+        }
+        if(count($request->victim)>0) {
+            foreach($request->victim as $item => $v){
+                $data5 = array(
+                    'caseid' => $lastid,
+                    'victim_name' => $request->victim[$item],
+                );
+                CaseVictims::create($data5);
+            }
+        }
+        Logs::create([
+            'userid' => $request['userid'],
+            'action' => $request['action'],
+            'description' => $request['description'],
+        ]);
+        $request->session()->flash('alert-success', 'Case record successfully inserted!');
+        return redirect()->back();
+        }
     }
 
     /**

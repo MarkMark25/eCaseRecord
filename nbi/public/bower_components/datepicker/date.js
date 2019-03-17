@@ -1,20 +1,17 @@
 
 $(function() {
   $( "#datepicker" ).datepicker({
-      dateFormat : 'mm/dd/yy',
+      dateFormat : 'yy-mm-dd',
       changeMonth : true,
       changeYear : true,
       yearRange: '-100y:c+nn',
       maxDate: '-1d'
   });
+  $( "#datepickers" ).datepicker({
+    dateFormat : 'yy-mm-dd',
+    changeMonth : true,
+    changeYear : true,
+    yearRange: '-100y:c+nn',
+    maxDate: '-1d'
 });
-
-  $(function() {
-    $( "#datepickers" ).datepicker({
-        dateFormat : 'mm/dd/yy',
-        changeMonth : true,
-        changeYear : true,
-        yearRange: '-100y:c+nn',
-        maxDate: '-1d'
-    });
 });

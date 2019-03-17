@@ -8,6 +8,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
     <title>NBI-CAR</title>
 
@@ -26,13 +29,23 @@
     <!--TAB IMAGE -->
     <link rel="icon"  href="bower_components/image/nbi-logo.png">
 
+    <!--Column search -->
+    <style>
+        thead input {
+            width: auto;
+            padding: 3px;
+            box-sizing: border-box;
+        }
+    </style>
+
+
   </head>
 
   <body id="page-top">
 
     <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
 
-      <a class="navbar-brand mr-1 " href="/encoderHome">NBI-CAR</a>
+      <a class="navbar-brand mr-1" href="/encoderHome">NBI-CAR</a>
 
       <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
         <i class="fas fa-bars"></i>
@@ -52,49 +65,59 @@
         </div>
       </form>
 
-      <!-- Navbar -->
-      <ul class="navbar-nav ml-auto ml-md-0">
+      @if (session('status'))
 
-        <li class="nav-item dropdown no-arrow">
-          <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fas fa-user-circle fa-fw"></i>
-            <label name="UserName" id="UserName"> Mark Anthony</label> {{-- QUERY HERE --}}
-          </a>
-          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-            <a class="dropdown-item" href="/encoderProfile">Profile</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Logout</a>
-          </div>
-        </li>
-      </ul>
+      {{ session('status') }}
+
+        @endif
+            <!-- Navbar -->
+            <ul class="navbar-nav ml-auto ml-md-0">
+                @guest
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                    </li>
+                @else
+
+                <li class="nav-item dropdown no-arrow">
+                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-user-circle fa-fw"></i>
+                    {{ Auth::user()->username }} <span class="caret"></span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+                    <a class="dropdown-item" href="/encoderProfile">Profile</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Logout</a>
+                </div>
+                </li>
+            </ul>
 
     </nav>
 
     <div id="wrapper">
 
-      <!-- Sidebar -->
-      <ul class="sidebar navbar-nav">
-        <li class="nav-item active">
-            <a class="nav-link" href="/encoderHome">
-              <i class="fas fa-fw fa-home"></i>
-              <span>Home</span></a>
+        <!-- Sidebar -->
+        <ul class="sidebar navbar-nav">
+          <li class="nav-item active">
+                  <a class="nav-link" href="/encoderHome">
+                      <i class="fas fa-fw fa-home"></i>
+                      <span>Home</span></a>
           </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/encoderCCN"> <!--LINK HERE -->
-            <i class="fas fa-fw fa-paste"></i>
-            <span>Update CCN</span></a>
-        </li>
-        <li class="nav-item">
-        <a class="nav-link" href="/addCase"> <!--LINK HERE -->
-            <i class="fas fa-fw fa-list"></i>
-            <span>Add Case</span></a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/complaintSheet"> <!--LINK HERE -->
-                <i class="fas fa-fw fa-newspaper"></i>
-                <span>Complaint Sheet</span></a>
-        </li>
-      </ul>
+          <li class="nav-item">
+              <a class="nav-link" href="/encoderCCN"> <!--LINK HERE -->
+              <i class="fas fa-fw fa-paste"></i>
+              <span>Insert CCN</span></a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" href="/addCase"> <!--LINK HERE -->
+                  <i class="fas fa-fw fa-list"></i>
+                  <span>Add Case</span></a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" href="/complaintSheet"> <!--LINK HERE -->
+              <i class="fas fa-fw fa-newspaper"></i>
+              <span>Complaint Sheet</span></a>
+          </li>
+        </ul>
 
       <div id="content-wrapper">
 
@@ -103,11 +126,11 @@
           <div class="card mb-3">
             <div class="card-header">
                 <i class="fas fa-table"></i>
-                Encoder View Case
+                Encoder View Cases
             </div>
             <div class="card-body">
               <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <table class="table table-bordered" id="dataTable" style="width:auto;" cellspacing="0">
                   <thead>
                     <tr>
                         <th>CAR Case Number</th>
@@ -116,27 +139,23 @@
                         <th>Complainant</th>
                         <th>Case Nature</th>
                         <th>Date Assigned</th>
+                        <th>Date Terminated</th>
                         <th>Status</th>
                         <th>Agent</th>
-                        <th>Details</th>
                     </tr>
                     </thead>
                     <tbody>
-                        @foreach($Administrator as $showData)
+                        @foreach($showData as $showData)
                         <tr>
-                            <td>{{ $showData->admin_id }}</td>
-                            <td>{{ $showData->firstname }}</td>
-                            <td>{{ $showData->role }}</td>
+                            <td>NBI-CAR-{{ $showData->docketnumber }}</td>
+                            <td>NBI-CCN-{{ $showData->ccn }}</td>
+                            <td>{{ $showData->acmo }}</td>
+                            <td>{{ $showData->complainantname }}</td>
+                            <td>{{ $showData->natureName }}</td>
+                            <td>{{ $showData->dateassigned }}</td>
+                            <td>{{ $showData->dateTerminated }}</td>
                             <td>{{ $showData->status }}</td>
-                            <td>{{ $showData->phone_number }}</td>
-                            <td>{{ $showData->address_line }}</td>
-                            <td>{{ $showData->city }}</td>
-                            <td>{{ $showData->province }}</td>
-                            <td>
-                                <button class="btn btn-secondary btn-add" type="button">
-                                    <span class="fas">More</span>
-                                </button>
-                            </td>
+                            <td>{{ $showData->full_name }}</td>
                         </tr>
                         @endforeach
                     </tbody>
@@ -148,9 +167,9 @@
                         <th>Complainant</th>
                         <th>Case Nature</th>
                         <th>Date Assigned</th>
+                        <th>Date Terminated</th>
                         <th>Status</th>
                         <th>Agent</th>
-                        <th>Details</th>
                     </tr>
                   </tfoot>
                 </table>
@@ -161,21 +180,6 @@
 
         </div>
         <!-- /.container-fluid -->
-
-        <!-- Sticky Footer -->
-        <footer class="sticky-footer">
-          <div class="container my-auto">
-            <div class="copyright text-center my-auto">
-                <span>Copyright © eCaseRecord-NBI 2018-2019</span>
-            </div>
-          </div>
-        </footer>
-
-      </div>
-      <!-- /.content-wrapper -->
-
-    </div>
-    <!-- /#wrapper -->
 
     <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">
@@ -195,11 +199,20 @@
           <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
           <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-            <a class="btn btn-primary" href="">Logout</a><!--LINK HERE -->
+                <a class="btn btn-primary" href="{{ route('logout') }}"
+                    onclick="event.preventDefault();
+                                document.getElementById('logout-form').submit();">
+                    {{ __('Logout') }}
+                </a>
+
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
           </div>
         </div>
       </div>
     </div>
+
 
     <!-- Bootstrap core JavaScript-->
     <script src="bower_components/vendor/jquery/jquery.min.js"></script>
@@ -210,14 +223,40 @@
 
     <!-- Page level plugin JavaScript-->
     <script src="bower_components/vendor/datatables/jquery.dataTables.js"></script>
+    <script src="bower_components/vendor/datatables/jquery.dataTables.min.js"></script>
     <script src="bower_components/vendor/datatables/dataTables.bootstrap4.js"></script>
+    <script src="bower_components/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
     <!-- Custom scripts for all pages-->
     <script src="bower_components/js/sb-admin.min.js"></script>
 
-    <!-- Demo scripts for this page-->
-    <script src="bower_components/js/demo/datatables-demo.js"></script>
+    <script>
+            $(document).ready(function() {
+                // Setup - add a text input to each footer cell
+                $('#dataTable thead th').each( function (i) {
+                    var title = $('#dataTable thead th').eq( $(this).index() ).text();
+                    $(this).html( '<input type="text" class="inputTable" placeholder="'+title+'" data-index="'+i+'" />' );
+                } );
+
+                // DataTable
+                var table = $('#dataTable').DataTable( {
+                    scrollY:        "auto",
+                    scrollX:        true,
+                    scrollCollapse: true,
+                    paging:         false,
+                    fixedColumns:   true
+                } );
+
+                // Filter event handler
+                $( table.table().container() ).on( 'keyup', 'thead input', function () {
+                    table
+                        .column( $(this).data('index') )
+                        .search( this.value )
+                        .draw();
+                } );
+            } );
+    </script>
 
   </body>
-
+@endguest
 </html>

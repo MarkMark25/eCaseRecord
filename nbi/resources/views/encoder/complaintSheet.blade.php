@@ -8,6 +8,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
     <title>NBI-CAR</title>
 
@@ -25,6 +28,21 @@
 
     <!--TAB IMAGE -->
     <link rel="icon"  href="bower_components/image/nbi-logo.png">
+
+    <!--DATE PICKER1-->
+    <!-- EXTRA CSS
+    <link href="bower_components/datepicker/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    -->
+    <script src="bower_components/datepicker/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="bower_components/datepicker/jquery-ui.css">
+    <script src="bower_components/datepicker/jquery-1.11.1.min.js"></script>
+    <script src="bower_components/datepicker/jquery-ui.js"></script>
+    <!--DATE PICKER2-->
+    <link rel="stylesheet" href="bower_components/datepicker/jquery-ui1.css">
+    <script src="bower_components/datepicker/jquery-ui1.js"></script>
+
+    <!-- JS Datepicker -->
+    <script src="bower_components/datepicker/date.js"></script>
 
   </head>
 
@@ -52,13 +70,23 @@
         </div>
       </form>
 
-      <!-- Navbar -->
-      <ul class="navbar-nav ml-auto ml-md-0">
+      @if (session('status'))
+
+      {{ session('status') }}
+
+        @endif
+            <!-- Navbar -->
+            <ul class="navbar-nav ml-auto ml-md-0">
+        @guest
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+            </li>
+        @else
 
         <li class="nav-item dropdown no-arrow">
           <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-user-circle fa-fw"></i>
-             <label name="UserName" id="UserName"> Mark Anthony</label> {{-- QUERY HERE --}}
+            {{ Auth::user()->username }} <span class="caret"></span>
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
             <a class="dropdown-item" href="/encoderProfile">Profile</a>
@@ -89,7 +117,7 @@
             <i class="fas fa-fw fa-list"></i>
             <span>Add Case</span></a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item active">
             <a class="nav-link" href="/complaintSheet"> <!--LINK HERE -->
                 <i class="fas fa-fw fa-newspaper"></i>
                 <span>Complaint Sheet</span></a>
@@ -116,7 +144,7 @@
                                         <label for="complainantAddress">Address</label>
                                         <input type="text" class="form-control" name="complainantAddress">
                                         <label for="complainantTelNumber">Telephone Number</label>
-                                        <input type="text" class="form-control" name="complainantTelNumber">
+                                        <input type="text" id="complainantTelNumber" name= "complainantTelNumber" autocomplete="off" class="ccNumber form-control" value="" placeholder="0000-000-0000" maxlength="13" pattern="^\d{4}-\d{3}-\d{4}$" title="Follow the following format. e.g. 0912-122-1212" onkeypress='validate(event)'> {{-- QUERY HERE --}}
                                     </div>
                                 </div>
                             </div>
@@ -161,7 +189,7 @@
                                         <label for="suspectAddress">Address</label>
                                         <input type="text" class="form-control" name="suspectAddress">
                                         <label for="suspectTelNumber">Telephone Number</label>
-                                        <input type="text" class="form-control" name="suspectTelNumber">
+                                        <input type="text" id="suspectTelNumber" name= "suspectTelNumber" autocomplete="off" class="ccNumber form-control" value="" placeholder="0000-000-0000" maxlength="13" pattern="^\d{4}-\d{3}-\d{4}$" title="Follow the following format. e.g. 0912-122-1212" onkeypress='validate(event)'> {{-- QUERY HERE --}}
                                         <label for="suspectOccupation">Occupation</label>
                                         <input type="text" name="" class="form-control" name="suspectOccupation">
                                     </div>
@@ -186,7 +214,14 @@
                                     </div>
                                     <div class="col-md-6">
                                         <label for="whenCommitted">When Committed</label>
-                                        <input type="date" name="whenCommitted" id="date" required="required" class="form-control"/>
+                                        <div class="input-group mb-2">
+                                            <div class="input-group-prepend">
+                                                <div class="btn btn-secondary">
+                                                    <i class="fas fa-fw fa-calendar"></i>
+                                                </div>
+                                            </div>
+                                            <input type="text" id="datepickers" name="whenCommitted" class="form-control" value="" placeholder="Choose" required> {{-- QUERY HERE --}}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -230,7 +265,7 @@
                                         <label for="victimAddressA">Address</label>
                                         <input type="text" class="form-control" name="victimAddressA">
                                         <label for="victimTelNumberA">Telephone Number</label>
-                                        <input type="text" class="form-control" name="victimTelNumberA">
+                                        <input type="text" id="victimTelNumberA" name= "victimTelNumberA" autocomplete="off" class="ccNumber form-control" value="" placeholder="0000-000-0000" maxlength="13" pattern="^\d{4}-\d{3}-\d{4}$" title="Follow the following format. e.g. 0912-122-1212" onkeypress='validate(event)'> {{-- QUERY HERE --}}
                                         <label for="victimOccupationA">Occupation</label>
                                         <input type="text" name="" class="form-control" name="victimOccupationA">
                                     </div>
@@ -273,7 +308,7 @@
                                         <label for="victimAddressB">Address</label>
                                         <input type="text" class="form-control" name="victimAddressB">
                                         <label for="victimTelNumberB">Telephone Number</label>
-                                        <input type="text" class="form-control" name="victimTelNumberB">
+                                        <input type="text" id="victimTelNumberB" name= "victimTelNumberB" autocomplete="off" class="ccNumber form-control" value="" placeholder="0000-000-0000" maxlength="13" pattern="^\d{4}-\d{3}-\d{4}$" title="Follow the following format. e.g. 0912-122-1212" onkeypress='validate(event)'> {{-- QUERY HERE --}}
                                         <label for="victimOccupationB">Occupation</label>
                                         <input type="text" class="form-control" name="victimOccupationB">
                                     </div>
@@ -350,29 +385,58 @@
           <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
           <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-            <a class="btn btn-primary" href="">Logout</a><!--LINK HERE -->
+                <a class="btn btn-primary" href="{{ route('logout') }}"
+                    onclick="event.preventDefault();
+                                document.getElementById('logout-form').submit();">
+                    {{ __('Logout') }}
+                </a>
+
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="bower_components/vendor/jquery/jquery.min.js"></script>
-    <script src="bower_components/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function validateComplainant(evt) {
+            var theEvent = evt || window.event;
 
-    <!-- Core plugin JavaScript-->
+            // Handle paste
+            if (theEvent.type === 'paste') {
+                key = event.clipboardData.getData('text/plain');
+            } else {
+            // Handle key press
+                var key = theEvent.keyCode || theEvent.which;
+                key = String.fromCharCode(key);
+            }
+            var regex = /0-9]/;
+            if( !regex.test(key) ) {
+                theEvent.returnValue = false;
+                if(theEvent.preventDefault) theEvent.preventDefault();
+            }
+        }
+    </script>
+    <!-- Custom scripts for all pages -->
+    <script src="bower_components/js/sb-admin.min.js"></script>
+
+
+    <!--THIS IS A COMMENT, BELOW ARE COMMENTS AND IT CANNOT RUN
+      Bootstrap core JavaScript
+    <script src="bower_components/vendor/jquery/jquery.min.js"></script>
+
+     Core plugin JavaScript
     <script src="bower_components/vendor/jquery-easing/jquery.easing.min.js"></script>
 
-    <!-- Page level plugin JavaScript-->
+     Page level plugin JavaScript
     <script src="bower_components/vendor/datatables/jquery.dataTables.js"></script>
     <script src="bower_components/vendor/datatables/dataTables.bootstrap4.js"></script>
 
-    <!-- Custom scripts for all pages-->
-    <script src="bower_components/js/sb-admin.min.js"></script>
-
-    <!-- Demo scripts for this page-->
+     Demo scripts for this page-->
     <script src="bower_components/js/demo/datatables-demo.js"></script>
+    <script src="bower_components/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
   </body>
-
+@endguest
 </html>

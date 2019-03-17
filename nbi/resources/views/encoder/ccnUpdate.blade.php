@@ -8,6 +8,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
     <title>NBI-CAR</title>
 
@@ -25,6 +28,16 @@
 
     <!--TAB IMAGE -->
     <link rel="icon"  href="bower_components/image/nbi-logo.png">
+
+    <!--Column search -->
+    <style>
+        tfoot input {
+            width: 100%;
+            padding: 3px;
+            box-sizing: border-box;
+        }
+    </style>
+
 
   </head>
 
@@ -52,13 +65,23 @@
         </div>
       </form>
 
-      <!-- Navbar -->
-      <ul class="navbar-nav ml-auto ml-md-0">
+      @if (session('status'))
+
+      {{ session('status') }}
+
+        @endif
+            <!-- Navbar -->
+            <ul class="navbar-nav ml-auto ml-md-0">
+        @guest
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+            </li>
+        @else
 
         <li class="nav-item dropdown no-arrow">
           <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-user-circle fa-fw"></i>
-            <label name="UserName" id="UserName"> Mark Anthony</label> {{-- QUERY HERE --}}
+            {{ Auth::user()->username }} <span class="caret"></span>
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
             <a class="dropdown-item" href="/encoderProfile">Profile</a>
@@ -72,29 +95,29 @@
 
     <div id="wrapper">
 
-      <!-- Sidebar -->
-      <ul class="sidebar navbar-nav">
-        <li class="nav-item">
-                <a class="nav-link" href="/encoderHome">
-                    <i class="fas fa-fw fa-home"></i>
-                    <span>Home</span></a>
-        </li>
-        <li class="nav-item active">
-            <a class="nav-link" href="/encoderCCN"> <!--LINK HERE -->
-            <i class="fas fa-fw fa-paste"></i>
-            <span>Update CCN</span></a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/addCase"> <!--LINK HERE -->
-            <i class="fas fa-fw fa-list"></i>
-            <span>Add Case</span></a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/complaintSheet"> <!--LINK HERE -->
-            <i class="fas fa-fw fa-newspaper"></i>
-            <span>Complaint Sheet</span></a>
-        </li>
-      </ul>
+        <!-- Sidebar -->
+        <ul class="sidebar navbar-nav">
+          <li class="nav-item">
+                  <a class="nav-link" href="/encoderHome">
+                      <i class="fas fa-fw fa-home"></i>
+                      <span>Home</span></a>
+          </li>
+          <li class="nav-item active">
+              <a class="nav-link" href="/encoderCCN"> <!--LINK HERE -->
+              <i class="fas fa-fw fa-paste"></i>
+              <span>Insert CCN</span></a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" href="/addCase"> <!--LINK HERE -->
+                  <i class="fas fa-fw fa-list"></i>
+                  <span>Add Case</span></a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" href="/complaintSheet"> <!--LINK HERE -->
+              <i class="fas fa-fw fa-newspaper"></i>
+              <span>Complaint Sheet</span></a>
+          </li>
+        </ul>
 
       <div id="content-wrapper">
 
@@ -106,13 +129,21 @@
                 Encoder Update CCN
             </div>
             <div class="card-body">
+                <div class="flash-message">
+                    @foreach (['danger', 'warning', 'success', 'info'] as $msg)
+                        @if(Session::has('alert-' . $msg))
+
+                        <p class="alert alert-{{ $msg }}">{{ Session::get('alert-' . $msg) }} <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
+                        @endif
+                    @endforeach
+                </div> <!-- end .flash-message -->
               <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <table class="table table-bordered" id="dataTable" style="width:100%;" cellspacing="0">
                   <thead>
                     <tr>
+                        <th  style="display:none;">ID</th>
                         <th>CAR Case Number</th>
-                        <th>CCN</th>
-                        <th>Subject</th>
+                        <th>ACMO</th>
                         <th>Complainant</th>
                         <th>Case Nature</th>
                         <th>Agent</th>
@@ -122,25 +153,39 @@
                     <tbody>
                         @foreach($showData as $showData)
                         <tr>
-                            <td>{{ $showData->description }}</td>
-                            <td>{{ $showData->firstname }} {{ $showData->lastname }}</td>
-                            <td>{{ $showData->rental_price }}</td>
-                            <td>{{ $showData->product_code }}</td>
-                            <td>{{ $showData->availability }}</td>
-                            <td>{{ $showData->firstname }}</td>
+                            <td  style="display:none;">{{ $showData->caseid }}</td>
+                            <td>NBI-CAR-{{ $showData->docketnumber }}</td>
+                            <td>{{ $showData->acmo }}</td>
+                            <td>{{ $showData->complainantname }}</td>
+                            <td>{{ $showData->natureName }}</td>
+                            <td>{{ $showData->full_name }}</td>
                             <td>
-                                    <div>
-                                        <a href="" data-target="#updateCCN" data-toggle="modal"> <button type="button" class="btn btn-default btn-xs btn-filter"><span style="color:#0460f4;" class="fas fa-edit"></span></button></a>
-                                    </div>
+
+                                <button type="button" class="btn btn-default btn-xs btn-filter"
+                                data-target="#caseRecordModal" data-toggle="modal"
+                                data-caseid="{{ $showData->caseid}}"
+                                data-ccn="{{ $showData->ccn}}"
+                                data-docketnumber="{{ $showData->docketnumber}}"
+                                data-acmo="{{ $showData->acmo}}"
+                                data-complainantname="{{ $showData->complainantname}}"
+                                data-status="{{ $showData->status}}"
+                                data-dateassigned="{{ $showData->dateassigned}}"
+                                data-nature_name="{{ $showData->natureName}}"
+                                data-date_terminated="{{ $showData->dateTerminated}}"
+                                data-full_name="{{ $showData->full_name}}"
+                                data-suspect_name="{{ $showData->suspectName}}"
+                                >
+                                    <span style="color:#0460f4;" class="fas fa-edit"></span>
+                                </button>
                             </td>
                         </tr>
                         @endforeach
                     </tbody>
                     <tfoot>
                     <tr>
+                        <th style="display:none;">ID</th>
                         <th>CAR Case Number</th>
-                        <th>CCN</th>
-                        <th>Subject</th>
+                        <th>ACMO</th>
                         <th>Complainant</th>
                         <th>Case Nature</th>
                         <th>Agent</th>
@@ -157,21 +202,6 @@
 
         </div>
         <!-- /.container-fluid -->
-
-        <!-- Sticky Footer -->
-        <footer class="sticky-footer">
-          <div class="container my-auto">
-            <div class="copyright text-center my-auto">
-                <span>Copyright © eCaseRecord-NBI 2018-2019</span>
-            </div>
-          </div>
-        </footer>
-
-      </div>
-      <!-- /.content-wrapper -->
-
-    </div>
-    <!-- /#wrapper -->
 
     <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">
@@ -191,30 +221,66 @@
           <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
           <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-            <a class="btn btn-primary" href="">Logout</a><!--LINK HERE -->
+                <a class="btn btn-primary" href="{{ route('logout') }}"
+                    onclick="event.preventDefault();
+                                document.getElementById('logout-form').submit();">
+                    {{ __('Logout') }}
+                </a>
+
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Update CCN-->
-    <div class="modal fade" id="updateCCN" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Criminal Case Number Insert</h5>
-            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">×</span>
-            </button>
-          </div>
-          <div class="modal-body">You are about to <b>insert</b> Criminal Case Number. Select "Proceed" to insert the neccessary data.</div>
-          <div class="modal-footer">
-            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-            <a class="btn btn-primary" href="">Proceed</a><!--LINK HERE -->
-          </div>
+     <!-- Case Record Modal-->
+  <div class="modal fade" id="caseRecordModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document" >
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h4 class="modal-title" id="exampleModalLabel">Criminal Case Number Insert</h4>
+                  <button class="close" type="button" data-dismiss="modal" aria-label="Close" onclick="javascript:window.location.reload()">
+                    <span aria-hidden="true">×</span>
+                  </button>
+              </div>
+              <div class="modal-body">
+                <form action="/ccnUpdate" method="POST">
+                    {{csrf_field()}}
+                  <input type="hidden" id="caseid" name="caseid" class="form-control" value=""> {{-- QUERY HERE --}}
+                  @include('encoder.modalForm')
+                  <div class="form-group">
+                      <center>
+                          <button type="submit" class="btn btn-primary">Submit</button>
+                      </center>
+                  </div>
+                </form>
+              </div>
         </div>
       </div>
-    </div>
+  </div>
+
+        <!-- Validation for inputs -->
+        <script>
+            function validate(evt) {
+                var theEvent = evt || window.event;
+
+                // Handle paste
+                if (theEvent.type === 'paste') {
+                    key = event.clipboardData.getData('text/plain');
+                } else {
+                // Handle key press
+                    var key = theEvent.keyCode || theEvent.which;
+                    key = String.fromCharCode(key);
+                }
+                var regex = /[0-9,I,M,-]/;
+                if( !regex.test(key) ) {
+                    theEvent.returnValue = false;
+                    if(theEvent.preventDefault) theEvent.preventDefault();
+                }
+            }
+        </script>
 
     <!-- Bootstrap core JavaScript-->
     <script src="bower_components/vendor/jquery/jquery.min.js"></script>
@@ -225,14 +291,74 @@
 
     <!-- Page level plugin JavaScript-->
     <script src="bower_components/vendor/datatables/jquery.dataTables.js"></script>
+    <script src="bower_components/vendor/datatables/jquery.dataTables.min.js"></script>
     <script src="bower_components/vendor/datatables/dataTables.bootstrap4.js"></script>
+    <script src="bower_components/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+
+    <script>
+            $(document).ready(function() {
+                // Setup - add a text input to each footer cell
+                $('#dataTable tfoot th').each( function (i) {
+                    var title = $('#dataTable thead th').eq( $(this).index() ).text();
+                    $(this).html( '<input type="text" class="inputTable" placeholder="'+title+'" data-index="'+i+'" />' );
+                } );
+
+                // DataTable
+                var table = $('#dataTable').DataTable( {
+                    scrollY:        "auto",
+                    scrollX:        true,
+                    scrollCollapse: true,
+                    paging:         false,
+                    fixedColumns:   true
+                } );
+
+                // Filter event handler
+                $( table.table().container() ).on( 'keyup', 'tfoot input', function () {
+                    table
+                        .column( $(this).data('index') )
+                        .search( this.value )
+                        .draw();
+                } );
+            } );
+    </script>
+
 
     <!-- Custom scripts for all pages-->
     <script src="bower_components/js/sb-admin.min.js"></script>
 
     <!-- Demo scripts for this page-->
     <script src="bower_components/js/demo/datatables-demo.js"></script>
+    <script>
+            $('#caseRecordModal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget)
+                var caseid = button.data('caseid')
+                var docketnumber = button.data('docketnumber')
+                var acmo = button.data('acmo')
+                var complainantname = button.data('complainantname')
+                var status = button.data('status')
+                var dateassigned = button.data('dateassigned')
+                var natureName = button.data('nature_name')
+                var dateTerminated = button.data('date_terminated')
+                var full_name = button.data('full_name')
+                var suspectName = button.data('suspect_name')
+                var ccn = button.data('ccn')
+
+                var modal = $(this)
+                modal.find('.modal-body #caseid').val(caseid)
+                modal.find('.modal-body #docketnumber').val(docketnumber)
+                modal.find('.modal-body #acmo').val(acmo)
+                modal.find('.modal-body #complainantname').val(complainantname)
+                modal.find('.modal-body #status').val(status)
+                modal.find('.modal-body #dateassigned').val(dateassigned)
+                modal.find('.modal-body #natureName').val(natureName)
+                modal.find('.modal-body #dateTerminated').val(dateTerminated)
+                modal.find('.modal-body #full_name').val(full_name)
+                modal.find('.modal-body #suspectName').val(suspectName)
+                modal.find('.modal-body #ccn').val(ccn)
+              })
+    </script>
 
   </body>
-
+@endguest
 </html>

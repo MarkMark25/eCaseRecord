@@ -58,7 +58,7 @@
         <li class="nav-item dropdown no-arrow">
           <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-user-circle fa-fw"></i>
-            <label name="UserName" id="UserName"> Mark Anthony</label> {{-- QUERY HERE --}}
+            {{ Auth::user()->username }} <span class="caret"></span>
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
             <a class="dropdown-item" href="/encoderProfile">Profile</a>
@@ -107,13 +107,13 @@
                         <div class="col-md-6">
                             <label for="firstName">First name</label>
                             <div class="">
-                            <input type="text" id="firstName" class="form-control" value="" disabled> {{-- QUERY HERE --}}
+                            <input type="text" id="firstName" class="form-control" value="{{ Auth::user()->firstName }}" disabled> {{-- QUERY HERE --}}
                             </div>
                         </div>
                         <div class="col-md-6">
                             <label for="lastName">Last name</label>
                             <div class="">
-                            <input type="text" id="lastName" class="form-control" value="" disabled> {{-- QUERY HERE --}}
+                            <input type="text" id="lastName" class="form-control" value="{{ Auth::user()->lastName }}" disabled> {{-- QUERY HERE --}}
                             </div>
                         </div>
                         </div>
@@ -123,13 +123,13 @@
                         <div class="col-md-6">
                             <label for="userName">Username</label>
                             <div class="">
-                            <input type="text" id="userName" class="form-control" value="" disabled> {{-- QUERY HERE --}}
+                            <input type="text" id="userName" class="form-control" value="{{ Auth::user()->username }}" disabled> {{-- QUERY HERE --}}
                             </div>
                         </div>
                         <div class="col-md-6">
                             <label for="role">Role</label>
                             <div class="">
-                            <input type="text" id="role" class="form-control" value="" disabled> {{-- QUERY HERE --}}
+                            <input type="text" id="role" class="form-control" value="{{ Auth::user()->role }}" disabled> {{-- QUERY HERE --}}
                             </div>
                         </div>
                         </div>
@@ -139,7 +139,7 @@
                         <div class="col-md-6">
                             <label for="status">Status</label>
                             <div class="">
-                            <input type="text" id="status" class="form-control" value="" disabled> {{-- QUERY HERE --}}
+                            <input type="text" id="status" class="form-control" value="{{ Auth::user()->userStatus }}" disabled> {{-- QUERY HERE --}}
                             </div>
                         </div>
                         </div>
@@ -196,7 +196,15 @@
           <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
           <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-            <a class="btn btn-primary" href="">Logout</a><!--LINK HERE -->
+                <a class="btn btn-primary" href="{{ route('logout') }}"
+                    onclick="event.preventDefault();
+                                document.getElementById('logout-form').submit();">
+                    {{ __('Logout') }}
+                </a>
+
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
           </div>
         </div>
       </div>

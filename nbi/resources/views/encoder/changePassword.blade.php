@@ -8,6 +8,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
     <title>NBI-CAR</title>
 
@@ -52,13 +55,23 @@
         </div>
       </form>
 
-      <!-- Navbar -->
-      <ul class="navbar-nav ml-auto ml-md-0">
+      @if (session('status'))
+
+      {{ session('status') }}
+
+        @endif
+            <!-- Navbar -->
+            <ul class="navbar-nav ml-auto ml-md-0">
+        @guest
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+            </li>
+        @else
 
         <li class="nav-item dropdown no-arrow">
           <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-user-circle fa-fw"></i>
-             <label name="UserName" id="UserName"> Mark Anthony</label> {{-- QUERY HERE --}}
+            {{ Auth::user()->username }} <span class="caret"></span>
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
             <a class="dropdown-item" href="/encoderProfile">Profile</a>
@@ -102,18 +115,28 @@
             <div class="card card-register mx-auto" style="width:50%;">
                 <div class="card-header">Personal Information</div>
                 <div class="card-body">
+                        @if (session('error'))
+                            <div class="alert alert-danger">
+                                {{ session('error') }}
+                            </div>
+                        @endif
+                        @if (session('success'))
+                            <div class="alert alert-success">
+                                {{ session('success') }}
+                            </div>
+                        @endif
                     <div class="form-group">
                         <div class="form-row">
                         <div class="col-md-6">
                             <label for="firstName">First name</label>
                             <div class="">
-                            <input type="text" id="firstName" class="form-control" value="" disabled> {{-- QUERY HERE --}}
+                            <input type="text" id="firstName" class="form-control" value="{{ Auth::user()->firstName }}" disabled> {{-- QUERY HERE --}}
                             </div>
                         </div>
                         <div class="col-md-6">
                             <label for="lastName">Last name</label>
                             <div class="">
-                            <input type="text" id="lastName" class="form-control" value="" disabled> {{-- QUERY HERE --}}
+                            <input type="text" id="lastName" class="form-control" value="{{ Auth::user()->lastName }}" disabled> {{-- QUERY HERE --}}
                             </div>
                         </div>
                         </div>
@@ -123,13 +146,13 @@
                         <div class="col-md-6">
                             <label for="userName">Username</label>
                             <div class="">
-                            <input type="text" id="userName" class="form-control" value="" disabled> {{-- QUERY HERE --}}
+                            <input type="text" id="userName" class="form-control" value="{{ Auth::user()->username }}" disabled> {{-- QUERY HERE --}}
                             </div>
                         </div>
                         <div class="col-md-6">
                             <label for="role">Role</label>
                             <div class="">
-                            <input type="text" id="role" class="form-control" value="" disabled> {{-- QUERY HERE --}}
+                            <input type="text" id="role" class="form-control" value="{{ Auth::user()->role }}" disabled> {{-- QUERY HERE --}}
                             </div>
                         </div>
                         </div>
@@ -139,7 +162,7 @@
                         <div class="col-md-6">
                             <label for="status">Status</label>
                             <div class="">
-                            <input type="text" id="status" class="form-control" value="" disabled> {{-- QUERY HERE --}}
+                            <input type="text" id="status" class="form-control" value="{{ Auth::user()->userStatus }}" disabled> {{-- QUERY HERE --}}
                             </div>
                         </div>
                         </div>
@@ -151,6 +174,8 @@
                         </div>
                         </div>
                     </div>
+<form class="form-horizontal" method="POST" action="{{ route('changePassword') }}">
+    {{ csrf_field() }}
                     <div class="form-group">
                         <div class="form-row">
                             <div class="col-md-6">
@@ -158,33 +183,43 @@
                             </div>
                         </div>
                     </div>
-                    <form method="" action=""> {{-- FORM GROUP --}}
-                        <div class="form-group">
+                        <div class="form-group{{ $errors->has('current-password') ? ' has-error' : '' }}">
                             <div class="form-row">
                                 <div class="col-md-6">
                                     <div class="form-label-group">
-                                            <input type="password" minlength="8" maxlength="16" id="oldPassword" class="form-control" required="required" autofocus="autofocus">
-                                            <label for="firstName">Old Password</label>
+                                            <input type="password" minlength="8" maxlength="16" name="current-password" id="current-password" class="form-control" required="required" autofocus="autofocus">
+                                            <label for="current-password">Old Password</label>
+
+                                            @if ($errors->has('current-password'))
+                                                <span class="help-block">
+                                                <strong>{{ $errors->first('current-password') }}</strong>
+                                            </span>
+                                            @endif
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group{{ $errors->has('new-password') ? ' has-error' : '' }}">
                             <div class="form-row">
                                 <div class="col-md-6">
                                     <div class="form-label-group">
-                                            <input type="password" minlength="8" maxlength="16" id="newPassword" class="form-control" required="required">
-                                            <label for="firstName">New Password (8-16 characters)</label>
+                                            <input type="password" minlength="8" maxlength="16" name="new-password" id="new-password" class="form-control" required="required">
+                                            <label for="new-password">New Password (8-16 characters)</label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-label-group">
-                                            <input type="password" minlength="8" maxlength="16" id="confirmPassword" class="form-control" required="required" onkeyup="checkPasswordMatch();">
-                                            <label for="firstName">Confirm Password</label>
+                                            <input type="password" minlength="8" maxlength="16" name="new-password_confirmation" id="new-password-confirm" class="form-control" required="required">
+                                            <label for="new-password-confirm">Confirm Password</label>
                                     </div>
-                                    <div class="registrationFormAlert" id="divCheckPasswordMatch"></div>
+
                                 </div>
                             </div>
+                            @if ($errors->has('new-password'))
+                                <span class="help-block">
+                                <strong style="color:red;">{{ $errors->first('new-password') }}</strong>
+                            </span>
+                            @endif
                         </div>
                         <div class="form-group">
                             <div class="form-row">
@@ -198,7 +233,7 @@
                                 <button class="btn btn-primary btn-block col-md-3" type="submit" value="submit">Save</button>
                             </center>
                         </div>
-                    </form>
+</form>
                 </div>
             </div>
 
@@ -238,7 +273,15 @@
           <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
           <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-            <a class="btn btn-primary" href="">Logout</a><!--LINK HERE -->
+                <a class="btn btn-primary" href="{{ route('logout') }}"
+                    onclick="event.preventDefault();
+                                document.getElementById('logout-form').submit();">
+                    {{ __('Logout') }}
+                </a>
+
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
           </div>
         </div>
       </div>
@@ -274,5 +317,5 @@
     </script>
 
   </body>
-
+@endguest
 </html>

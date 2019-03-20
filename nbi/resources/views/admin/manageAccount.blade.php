@@ -109,7 +109,7 @@
           </div>
         </li>
        
-        <li class="nav-item active">
+        <li class="nav-item">
           <a class="nav-link" href="/adminManageAccount">
             <i class="fas fa-fw fa-user-cog"></i>
             <span>Manage Accounts</span></a>
@@ -199,7 +199,7 @@
 
                     <thead>
                     <tbody>
-                        @foreach($Administrator as $showData)
+                        @foreach($showData as $showData)
                         <tr>
                             <td>{{ $showData->username }}</td>
                             <td>{{ $showData->firstname }}</td>

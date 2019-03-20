@@ -87,8 +87,8 @@
             <span>Manage Case</span>
           </a>
           <div class="dropdown-menu" aria-labelledby="pagesDropdown">
-            <a class="dropdown-item" href="/adminCaseReport">Case Records</a> <!-- add page for case records-->
-            <a class="dropdown-item" href="/adminCaseNature">Case Nature</a>  <!-- add page for case nature -->
+            <a class="dropdown-item" href="/adminCaseReport">Case Records</a> 
+            <a class="dropdown-item" href="/adminCaseNature">Case Nature</a> 
           </div>
         </li>
 
@@ -105,7 +105,7 @@
             <a class="dropdown-item" href="/adminTerminatedMisc">Terminated Misc...</a> 
             <a class="dropdown-item" href="/adminPendingCrimes">Pending Crimes</a>  
             <a class="dropdown-item" href="/adminPendingMisc">Pending Misc...</a>  
-            <a class="dropdown-item" href="/adminCaseReport2">Case Report</a>   
+            <a class="dropdown-item" href="/adminGenCaseReport">Case Report</a>   
           </div>
         </li>
        

@@ -105,7 +105,7 @@
             <a class="dropdown-item" href="/adminTerminatedMisc">Terminated Misc...</a> 
             <a class="dropdown-item" href="/adminPendingCrimes">Pending Crimes</a>  
             <a class="dropdown-item" href="/adminPendingMisc">Pending Misc...</a>  
-            <a class="dropdown-item" href="/adminCaseReport2">Case Report</a>   
+            <a class="dropdown-item" href="/adminGenCaseReport">Case Report</a>   
           </div>
         </li>
        

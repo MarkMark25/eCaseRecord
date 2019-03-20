@@ -98,14 +98,13 @@
             <span>Generate Report</span>
           </a>
           <div class="dropdown-menu" aria-labelledby="pagesDropdown">
-            <a class="dropdown-item" href="/">CCN & ACMO No. Request</a> <!-- add page for case records-->
-            <a class="dropdown-item" href="/">Transmittal</a>  <!-- add page -->
-            <a class="dropdown-item" href="/">Statistics</a>  <!-- add page -->
-            <a class="dropdown-item" href="/">Terminated Crimes</a>  <!-- add page -->
-            <a class="dropdown-item" href="/">Terminated Miscellaneous</a>  <!-- add page -->
-            <a class="dropdown-item" href="/">Pending Crimes</a>  <!-- add page -->
-            <a class="dropdown-item" href="/">Pending Miscellaneous</a>  <!-- add page -->
-            <a class="dropdown-item" href="/">Case Report</a>  <!-- add page -->
+            <a class="dropdown-item" href="/adminAcmoCcnRequest">CCN & ACMO No. Req</a>
+            <a class="dropdown-item" href="/adminTransmittal">Transmittal</a>  
+            <a class="dropdown-item" href="/adminStatistics">Statistics</a>  
+            <a class="dropdown-item" href="/adminTerminatedCrimes">Terminated Crimes</a>  
+            <a class="dropdown-item" href="/adminTerminatedMisc">Terminated Misc...</a> 
+            <a class="dropdown-item" href="/adminPendingCrimes">Pending Crimes</a>  
+            <a class="dropdown-item" href="/adminPendingMisc">Pending Misc...</a>  
           </div>
         </li>
        
@@ -118,6 +117,7 @@
 <br>
 <br>
 <!-- Icon Cards-->
+<div class="content-wrapper">
 <div class="col">
             <div class="row-xl-3 row-sm-6 mb-3">
               <div class="card text-black o-hidden h-100">

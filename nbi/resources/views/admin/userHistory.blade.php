@@ -87,8 +87,8 @@
             <span>Manage Case</span>
           </a>
           <div class="dropdown-menu" aria-labelledby="pagesDropdown">
-            <a class="dropdown-item" href="/adminCaseReport">Case Records</a> <!-- add page for case records-->
-            <a class="dropdown-item" href="/adminCaseNature">Case Nature</a>  <!-- add page for case nature -->
+            <a class="dropdown-item" href="/">Case Records</a> <!-- add page for case records-->
+            <a class="dropdown-item" href="/">Case Nature</a>  <!-- add page for case nature -->
           </div>
         </li>
 
@@ -197,7 +197,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    @foreach($Administrator as $showData)
+                    @foreach($showData as $showData)
                     <tr>
                         <td>{{ $showData->user }}</td>
                         <td>{{ $showData->role }}</td>

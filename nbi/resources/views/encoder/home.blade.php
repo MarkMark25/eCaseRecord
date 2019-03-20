@@ -148,7 +148,9 @@
                         @foreach($showData as $showData)
                         <tr>
                             <td>NBI-CAR-{{ $showData->docketnumber }}</td>
-                            <td>NBI-CCN-{{ $showData->ccn }}</td>
+                            <td>
+                                    NBI-CCN-{{$showData->ccn}}
+                            </td>
                             <td>{{ $showData->acmo }}</td>
                             <td>{{ $showData->complainantname }}</td>
                             <td>{{ $showData->natureName }}</td>
@@ -175,7 +177,6 @@
                 </table>
               </div>
             </div>
-            <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
           </div>
 
         </div>

@@ -52,16 +52,26 @@
         </div>
       </form>
 
-      <!-- Navbar -->
-      <ul class="navbar-nav ml-auto ml-md-0">
+        @if (session('status'))
+
+        {{ session('status') }}
+
+        @endif
+            <!-- Navbar -->
+            <ul class="navbar-nav ml-auto ml-md-0">
+        @guest
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+            </li>
+        @else
 
         <li class="nav-item dropdown no-arrow">
           <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-user-circle fa-fw"></i>
-            <label name="UserName" id="UserName"> Mark Anthony</label> {{-- QUERY HERE --}}
+            {{ Auth::user()->username }} <span class="caret"></span>
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-            <a class="dropdown-item" href="/encoderProfile">Profile</a>
+            <a class="dropdown-item" href="/profile">Profile</a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Logout</a>
           </div>
@@ -72,109 +82,114 @@
 
     <div id="wrapper">
 
- <!-- Sidebar -->
- <ul class="sidebar navbar-nav">
-        <li class="nav-item active">
-          <a class="nav-link" href="/adminHome">
-            <i class="fas fa-fw fa-home"></i>
-            <span>Home</span>
-          </a>
-        </li>
-       
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fas fa-fw fa-briefcase"></i>
-            <span>Manage Case</span>
-          </a>
-          <div class="dropdown-menu" aria-labelledby="pagesDropdown">
-            <a class="dropdown-item" href="/">Case Records</a> <!-- add page for case records-->
-            <a class="dropdown-item" href="/">Case Nature</a>  <!-- add page for case nature -->
-          </div>
-        </li>
+            <!-- Sidebar -->
+       <ul class="sidebar navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link" href="/adminHome">
+                  <i class="fas fa-fw fa-home"></i>
+                  <span>Home</span>
+                </a>
+              </li>
 
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fas fa-fw fa-briefcase"></i>
-            <span>Generate Report</span>
-          </a>
-          <div class="dropdown-menu" aria-labelledby="pagesDropdown">
-            <a class="dropdown-item" href="/">CCN & ACMO No. Request</a> <!-- add page for case records-->
-            <a class="dropdown-item" href="/">Transmittal</a>  <!-- add page -->
-            <a class="dropdown-item" href="/">Statistics</a>  <!-- add page -->
-            <a class="dropdown-item" href="/">Terminated Crimes</a>  <!-- add page -->
-            <a class="dropdown-item" href="/">Terminated Miscellaneous</a>  <!-- add page -->
-            <a class="dropdown-item" href="/">Pending Crimes</a>  <!-- add page -->
-            <a class="dropdown-item" href="/">Pending Miscellaneous</a>  <!-- add page -->
-            <a class="dropdown-item" href="/">Case Report</a>  <!-- add page -->
-          </div>
-        </li>
-       
-        <li class="nav-item">
-          <a class="nav-link" href="/adminManageAccount">
-            <i class="fas fa-fw fa-user-cog"></i>
-            <span>Manage Accounts</span></a>
-        </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <i class="fas fa-fw fa-briefcase"></i>
+                  <span>Manage Case</span>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+                  <a class="dropdown-item" href="/caseReport">Case Report</a> <!-- add page for case records-->
+                  <a class="dropdown-item" href="/caseNature">Case Nature</a>  <!-- add page for case nature -->
+                </div>
+              </li>
 
-<br>
-<br>
-<!-- Icon Cards-->
-<div class="col">
-            <div class="row-xl-3 row-sm-6 mb-3">
-              <div class="card text-black o-hidden h-100">
-                <div class="card-body">
-                  <div class="card-body-icon">
-                    <i class="fas fa-fw fa-user-friends"></i>
-                  </div>
-                  <div class="mr-5"># active users</div>
-                </div>
-                <a class="card-footer text-white clearfix small z-1 bg-success" href="#">
-                  <span class="float-left" bg-primary>View Details</span>
-                  <span class="float-right">
-                    <i class="fas fa-angle-right"></i>
-                  </span>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <i class="fas fa-fw fa-briefcase"></i>
+                  <span>Generate Report</span>
                 </a>
-              </div>
-            </div>
-           
-            <div class="row-xl-3 ow-sm-6 mb-3">
-              <div class="card text-black o-hidden h-100">
-                <div class="card-body">
-                  <div class="card-body-icon">
-                    <i class="fas fa-fw fa-copy"></i>
-                  </div>
-                  <div class="mr-5"># closed cases</div>
+                <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+                  <a class="dropdown-item" href="/">CCN & ACMO No. Request</a> <!-- add page for case records-->
+                  <a class="dropdown-item" href="/">Transmittal</a>  <!-- add page -->
+                  <a class="dropdown-item" href="/">Statistics</a>  <!-- add page -->
+                  <a class="dropdown-item" href="/">Terminated Crimes</a>  <!-- add page -->
+                  <a class="dropdown-item" href="/">Terminated Miscellaneous</a>  <!-- add page -->
+                  <a class="dropdown-item" href="/">Pending Crimes</a>  <!-- add page -->
+                  <a class="dropdown-item" href="/">Pending Miscellaneous</a>  <!-- add page -->
+                  <a class="dropdown-item" href="/">Case Report</a>  <!-- add page -->
                 </div>
-                <a class="card-footer text-white clearfix small z-1 bg-primary" href="#">
-                  <span class="float-left">View Details</span>
-                  <span class="float-right">
-                    <i class="fas fa-angle-right"></i>
-                  </span>
-                </a>
-              </div>
-            </div>
-            
-            <div class="row-xl-3 row-sm-6 mb-3">
-              <div class="card text-black  o-hidden h-100">
-                <div class="card-body">
-                  <div class="card-body-icon">
-                    <i class="fas fa-fw fa-download"></i>
+              </li>
+
+              <li class="nav-item dropdown active">
+                    <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-fw fa-user-cog"></i>
+                        <span>Manage Accounts</span>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+                        <a class="dropdown-item" href="/manageAccounts">User Monitoring</a> <!-- add page for case records-->
+                        <a class="dropdown-item" href="/userLogs">User Logs</a>  <!-- add page -->
+                        <a class="dropdown-item" href="/userHistory">User History</a>  <!-- add page -->
+                    </div>
+                </li>
+
+      <br>
+      <br>
+            <!-- Icon Cards-->
+      <div class="col">
+                  <div class="row-xl-3 row-sm-6 mb-3">
+                    <div class="card text-black o-hidden h-100">
+                      <div class="card-body">
+                        <div class="card-body-icon">
+                          <i class="fas fa-fw fa-user-friends"></i>
+                        </div>
+                        <div class="mr-5"># active users</div>
+                      </div>
+                      <a class="card-footer text-white clearfix small z-1 bg-success" href="#">
+                        <span class="float-left" bg-primary>View Details</span>
+                        <span class="float-right">
+                          <i class="fas fa-angle-right"></i>
+                        </span>
+                      </a>
+                    </div>
                   </div>
-                  <div class="mr-5">Total No. of Records</div>
+
+                  <div class="row-xl-3 ow-sm-6 mb-3">
+                    <div class="card text-black o-hidden h-100">
+                      <div class="card-body">
+                        <div class="card-body-icon">
+                          <i class="fas fa-fw fa-copy"></i>
+                        </div>
+                        <div class="mr-5"># closed cases</div>
+                      </div>
+                      <a class="card-footer text-white clearfix small z-1 bg-primary" href="#">
+                        <span class="float-left">View Details</span>
+                        <span class="float-right">
+                          <i class="fas fa-angle-right"></i>
+                        </span>
+                      </a>
+                    </div>
+                  </div>
+
+                  <div class="row-xl-3 row-sm-6 mb-3">
+                    <div class="card text-black  o-hidden h-100">
+                      <div class="card-body">
+                        <div class="card-body-icon">
+                          <i class="fas fa-fw fa-download"></i>
+                        </div>
+                        <div class="mr-5">Total No. of Records</div>
+                      </div>
+                      <a class="card-footer text-white clearfix small z-1 bg-warning" href="#">
+                        <span class="float-left">View Details</span>
+                        <span class="float-right">
+                          <i class="fas fa-angle-right"></i>
+                        </span>
+                      </a>
+                    </div>
+                  </div>
                 </div>
-                <a class="card-footer text-white clearfix small z-1 bg-warning" href="#">
-                  <span class="float-left">View Details</span>
-                  <span class="float-right">
-                    <i class="fas fa-angle-right"></i>
-                  </span>
-                </a>
-              </div>
-            </div>
-          </div>
-    </ul>  
+          </ul>
 
 <!-- /.container-fluid -->
   <div id="content-wrapper">
-
         <div class="container-fluid" style="padding-top:3%;padding-bottom:2%;">
           <!-- DataTables Example -->
           <div class="card mb-3">
@@ -199,12 +214,12 @@
                   <tbody>
                     @foreach($showData as $showData)
                     <tr>
-                        <td>{{ $showData->user }}</td>
+                        <td>{{ $showData->name }}</td>
                         <td>{{ $showData->role }}</td>
                         <td>{{ $showData->date }}</td>
                         <td>{{ $showData->login }}</td>
                         <td>{{ $showData->logout }}</td>
-                        <td>{{ $showData->duration }}</td>
+                        <td>{{ $showData->durationS }}</td>
                     </tr>
                   @endforeach
                   </tbody>
@@ -212,9 +227,12 @@
               </div>
         </div>
         </div>
+    </div>
+</div>
+
+
 
 <!-- /.container-fluid -->
-  <div id="content-wrapper">
 
         <!-- Sticky Footer -->
         <footer class="sticky-footer">
@@ -224,8 +242,6 @@
             </div>
           </div>
         </footer>
-
-      </div>
 
     </div>
     <!-- /#wrapper -->
@@ -248,7 +264,15 @@
           <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
           <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-            <a class="btn btn-primary" href="">Logout</a><!--LINK HERE -->
+                <a class="btn btn-primary" href="{{ route('logout') }}"
+                    onclick="event.preventDefault();
+                                document.getElementById('logout-form').submit();">
+                    {{ __('Logout') }}
+                </a>
+
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
           </div>
         </div>
       </div>
@@ -263,7 +287,9 @@
 
     <!-- Page level plugin JavaScript-->
     <script src="bower_components/vendor/datatables/jquery.dataTables.js"></script>
+    <script src="bower_components/vendor/datatables/jquery.dataTables.min.js"></script>
     <script src="bower_components/vendor/datatables/dataTables.bootstrap4.js"></script>
+    <script src="bower_components/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
     <!-- Custom scripts for all pages-->
     <script src="bower_components/js/sb-admin.min.js"></script>
@@ -272,5 +298,5 @@
     <script src="bower_components/js/demo/datatables-demo.js"></script>
 
   </body>
-
+  @endguest
 </html>

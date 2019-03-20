@@ -8,6 +8,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
     <title>NBI-CAR</title>
 
@@ -52,13 +55,23 @@
         </div>
       </form>
 
-      <!-- Navbar -->
-      <ul class="navbar-nav ml-auto ml-md-0">
+      @if (session('status'))
+
+      {{ session('status') }}
+
+        @endif
+            <!-- Navbar -->
+            <ul class="navbar-nav ml-auto ml-md-0">
+        @guest
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+            </li>
+        @else
 
         <li class="nav-item dropdown no-arrow">
           <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-user-circle fa-fw"></i>
-            <label name="UserName" id="UserName"> Mark Anthony</label> {{-- QUERY HERE --}}
+            {{ Auth::user()->username }} <span class="caret"></span>
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
             <a class="dropdown-item" href="/agentProfile">Profile</a>
@@ -98,7 +111,7 @@
             <div class="card-body">
               <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <thead>
+                  <thead>
                     <tr>
                         <th>CAR Case Number</th>
                         <th>CCN</th>
@@ -106,6 +119,7 @@
                         <th>Complainant</th>
                         <th>Case Nature</th>
                         <th>Date Assigned</th>
+                        <th>Date Terminated</th>
                         <th>Status</th>
                         <th>Agent</th>
                         <th>Details</th>
@@ -113,17 +127,21 @@
                   </thead>
                   <tbody>
                     @foreach($showData as $showData)
-                    <tr>
-                        <td>{{ $showData->admin_id }}</td>
-                        <td>{{ $showData->firstname }}</td>
-                        <td>{{ $showData->role }}</td>
-                        <td>{{ $showData->status }}</td>
-                        <td>{{ $showData->phone_number }}</td>
-                        <td>{{ $showData->address_line }}</td>
-                        <td>{{ $showData->city }}</td>
-                        <td>{{ $showData->province }}</td>
-                    </tr>
-                  @endforeach
+                        <tr>
+                            <td>NBI-CAR-{{ $showData->docketnumber }}</td>
+                            <td>NBI-CCN-{{ $showData->ccn }}</td>
+                            <td>{{ $showData->acmo }}</td>
+                            <td>{{ $showData->complainantname }}</td>
+                            <td>{{ $showData->natureName }}</td>
+                            <td>{{ $showData->dateassigned }}</td>
+                            <td>{{ $showData->dateTerminated }}</td>
+                            <td>{{ $showData->status }}</td>
+                            <td>{{ $showData->full_name }}</td>
+                            <td>
+                                <button disabled="disabled"></button>
+                            </td>
+                        </tr>
+                        @endforeach
                   </tbody>
                   <tfoot>
                     <tr>
@@ -133,6 +151,7 @@
                         <th>Complainant</th>
                         <th>Case Nature</th>
                         <th>Date Assigned</th>
+                        <th>Date Terminated</th>
                         <th>Status</th>
                         <th>Agent</th>
                         <th>Details</th>
@@ -145,7 +164,7 @@
             </div>
             <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
           </div>
-
+        </div>
         </div>
         <!-- /.container-fluid -->
 
@@ -182,7 +201,15 @@
           <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
           <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-            <a class="btn btn-primary" href="">Logout</a><!--LINK HERE -->
+                <a class="btn btn-primary" href="{{ route('logout') }}"
+                    onclick="event.preventDefault();
+                                document.getElementById('logout-form').submit();">
+                    {{ __('Logout') }}
+                </a>
+
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
           </div>
         </div>
       </div>
@@ -206,5 +233,5 @@
     <script src="bower_components/js/demo/datatables-demo.js"></script>
 
   </body>
-
+@endguest
 </html>

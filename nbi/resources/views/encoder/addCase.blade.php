@@ -139,9 +139,18 @@
         <form method="POST" action="/encoderAddCase">
             {{ csrf_field() }}
           <div class="container-fluid" style="padding-bottom:3%; padding-top:2%;">
-            <div class="card card-register mx-auto" style="width:80%;">
+            <div class="card card-register mx-auto" style="width:100%%;">
               <center><div class="card-header"><h4>Add Case Records</div></center>
                 <div class="card-body">
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
                     <div class="flash-message">
                         @foreach (['danger', 'warning', 'success', 'info'] as $msg)
                             @if(Session::has('alert-' . $msg))
@@ -156,7 +165,7 @@
                               <label for="caseNumber">NBI-CAR Case Number</label>
                               <div class="input-group mb-2">
                                   <input type="text" id="" name="" class="form-control col-md-5" value="NBI-CAR-" readonly>
-                                  <input type="text" id="caseNumber" name="caseNumber" class="form-control" value="" placeholder="0-00-000" maxlength="8" pattern="^\w{1}-\d{2}-\d{3}$" onkeypress='validate(event)' title="Follow the following format. e.g. C-10-001" required> {{-- QUERY HERE --}}
+                                  <input type="text" id="docketnumber" name="docketnumber" class="form-control" value="" placeholder="0-00-000" maxlength="8" pattern="^\w{1}-\d{2}-\d{3}$" onkeypress='validate(event)' title="Follow the following format. e.g. C-10-001" required> {{-- QUERY HERE --}}
                               </div>
                           </div>
 
@@ -223,16 +232,16 @@
                             <label for="agent">Agent</label>
                             <div class="fld_wrap" id="fld2">
                                 <div class="input-group">
-                                        <select name="fld_val2[]" id="fld_val2"  class="form-control" required>
-                                            <option value=""></option>
-                                            @foreach($agent as $agent)
-                                            <option value="{{ $agent->userid }}">{{ $agent->firstName }} {{ $agent->lastName }}</option>@endforeach
-                                        </select>
-                                        <div class="input-group-prepend">
-                                            <button class="btn btn-success btn-add add_button2" fldnum="2" type="button">
-                                                <span class="fas">+</span>
-                                            </button>
-                                        </div>
+                                    <select name="fld_val2[]" id="fld_val2"  class="form-control" required>
+                                        <option value=""></option>
+                                        @foreach($agent as $agent)
+                                        <option value="{{ $agent->userid }}">{{ $agent->firstName }} {{ $agent->lastName }}</option>@endforeach
+                                    </select>
+                                    <div class="input-group-prepend">
+                                        <button class="btn btn-success btn-add add_button2" fldnum="2" type="button">
+                                            <span class="fas">+</span>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -269,13 +278,13 @@
                                         <i class="fas fa-fw fa-calendar"></i>
                                     </div>
                                 </div>
-                                <input type="text" id="datepicker" name= "dateAssigned"  class="form-control" value="" placeholder="Choose" required> {{-- QUERY HERE --}}
+                                <input type="text" id="datepicker" name= "dateAssigned"  class="form-control" value="" placeholder="Choose" autocomplete="off" required> {{-- QUERY HERE --}}
                             </div>
                         </div>
                         <div class="col-md-6">
                             <label for="status">Status</label>
                             <div class="input-group">
-                                <select name="status" class="form-control">
+                                <select name="status" class="form-control" required>
                                     <option value=""></option>
                                     @foreach($status as $status)
                                         <option value="{{ $status->statusid }}">{{ $status->status }}</option>
@@ -295,7 +304,7 @@
                                     <i class="fas fa-fw fa-calendar"></i>
                                 </div>
                             </div>
-                            <input type="text" id="datepickers" name="dateTerminated" class="form-control" value="" placeholder="Choose" required> {{-- QUERY HERE --}}
+                            <input type="text" id="datepickers" name="dateTerminated" class="form-control" value="" placeholder="Choose"  autocomplete="off"> {{-- QUERY HERE --}}
                         </div>
                     </div>
                 </div>

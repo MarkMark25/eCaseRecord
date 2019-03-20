@@ -1,10 +1,9 @@
 <?php
 
 namespace App\Http\Controllers\admin;
-use DB; //DATABASE CONNECTION TAG
+use DB;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Administrator; //DB Connection
 
 class userLogsController extends Controller
 {
@@ -15,9 +14,13 @@ class userLogsController extends Controller
      */
     public function index()
     {
-        
-        $Administrator = Administrator::all();
-        return view ('admin.userLogs',compact('Administrator'));
+        $showData = DB::table('users')
+        ->join('logs','users.userid','=','logs.userid')
+        ->select('users.*','logs.*'
+                ,DB::raw("CONCAT(users.firstName,' ',users.lastName) AS name")
+                )
+        ->get();
+        return view ('admin.userLogs',compact('showData'));
     }
 
     /**

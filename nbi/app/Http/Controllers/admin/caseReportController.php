@@ -1,10 +1,9 @@
 <?php
 
 namespace App\Http\Controllers\admin;
-use DB; //DATABASE CONNECTION TAG
+use DB;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Administrator; //DB Connection
 
 class caseReportController extends Controller
 {
@@ -15,12 +14,44 @@ class caseReportController extends Controller
      */
     public function index()
     {
-      // $showData = DB::select('select * from administrator');
-       //return view('admin.caseReport',['showData'=>$showData]);
-      // return view('admin.caseReport');
+        $agent = DB::table('users')
+        ->where('role','=','Agent')
+        ->get();
+        $agent2 = DB::table('users')
+        ->where('role','=','Agent')
+        ->get();
 
-      $Administrator = Administrator::all();
-        return view ('admin.caseReport',compact('Administrator'));
+        $nature = DB::table('nature')
+        ->where('natureAvailability','=','Available')
+        ->get();
+        $nature2 = DB::table('nature')
+        ->where('natureAvailability','=','Available')
+        ->get();
+
+        $status = DB::table('case_status')
+        ->where('caseStatusAvailability','=','Available')
+        ->get();
+
+        $showData = DB::table('nature')
+        ->join('casenature','nature.natureid','=','casenature.natureid')
+        ->join('caseagent','casenature.caseid','=','caseagent.caseid')
+        ->join('users','users.userid','=','caseagent.userid')
+        ->join('cases','caseagent.caseid','=','cases.caseid')
+        ->join('agent','caseagent.userid','=','agent.userid')
+        ->join('case_suspects','case_suspects.caseid','=','cases.caseid')
+        ->join('case_status','case_status.statusid','=','cases.statusid')
+        ->join('case_victims','case_victims.caseid','=','cases.caseid')
+        ->select('nature.*','case_status.*','caseagent.*','users.*','agent.*','cases.*','case_suspects.*','case_victims.*'
+        ,DB::raw("GROUP_CONCAT(DISTINCT CONCAT (agent.position, ' ', users.firstName,' ',users.lastName) SEPARATOR ' and ') as full_name")
+        ,DB::raw("GROUP_CONCAT(DISTINCT CONCAT (nature.nature) SEPARATOR ' and ') as natureName")
+        ,DB::raw("GROUP_CONCAT(DISTINCT CONCAT(case_suspects.suspect_name) SEPARATOR ' and ') as suspectName"))
+        ->groupBy(DB::raw('caseagent.caseid'),
+        DB::raw('case_victims.caseid'),
+        DB::raw('case_suspects.caseid'))
+        ->orderby('cases.docketnumber','ASC')
+        ->where('cases.caseStatus','=','Available')
+        ->get();
+        return view ('admin.caseReport',compact('showData','agent','nature','status','agent2','nature2'));
     }
 
     /**

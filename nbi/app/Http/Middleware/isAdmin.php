@@ -16,7 +16,11 @@ class isAdmin
     public function handle($request, Closure $next)
     {
         if(auth()->check() && $request->user()->role == 'Encoder'){
-            return redirect()->guest('home');
+            return redirect()->guest('encoder.home');
+        }else if(auth()->check() && $request->user()->role == 'Administrator'){
+            return redirect()->guest('admin.home');
+        }else{
+
         }
         return $next($request);
     }

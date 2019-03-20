@@ -9,6 +9,6 @@ class Nature extends Model
     protected $table = 'nature';
     protected $primaryKey = 'natureid';
     protected $fillable = [
-        'nature','casetype','description'
+        'nature','casetype','description','natureAvailability'
     ];
 }

@@ -27,6 +27,7 @@
     <!--TAB IMAGE -->
     <link rel="icon"  href="bower_components/image/nbi-logo.png">
 
+    <!--DATE PICKER AND ADD FIELDS START HERE-->
     <!--DATE PICKER1-->
     <!-- EXTRA CSS
     <link href="bower_components/datepicker/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
@@ -35,16 +36,17 @@
     <link rel="stylesheet" href="bower_components/datepicker/jquery-ui.css">
     <script src="bower_components/datepicker/jquery-1.11.1.min.js"></script>
     <script src="bower_components/datepicker/jquery-ui.js"></script>
-    
     <!--DATE PICKER2-->
     <link rel="stylesheet" href="bower_components/datepicker/jquery-ui1.css">
     <script src="bower_components/datepicker/jquery-ui1.js"></script>
 
     <!-- JS Datepicker -->
     <script src="bower_components/datepicker/date.js"></script>
+    <script src="bower_components/datepicker/addCase.js"></script>
 
-    <!-- Add Fields -->
+    <!-- Add Fields
     <script src="bower_components/datepicker/addFields.js"></script>
+    -->
     <style>
             .input-group:not(:first-of-type) { margin-top: 10px; }
     </style>
@@ -75,13 +77,23 @@
         </div>
       </form>
 
-      <!-- Navbar -->
-      <ul class="navbar-nav ml-auto ml-md-0">
+      @if (session('status'))
+
+      {{ session('status') }}
+
+        @endif
+            <!-- Navbar -->
+            <ul class="navbar-nav ml-auto ml-md-0">
+        @guest
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+            </li>
+        @else
 
         <li class="nav-item dropdown no-arrow">
           <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-user-circle fa-fw"></i>
-            <label name="UserName" id="UserName"> Mark Anthony</label> {{-- QUERY HERE --}}
+            {{ Auth::user()->username }} <span class="caret"></span>
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
             <a class="dropdown-item" href="/encoderProfile">Profile</a>
@@ -103,15 +115,15 @@
             <span>Home</span>
           </a>
         </li>
-       
+
         <li class="nav-item dropdown active">
           <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-fw fa-briefcase"></i>
             <span>Manage Case</span>
           </a>
           <div class="dropdown-menu" aria-labelledby="pagesDropdown">
-            <a class="dropdown-item" href="/adminCaseReport">Case Report</a> <!-- add page for case records-->
-            <a class="dropdown-item" href="/adminCaseNature">Case Nature</a>  <!-- add page for case nature -->
+            <a class="dropdown-item" href="/caseReport">Case Report</a> <!-- add page for case records-->
+            <a class="dropdown-item" href="/caseNature">Case Nature</a>  <!-- add page for case nature -->
           </div>
         </li>
 
@@ -131,11 +143,17 @@
             <a class="dropdown-item" href="/">Case Report</a>  <!-- add page -->
           </div>
         </li>
-       
-        <li class="nav-item">
-          <a class="nav-link" href="/adminManageAccount">
-            <i class="fas fa-fw fa-user-cog"></i>
-            <span>Manage Accounts</span></a>
+
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-fw fa-user-cog"></i>
+                <span>Manage Accounts</span>
+            </a>
+            <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+                <a class="dropdown-item" href="/manageAccounts">User Monitoring</a> <!-- add page for case records-->
+                <a class="dropdown-item" href="/userLogs">User Logs</a>  <!-- add page -->
+                <a class="dropdown-item" href="/userHistory">User History</a>  <!-- add page -->
+            </div>
         </li>
 
 <br>
@@ -158,7 +176,7 @@
                 </a>
               </div>
             </div>
-           
+
             <div class="row-xl-3 ow-sm-6 mb-3">
               <div class="card text-black o-hidden h-100">
                 <div class="card-body">
@@ -175,7 +193,7 @@
                 </a>
               </div>
             </div>
-            
+
             <div class="row-xl-3 row-sm-6 mb-3">
               <div class="card text-black  o-hidden h-100">
                 <div class="card-body">
@@ -193,24 +211,41 @@
               </div>
             </div>
           </div>
-    </ul>  
+    </ul>
 
 
     <div id="content-wrapper">
     <div class="container-fluid" style="padding-top:3%;padding-bottom:2%;">
-      <button class="btn" href="/addNewCase" data-toggle="modal" data-target="#addNewCase"><i class="fa fa-plus-circle"></i> Add New Case</button>
-      <button class="btn" style="float: right">Backup Records <i class="fa fa-file-download"></i></button>
+      <a class="btn btn-secondary" href="/addNewCase" style="float: left"><i class="fa fa-plus-circle"></i> Add New Case</a>
+      <a class="btn btn-secondary" style="float: right">Backup Records <i class="fa fa-file-download"></i></a>
       <br><br>
           <!-- DataTables Example -->
           <div class="card mb-3">
             <div class="card-body">
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+            <div class="flash-message">
+                @foreach (['danger', 'warning', 'success', 'info'] as $msg)
+                    @if(Session::has('alert-' . $msg))
+
+                    <p class="alert alert-{{ $msg }}">{{ Session::get('alert-' . $msg) }} <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
+                    @endif
+                @endforeach
               <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                   <thead>
                     <tr>
-                        <th style="width:8%">Case No.</th>
+                        <th style="display:none;">Case ID</th>
+                        <th style="width:8%">ACMO</th>
                         <th style="width:8%">CAR Case No.</th>
-                        <th style="width:8%">CCN & ACMO No.</th>
+                        <th style="width:8%">CCN</th>
                         <th style="width:10%">Subject</th>
                         <th style="width:10%">Complainant</th>
                         <th style="width:10%">Nature of Case</th>
@@ -225,18 +260,19 @@
 
                     <thead>
                     <tbody>
-                        @foreach($Administrator as $showData)
+                        @foreach($showData as $showData)
                         <tr>
-                            <td>{{ $showData->caseno }}</td>
-                            <td>{{ $showData->carcaseno }}</td>
-                            <td>{{ $showData->ccnacmo }}</td>
-                            <td>{{ $showData->subject }}</td>
-                            <td>{{ $showData->complainant}}</td>
-                            <td>{{ $showData->nature }}</td>
-                            <td>{{ $showData->terminated }}</td>
-                            <td>{{ $showData->terminated }}</td>
+                            <td style="display:none;">{{ $showData->caseid }}</td>
+                            <td>{{ $showData->acmo }}</td>
+                            <td>{{ $showData->docketnumber }}</td>
+                            <td>{{ $showData->ccn }}</td>
+                            <td>{{ $showData->suspectName}}</td>
+                            <td>{{ $showData->complainantname}}</td>
+                            <td>{{ $showData->natureName }}</td>
+                            <td>{{ $showData->dateassigned }}</td>
+                            <td>{{ $showData->dateTerminated }}</td>
                             <td>{{ $showData->status }}</td>
-                            <td>{{ $showData->agent }}</td>
+                            <td>{{ $showData->full_name }}</td>
                             <td>
                                     <div>
                                         <a href="/editModal" data-target="#editModal" data-toggle="modal"> <button type="button" class="btn btn-default btn-xs btn-filter"> <span style="color:#0460f4;" class="fas fa-edit"> </span></button></a>
@@ -292,147 +328,21 @@
           <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
           <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-            <a class="btn btn-primary" href="">Logout</a><!--LINK HERE -->
+            <a class="btn btn-primary" href="{{ route('logout') }}"
+                onclick="event.preventDefault();
+                            document.getElementById('logout-form').submit();">
+                {{ __('Logout') }}
+            </a>
+
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                @csrf
+            </form>
           </div>
         </div>
       </div>
     </div>
 
 
- <!-- Add New case Modal-->
- <div class="modal fade" id="addNewCase" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="container-fluid" style="padding-bottom:3%; padding-top:4%;">
-    <div class="card card-register mx-auto" style="width:40%;">
-       <div class="card-header"><h4 align="center">Add New Case
-       <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">x</span></div>
-            </button>
-            </h4>
-            <div class="card-body">
-                   
-            <form>
-            <div class="form-group row">
-              <label for="docketno" class="col-sm-3 col-form-label">Docket Number</label>
-              <div class="col-sm-7">
-                <input type="text" class="form-control" id="docketno" placeholder="Enter docket number">
-              </div>
-            </div>
-
-            <div class="form-group row">
-              <label for="ccn" class="col-sm-3 col-form-label">CCN</label>
-              <div class="col-sm-7">
-                <input type="text" class="form-control" id="ccn" placeholder="Enter CCN">
-              </div>
-            </div>
-
-            <div class="form-group row">
-              <label for="acmo" class="col-sm-3 col-form-label">ACMO</label>
-              <div class="col-sm-7">
-                <input type="text" class="form-control" id="acmo" placeholder="Enter ACMO number">
-              </div>
-            </div>
-                   
-            <div class="form-group row">
-              <label for="subject" class="col-sm-3 col-form-label">Subject</label>
-              <div class="col-sm-7">
-              <div class="input-group-prepend">
-                <input type="text" class="form-control" id="acmo" placeholder="Enter name of suspect">
-                <div class="input-group-prepend">
-                                        <button class="btn btn-success btn-add add_button2" fldnum="3">
-                                            <span class="fas">+</span>
-                                        </button>
-                                    </div>
-              </div>
-            </div>
-            </div>
-
-            <div class="form-group row">
-              <label for="complainant" class="col-sm-3 col-form-label">Complainant</label>
-              <div class="col-sm-7">
-                <input type="text" class="form-control" id="complainant" placeholder="Enter name of complainant">
-              </div>
-            </div>
-
-           <div class="form-group row">
-            <label for="natureofcase" class="col-sm-3 col-form-label">Nature of Case</label>
-              <div class="col-sm-7">
-              <div class="input-group-prepend" id="fld2">
-                    <select name="fld_val2" class="form-control" placeholder="Choose nature of case">
-                                <option >......</option>
-                                <option value="status1">Nature 1</option>
-                                <option value="status2">Nature 2</option>
-                                <option value="status3">Nature 3</option>
-                                <option value="status4">Nature 4</option>
-                            </select>
-                            <div class="input-group-prepend">
-                                        <button class="btn btn-success btn-add add_button2" fldnum="5">
-                                            <span class="fas">+</span>
-                                        </button>
-                                    </div>
-                            </div>
-                        </div>
-                    </div>
-                     
-                <div class="form-group row">
-                    <label for="dateAssigned" class="col-sm-3 col-form-label">Date Assigned</label>
-                        <div class="col-sm-7">
-                            <div class="input-group-prepend">
-                                <div class="btn btn-secondary">
-                                    <i class="fas fa-fw fa-calendar"></i>
-                                 </div>
-                            <input type="text" id="datepicker" name="dateAssigned" class="form-control" value="" required> {{-- QUERY HERE --}}
-                        </div>
-                      </div>
-                  </div>
-
-                  <div class="form-group row">
-                    <label for="dateTerminated" class="col-sm-3 col-form-label">Date Terminated</label>
-                        <div class="col-sm-7">
-                            <div class="input-group-prepend">
-                                <div class="btn btn-secondary">
-                                    <i class="fas fa-fw fa-calendar"></i>
-                            </div>
-                            <input type="text" id="datepicker" name="dateTerminated" class="form-control" value="" required> {{-- QUERY HERE --}}
-                        </div>
-                  </div>
-                  </div>
-                       
-          <div class="form-group row">
-              <label for="status" class="col-sm-3 col-form-label">Status</label>
-              <div class="col-sm-7">
-                <input type="text" class="form-control" id="status" placeholder="Case Status">
-              </div>
-            </div>
-            
-            <div class="form-group row">
-            <label for="agent" class="col-sm-3 col-form-label">Agent</label>
-            <div class="col-sm-7">
-              <div class="input-group-prepend" id="fld2">
-                    <select name="agent" class="form-control" placeholder="Choose Agent">
-                                <option >......</option>
-                                <option value="status1">Agent 1</option>
-                                <option value="status2">Agent 2</option>
-                                <option value="status3">Agent 3</option>
-                                <option value="status4">Agent 4</option>
-                            </select>
-                            <div class="input-group-prepend">
-                                        <button class="btn btn-success btn-add add_button2" fldnum="5">
-                                            <span class="fas">+</span>
-                                        </button>
-                                    </div>
-                        </div>
-                    </div>
-                    </div>
-                    <br>
-                        <div class="form-group">
-                           <center>
-                                <button class="btn btn-primary  col-md-3" type="submit" value="submit">Save</button>
-                                <button class="btn btn-danger  col-md-3" type="submit" value="submit">Cancel</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
 
 <!-- Exit Modal -->
 <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -449,13 +359,13 @@
  <div class="modal fade" id="editModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="container-fluid" style="padding-bottom:3%; padding-top:4%;">
     <div class="card card-register mx-auto" style="width:40%;">
-       <div class="card-header"><h4 align="center">Update Case: 
+       <div class="card-header"><h4 align="center">Update Case:
        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">x</span></div>
             </button>
             </h4>
             <div class="card-body">
-                   
+
             <form>
             <div class="form-group row">
               <label for="docketno" class="col-sm-3 col-form-label">Docket Number</label>
@@ -477,7 +387,7 @@
                 <input type="text" class="form-control" id="acmo">
               </div>
             </div>
-                   
+
             <div class="form-group row">
               <label for="subject" class="col-sm-3 col-form-label">Subject</label>
               <div class="col-sm-7">
@@ -518,14 +428,14 @@
                            </div>
                         </div>
                     </div>
-                     
+
                     <div class="form-group row">
               <label for="status" class="col-sm-3 col-form-label">Status</label>
               <div class="col-sm-7">
                 <input type="text" class="form-control" id="status" placeholder="Case Status">
               </div>
             </div>
-            
+
             <div class="form-group row">
             <label for="agent" class="col-sm-3 col-form-label">Agent</label>
             <div class="col-sm-7">
@@ -569,8 +479,8 @@
                         </div>
                   </div>
                   </div>
-                       
-          
+
+
                     <br>
                         <div class="form-group">
                            <center>
@@ -581,7 +491,7 @@
                 </div>
             </div>
         </div>
-        
+
 <!-- Exit Modal -->
 <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -612,7 +522,7 @@
        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">x</span></div>
             </button>
- 
+
   <div class="card-body">
     <h5 class="card-title" align="center">Are you sure you want to delete this case?</h5>
       <center> <img src="https://cdn4.iconfinder.com/data/icons/bulletin-board/95/stop-512.png" class="img-thumbnail" alt="Stop Sign" width="40%" height="40%">
@@ -625,7 +535,7 @@
     </div>
   </div>
   </div>
-        
+
 <!-- Exit Modal -->
 <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -645,7 +555,7 @@
        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">x</span></div>
       </button>
-           
+
       <div class="card-body">
         <div class="form-group">
             <div class="form-row">
@@ -673,7 +583,7 @@
                         <input type="text" id="ccn" name= "ccn" class="form-control" value="" required> {{-- QUERY HERE --}}
                     </div>
                 </div>
-                
+
                 <div class="col-md-6">
                     <label for="encodedBy">Encoded By:</label>
                         <div class="">
@@ -703,7 +613,7 @@
                             </div>
                             <input type="text" id="datepicker" name="dateAssigned" class="form-control" value="" placeholder="Choose" required> {{-- QUERY HERE --}}
                         </div>
-                   
+
                     <div class="control-group fld_wrap" id="fld4">
                     <label for="lastUpdate">Last Update</label>
                         <div class="input-group mb-2">
@@ -714,7 +624,7 @@
                             </div>
                             <input type="text" id="datepicker" name="lastUpdate" class="form-control" value="" placeholder="Choose" required> {{-- QUERY HERE --}}
                         </div>
-                    
+
                     <div class="control-group fld_wrap" id="fld4">
                         <label for="updatedBy">Updated By: </label>
                         <input class="form-control" name="updatedBy" type="text" required/>
@@ -723,7 +633,7 @@
                 </div>
             </div>
         </div>
- 
+
              <div class="form-group">
                 <div class="form-row">
                 <div class="col-md-6">
@@ -732,7 +642,7 @@
                         <div class="input-group">
                             <input class="form-control" name="complainant[]" type="text" required/>
                             <div class="input-group-prepend">
-                                
+
                             </div>
                         </div>
                     </div>
@@ -748,7 +658,7 @@
                         <div class="input-group">
                             <input class="form-control" name="suspect[]" type="text" required/>
                             <div class="input-group-prepend">
-                                
+
                             </div>
                         </div>
                     </div>
@@ -761,7 +671,7 @@
                         <div class="input-group">
                             <input class="form-control" name="victim[]" type="text" required/>
                             <div class="input-group-prepend">
-                                
+
                             </div>
                         </div>
                     </div>
@@ -778,7 +688,7 @@
                         <input type="text" id="caseNature" name= "caseNature" class="form-control" value="" required> {{-- QUERY HERE --}}
                     </div>
                 </div>
-                
+
                 <div class="col-md-4">
                     <label for="status">Status</label>
                         <div class="">
@@ -799,7 +709,7 @@
                     </div>
                 </div>
             </div>
-                        
+
             <div class="form-group">
                 <div class="form-row">
                 <div class="col-md-6">
@@ -808,7 +718,7 @@
                         <input type="text" id="agentOnCase" name= "agentOnCase" class="form-control" value="" required> {{-- QUERY HERE --}}
                     </div>
                 </div>
-                
+
                 <div class="col-md-6">
                         <label for="dateAssigned">Date Assigned</label>
                         <div class="input-group mb-2">
@@ -833,18 +743,22 @@
                     </tr>
                     </thead>
                     <tbody>
-                        @foreach($Administrator as $showData)
+                        <!--
+                        foreach($showData as $showData)
+                        -->
                         <tr>
-                            <td>{{ $showData->casereport }}</td>
-                            <td>{{ $showData->date }}</td>
-                            <td>{{ $showData->agent }}</td>
+                            <td>SAMPLE</td>
+                            <td>SAMPLE</td>
+                            <td>SAMPLE</td>
                         </tr>
-                        @endforeach
+                        <!--
+                        endforeach
+                        -->
                     </tbody>
                 </table>
               </div>
             </div>
-          
+
 
           <div class="form-group">
             <center> <button class="btn btn-primary btn-block col-md-3" type="submit" value="submit">Save</button> </center>
@@ -870,23 +784,22 @@
       <i class="fas fa-angle-up"></i>
     </a>
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="bower_components/vendor/jquery/jquery.min.js"></script>
+    <!-- Custom scripts for all pages -->
+    <script src="bower_components/js/sb-admin.min.js"></script>
+    <script src="bower_components/js/demo/datatables-demo.js"></script>
     <script src="bower_components/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Core plugin JavaScript-->
-    <script src="bower_components/vendor/jquery-easing/jquery.easing.min.js"></script>
 
-    <!-- Page level plugin JavaScript-->
+    <!--THIS IS A COMMENT, BELOW ARE COMMENTS AND IT CANNOT RUN
+      Bootstrap core JavaScript
+    <script src="bower_components/vendor/jquery/jquery.min.js"></script>
+     Core plugin JavaScript
+    <script src="bower_components/vendor/jquery-easing/jquery.easing.min.js"></script>
+     Page level plugin JavaScript
     <script src="bower_components/vendor/datatables/jquery.dataTables.js"></script>
     <script src="bower_components/vendor/datatables/dataTables.bootstrap4.js"></script>
-
-    <!-- Custom scripts for all pages-->
-    <script src="bower_components/js/sb-admin.min.js"></script>
-
-    <!-- Demo scripts for this page-->
-    <script src="bower_components/js/demo/datatables-demo.js"></script>
+     Demo scripts for this page-->
 
   </body>
-
+  @endguest
 </html>

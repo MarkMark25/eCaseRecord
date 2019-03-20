@@ -7,6 +7,10 @@ use App\Http\Controllers\Controller;
 
 class assignedCaseController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,10 +18,12 @@ class assignedCaseController extends Controller
      */
     public function index()
     {
+        /*
         $showData = DB::select('select * from client');
         $pendingCase = DB::select('select COUNT(province) from client where province="Benguet"');
         //$caseClosed = DB::select('select COUNT(status) from client where status="Approved"');
         return view('agent.assignedCase',['showData'=>$showData],['pendingCase'=>$pendingCase]);
+        */
     }
 
     /**

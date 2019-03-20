@@ -80,15 +80,15 @@
             <span>Home</span>
           </a>
         </li>
-       
+
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-fw fa-briefcase"></i>
             <span>Manage Case</span>
           </a>
           <div class="dropdown-menu" aria-labelledby="pagesDropdown">
-            <a class="dropdown-item" href="/adminCaseReport">Case Records</a> <!-- add page for case records-->
-            <a class="dropdown-item" href="/adminCaseNature">Case Nature</a>  <!-- add page for case nature -->
+            <a class="dropdown-item" href="/caseReport">Case Records</a> <!-- add page for case records-->
+            <a class="dropdown-item" href="/caseNature">Case Nature</a>  <!-- add page for case nature -->
           </div>
         </li>
 
@@ -98,27 +98,32 @@
             <span>Generate Report</span>
           </a>
           <div class="dropdown-menu" aria-labelledby="pagesDropdown">
-            <a class="dropdown-item" href="/adminAcmoCcnRequest">CCN & ACMO No. Req</a>
-            <a class="dropdown-item" href="/adminTransmittal">Transmittal</a>  
-            <a class="dropdown-item" href="/adminStatistics">Statistics</a>  
-            <a class="dropdown-item" href="/adminTerminatedCrimes">Terminated Crimes</a>  
-            <a class="dropdown-item" href="/adminTerminatedMisc">Terminated Misc...</a> 
-            <a class="dropdown-item" href="/adminPendingCrimes">Pending Crimes</a>  
-            <a class="dropdown-item" href="/adminPendingMisc">Pending Misc...</a> 
-            <a class="dropdown-item" href="/adminCaseReport2">Case Report</a>   
+            <a class="dropdown-item" href="/">CCN & ACMO No. Request</a> <!-- add page for case records-->
+            <a class="dropdown-item" href="/">Transmittal</a>  <!-- add page -->
+            <a class="dropdown-item" href="/">Statistics</a>  <!-- add page -->
+            <a class="dropdown-item" href="/">Terminated Crimes</a>  <!-- add page -->
+            <a class="dropdown-item" href="/">Terminated Miscellaneous</a>  <!-- add page -->
+            <a class="dropdown-item" href="/">Pending Crimes</a>  <!-- add page -->
+            <a class="dropdown-item" href="/">Pending Miscellaneous</a>  <!-- add page -->
+            <a class="dropdown-item" href="/">Case Report</a>  <!-- add page -->
           </div>
         </li>
-       
-        <li class="nav-item">
-          <a class="nav-link" href="/adminManageAccount">
-            <i class="fas fa-fw fa-user-cog"></i>
-            <span>Manage Accounts</span></a>
+
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-fw fa-user-cog"></i>
+                <span>Manage Accounts</span>
+            </a>
+            <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+                <a class="dropdown-item" href="/manageAccounts">User Monitoring</a> <!-- add page for case records-->
+                <a class="dropdown-item" href="/userLogs">User Logs</a>  <!-- add page -->
+                <a class="dropdown-item" href="/userHistory">User History</a>  <!-- add page -->
+            </div>
         </li>
 
 <br>
 <br>
 <!-- Icon Cards-->
-<div class="content-wrapper">
 <div class="col">
             <div class="row-xl-3 row-sm-6 mb-3">
               <div class="card text-black o-hidden h-100">
@@ -136,7 +141,7 @@
                 </a>
               </div>
             </div>
-           
+
             <div class="row-xl-3 ow-sm-6 mb-3">
               <div class="card text-black o-hidden h-100">
                 <div class="card-body">
@@ -153,7 +158,7 @@
                 </a>
               </div>
             </div>
-            
+
             <div class="row-xl-3 row-sm-6 mb-3">
               <div class="card text-black  o-hidden h-100">
                 <div class="card-body">
@@ -171,9 +176,9 @@
               </div>
             </div>
           </div>
-    </ul>  
+    </ul>
 <!-- /.container-fluid -->
- 
+
 <div id="content-wrapper">
 
 <div class="container-fluid">
@@ -184,7 +189,6 @@
               <b>CAR Crime Offenses 2019</b></div>
               <script>
 window.onload = function () {
-
 var chart = new CanvasJS.Chart("chartContainer", {
 	title:{
 		text: "Criminal Offenses"
@@ -192,9 +196,9 @@ var chart = new CanvasJS.Chart("chartContainer", {
 	axisY: {
 		title: "Percentage"
 	},
-	data: [{        
-		type: "column",  
-		dataPoints: [      
+	data: [{
+		type: "column",
+		dataPoints: [
 			{ y: 300878, label: "Murder" },
 			{ y: 266455,  label: "Rape" },
 			{ y: 169709,  label: "Kidnapping" },
@@ -207,7 +211,6 @@ var chart = new CanvasJS.Chart("chartContainer", {
 	}]
 });
 chart.render();
-
 }
 </script>
 <div id="chartContainer" style="height: 200px; width: 98%;"></div>
@@ -224,7 +227,7 @@ chart.render();
               <b>CAR Miscellaneous Offenses 2019</b></div>
 
 
-              
+
             <div class="card-body">
               <canvas id="myAreaChart" width="50%" height="50"></canvas>
             </div>
@@ -270,14 +273,14 @@ chart.render();
       <td>@mdo</td>
     </tr>
   </tbody>
-</table>           
+</table>
                 <div class="card-body">
                   <canvas id="myBarChart" width="60%" height="80"></canvas>
                 </div>
               </div>
             </div>
-            
-           
+
+
             <div class="col-lg-6">
               <div class="card mb-3">
                 <div class="card-header">
@@ -308,7 +311,7 @@ chart.render();
       <td>the Bird</td>
     </tr>
   </tbody>
-</table>         
+</table>
                 <div class="card-body">
                   <canvas id="myBarChart" width="60%" height="80"></canvas>
                 </div>

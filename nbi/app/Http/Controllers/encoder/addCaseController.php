@@ -5,14 +5,15 @@ use DB;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\addNewCase;
 use App\Nature;
-use \App\Cases;
-use App\Users;
-use \App\Logs;
-use \App\CaseAgent;
-use \App\CaseNature;
-use \App\CaseSuspect;
-use \App\CaseVictims;
+use App\Cases;
+use App\User;
+use App\Logs;
+use App\CaseAgent;
+use App\CaseNature;
+use App\CaseSuspect;
+use App\CaseVictims;
 use Carbon\Carbon;
 
 
@@ -20,7 +21,7 @@ class addCaseController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('preventBackHistory'); $this->middleware('auth');
     }
     /**
      * Display a listing of the resource.
@@ -36,10 +37,15 @@ class addCaseController extends Controller
         ->where('role','=','Agent')
         ->get();
 
-        $nature = Nature::all();
-        $nature2 = Nature::all();
+        $nature = DB::table('nature')
+        ->where('natureAvailability','=','Available')
+        ->get();
+        $nature2 = DB::table('nature')
+        ->where('natureAvailability','=','Available')
+        ->get();
 
         $status = DB::table('case_status')
+        ->where('caseStatusAvailability','=','Available')
         ->get();
 
         return view('encoder.addCase', compact('agent','nature','status','agent2','nature2'));
@@ -61,20 +67,10 @@ class addCaseController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(addNewCase $request)
     {
-        $validator = Validator::make($request->all(), [
-            'ccn' => 'unique:cases|max:255',
-            'docketnumber' => 'required|unique:cases|max:255',
-            'acmo' => 'required|unique:cases|max:255',
-        ]);
-        if ($validator->fails()){
-            $request->session()->flash('alert-danger', 'Error: Adding of case records was unsucessful, maybe some records was already added like CCN, Docketnumber or ACMO.');
-            return redirect()->back();
-        }else {
-        $data=$request->all();
         $cases = Cases::create([
-            'docketnumber' => $request['caseNumber'],
+            'docketnumber' => $request['docketnumber'],
             'ccn' => $request['ccn'],
             'acmo' => $request['acmo'],
             'complainantname' => $request['complainant'],
@@ -127,7 +123,25 @@ class addCaseController extends Controller
         ]);
         $request->session()->flash('alert-success', 'Case record successfully inserted!');
         return redirect()->back();
-        }
+        /*
+            $validator = Validator::make($request->all(), [
+                'ccn' => 'required|unique:cases,ccn|max:255',
+                'docketnumber' => 'required|unique:cases|max:255',
+                'acmo' => 'required|unique:cases|max:255',
+            ]);
+            $validator->after(function ($validator) {
+                if ($this->somethingElseIsInvalid()) {
+                    $validator->errors()->add('field', 'Something is wrong with this field!');
+                }
+            });
+
+            if ($validator->fails()){
+                $request->session()->flash('alert-danger', 'Error: Adding of case records was unsucessful, maybe some records was already added like CCN, Docketnumber or ACMO.');
+            return redirect()->back();
+            }else {
+                $data=$request->all();
+            }
+        */
     }
 
     /**

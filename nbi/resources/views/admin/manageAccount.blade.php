@@ -52,16 +52,26 @@
         </div>
       </form>
 
-      <!-- Navbar -->
-      <ul class="navbar-nav ml-auto ml-md-0">
+      @if (session('status'))
+
+      {{ session('status') }}
+
+        @endif
+            <!-- Navbar -->
+            <ul class="navbar-nav ml-auto ml-md-0">
+        @guest
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+            </li>
+        @else
 
         <li class="nav-item dropdown no-arrow">
           <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-user-circle fa-fw"></i>
-            <label name="UserName" id="UserName"> Mark Anthony</label> {{-- QUERY HERE --}}
-          </a>
+            {{ Auth::user()->username }} <span class="caret"></span>
+            </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-            <a class="dropdown-item" href="/encoderProfile">Profile</a>
+            <a class="dropdown-item" href="/profile">Profile</a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Logout</a>
           </div>
@@ -80,15 +90,15 @@
             <span>Home</span>
           </a>
         </li>
-       
+
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-fw fa-briefcase"></i>
             <span>Manage Case</span>
           </a>
           <div class="dropdown-menu" aria-labelledby="pagesDropdown">
-            <a class="dropdown-item" href="/adminCaseReport">Case Report</a> <!-- add page for case records-->
-            <a class="dropdown-item" href="/adminCaseNature">Case Nature</a>  <!-- add page for case nature -->
+            <a class="dropdown-item" href="/caseReport">Case Report</a> <!-- add page for case records-->
+            <a class="dropdown-item" href="/caseNature">Case Nature</a>  <!-- add page for case nature -->
           </div>
         </li>
 
@@ -108,11 +118,17 @@
             <a class="dropdown-item" href="/">Case Report</a>  <!-- add page -->
           </div>
         </li>
-       
-        <li class="nav-item">
-          <a class="nav-link" href="/adminManageAccount">
-            <i class="fas fa-fw fa-user-cog"></i>
-            <span>Manage Accounts</span></a>
+
+        <li class="nav-item dropdown active">
+            <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-fw fa-user-cog"></i>
+                <span>Manage Accounts</span>
+            </a>
+            <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+                <a class="dropdown-item" href="/manageAccounts">User Monitoring</a> <!-- add page for case records-->
+                <a class="dropdown-item" href="/userLogs">User Logs</a>  <!-- add page -->
+                <a class="dropdown-item" href="/userHistory">User History</a>  <!-- add page -->
+            </div>
         </li>
 
 <br>
@@ -135,7 +151,7 @@
                 </a>
               </div>
             </div>
-           
+
             <div class="row-xl-3 ow-sm-6 mb-3">
               <div class="card text-black o-hidden h-100">
                 <div class="card-body">
@@ -152,7 +168,7 @@
                 </a>
               </div>
             </div>
-            
+
             <div class="row-xl-3 row-sm-6 mb-3">
               <div class="card text-black  o-hidden h-100">
                 <div class="card-body">
@@ -170,26 +186,43 @@
               </div>
             </div>
           </div>
-    </ul>  
+    </ul>
       <!-- /.container-fluid -->
 
 <div id="content-wrapper">
 
         <div class="container-fluid" style="padding-top:3%;padding-bottom:2%;">
-        
+
 
         <button class="btn" style="float: right" href="/addNewUser" data-toggle="modal" data-target="#addNewUser"><i class="fa fa-plus-circle"></i> Add a New User</button>
         <br><br>
       <!-- DataTables Example -->
           <div class="card mb-3">
             <div class="card-body">
+                @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+                @endif
+                <div class="flash-message">
+                    @foreach (['danger', 'warning', 'success', 'info'] as $msg)
+                        @if(Session::has('alert-' . $msg))
+
+                        <p class="alert alert-{{ $msg }}">{{ Session::get('alert-' . $msg) }} <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
+                        @endif
+                    @endforeach
+                </div> <!-- end .flash-message -->
               <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                   <thead>
                     <tr>
+                        <th style="display:none;">User Id</th>
                         <th>Username</th>
-                        <th>Firstname</th>
-                        <th>Lastname</th>
+                        <th>Name</th>
                         <th>Role</th>
                         <th>Status</th>
                         <th>Action</th>
@@ -201,29 +234,37 @@
                     <tbody>
                         @foreach($showData as $showData)
                         <tr>
+                            <td style="display:none;">{{ $showData->userid }}</td>
                             <td>{{ $showData->username }}</td>
-                            <td>{{ $showData->firstname }}</td>
-                            <td>{{ $showData->lastname }}</td>
+                            <td>{{ $showData->firstName }} {{ $showData->lastName }}</td>
                             <td>{{ $showData->role }}</td>
-                            <td>{{ $showData->status}}</td>
+                            <td>{{ $showData->userStatus}}</td>
                             <td>
-                                    <div>
-                                      <center>
-                                        <button type="button" class="btn btn-default btn-xs btn-filter" data-target="#editInformation" data-toggle="modal" style="width: 100px; height: 40px;">
+                                <div>
+                                    <center>
+                                        <button type="button" class="btn btn-default btn-xs btn-filter"
+                                            data-target="#editInformation" data-toggle="modal"
+                                            data-userid = "{{ $showData->userid}}"
+                                            data-username = "{{ $showData->username}}"
+                                            data-firstname = "{{ $showData->firstName}}"
+                                            data-lastname = "{{ $showData->lastName}}"
+                                            data-role = "{{ $showData->role}}"
+                                            data-userstatus = "{{ $showData->userStatus}}"
+                                            >
                                             <span style="color:#0460f4;" class="fas fa-edit"> Edit </span>
                                         </button>
-                                      </center>
-                                    </div>
+                                    </center>
+                                </div>
                             </td>
                             <td>
-                                    <div>
-                                    <center><button type="button" class="btn btn-default btn-xs btn-filter" data-target="#resetPassword" data-toggle="modal" style="width: 100px; height: 40px;">
-                                            <span style="color:#008000;" class="fas fa-redo"> Reset </span>
-                                        </button>
-                                    </center>
-                                    </div>
+                                <div>
+                                <center><button type="button" class="btn btn-default btn-xs btn-filter" data-target="#resetPassword" data-toggle="modal" style="width: 100px; height: 40px;">
+                                        <span style="color:#008000;" class="fas fa-redo"> Reset </span>
+                                    </button>
+                                </center>
+                                </div>
                             </td>
-                           
+
                         </tr>
                         @endforeach
                     </tbody>
@@ -266,7 +307,15 @@
           <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
           <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-            <a class="btn btn-primary" href="">Logout</a><!--LINK HERE -->
+                <a class="btn btn-primary" href="{{ route('logout') }}"
+                    onclick="event.preventDefault();
+                                document.getElementById('logout-form').submit();">
+                    {{ __('Logout') }}
+                </a>
+
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
           </div>
         </div>
       </div>
@@ -282,110 +331,16 @@
             </button>
             </h4>
             <div class="card-body">
+                <form method="POST" action="/addNewUser">
+                    {{csrf_field()}}
+                    @include('admin.userRegisterModalForm')
                     <div class="form-group">
-                        <div class="form-row">
-                        <div class="col-md-6">
-                            <label for="firstName">First name</label>
-                            <div class="">
-                            <input type="text" id="firstName" class="form-control" value=""> {{-- QUERY HERE --}}
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <label for="lastName">Last name</label>
-                            <div class="">
-                            <input type="text" id="lastName" class="form-control" value=""> {{-- QUERY HERE --}}
-                            </div>
-                        </div>
-                        </div>
+                        <center>
+                            <button class="btn btn-primary btn-block col-md-3" type="submit" value="submit">Save</button>
+                        </center>
                     </div>
-                    <div class="form-group">
-                        <div class="form-row">
-                        <div class="col-md-6">
-                            <label for="userName">Username</label>
-                            <div class="">
-                            <input type="text" id="userName" class="form-control" value=""> {{-- QUERY HERE --}}
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <label for="role">Role</label>
-                            <div class="">
-                            <select name="role" id="role" style="width: 290px; height: 38px;">
-                                  <option value="admin">Admin</option>
-                                  <option value="agent">Agent</option>
-                                  <option value="encoder">Encoder</option>
-                            </select>
-                            </div>
-                        </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="form-row">
-                        <div class="col-md-6">
-
-                        </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="form-row">
-                            <div class="col-md-6">
-                                <label for="password"><b>Password</b></label>
-                            </div>
-                        </div>
-                    </div>
-                    <form method="" action=""> {{-- FORM GROUP --}}
-                        <div class="form-group">
-                            <div class="form-row">
-                                <div class="col-md-6">
-                                    <div class="form-label-group">
-                                            <input type="password" minlength="8" maxlength="16" id="oldPassword" class="form-control" required="required" autofocus="autofocus">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                        <div class="form-row">
-                            <div class="col-md-6">
-                                <label for="password"><b>Confirm Password</b></label>
-                            </div>
-                        </div>
-                    </div>
-                    <form method="" action=""> {{-- FORM GROUP --}}
-                        <div class="form-group">
-                            <div class="form-row">
-                                <div class="col-md-6">
-                                    <div class="form-label-group">
-                                            <input type="password" minlength="8" maxlength="16" id="oldPassword" class="form-control" required="required" autofocus="autofocus">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="form-row">
-                                <div class="col-md-6">
-                                    <div class="form-label-group">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-label-group">
-                                    </div>
-                                    <div class="registrationFormAlert" id="divCheckPasswordMatch"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="form-row">
-                                <div class="col-md-6">
-
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <center>
-                                <button class="btn btn-primary btn-block col-md-3" type="submit" value="submit">Save</button>
-                            </center>
-                        </div>
-                    </form>
-                </div>
+                </form>
+            </div>
             </div>
         </div>
 
@@ -398,76 +353,34 @@
         </div>
       </div>
     </div>
-    
-    <!-- Edit Information Modal-->
-    <div class="modal fade" id="editInformation" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="container-fluid" style="padding-bottom:3%; padding-top:4%;">
-    <div class="card card-register mx-auto" style="width:100%;">
-       <div class="card-header"><h4 align="center">Edit Information
-       <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">x</span></div>
-            </button>
-            </h4>
-            <div class="card-body">
-                    <div class="form-group">
-                        <div class="form-row">
-                        <div class="col-md-6">
-                            <label for="firstName">First name</label>
-                            <div class="">
-                            <input type="text" id="firstName" class="form-control" value=""> {{-- QUERY HERE --}}
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <label for="lastName">Last name</label>
-                            <div class="">
-                            <input type="text" id="lastName" class="form-control" value=""> {{-- QUERY HERE --}}
-                            </div>
-                        </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="form-row">
-                        <div class="col-md-6">
-                            <label for="userName">Username</label>
-                            <div class="">
-                            <input type="text" id="userName" class="form-control" value=""> {{-- QUERY HERE --}}
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <label for="role">Role</label>
-                            <div class="">
-                            <select name="role" id="role" style="width: 290px; height: 38px;">
-                                  <option value="admin">Admin</option>
-                                  <option value="agent">Agent</option>
-                                  <option value="encoder">Encoder</option>
-                            </select>
-                            </div>
-                        </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="form-row">
-                        <div class="col-md-6">
-                        <label for="userName">Status</label>
-                            <div class="">
-                            <select name="status" id="status" style="width: 290px; height: 38px;">
-                                  <option value="active" selected>Active</option>
-                                  <option value="inactive">Inactive</option>
-                            </select>
-                            </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                        <div class="form-group">
-                            <center>
-                                <button class="btn btn-primary btn-block col-md-3" type="submit" value="submit">Save</button>
-                            </center>
-                        </div>
-                    </form>
+
+
+    <!-- Case Record Modal-->
+    <div class="modal fade" id="editInformation" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document" >
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="exampleModalLabel">User details update</h4>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close" onclick="javascript:window.location.reload()">
+                      <span aria-hidden="true">×</span>
+                    </button>
                 </div>
-            </div>
+                <div class="modal-body">
+                  <form action="/userUpdate" method="POST">
+                      {{csrf_field()}}
+                      <input type="hidden" id="useridOne" name="useridOne" class="form-control" value=""> {{-- QUERY HERE --}}
+                      @include('admin.userUpdateModalForm')
+                    <div class="form-group">
+                        <center>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </center>
+                    </div>
+                  </form>
+                </div>
+          </div>
         </div>
+    </div>
+
 
         <!-- Exit Modal for edit Information-->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -488,106 +401,7 @@
               <span aria-hidden="true">x</span></div>
             </button>
             </h4>
-
         <div class="card-body">
-            <div class="form-group">
-                <div class="form-row">
-                <div class="col-md-6">
-                    <label for="firstName">First name</label>
-                    <div class="">
-                    <input type="text" id="firstName" class="form-control" value=""> {{-- QUERY HERE --}}
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <label for="lastName">Last name</label>
-                    <div class="">
-                    <input type="text" id="lastName" class="form-control" value=""> {{-- QUERY HERE --}}
-                    </div>
-                </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="form-row">
-                <div class="col-md-6">
-                    <label for="userName">Username</label>
-                    <div class="">
-                    <input type="text" id="userName" class="form-control" value=""> {{-- QUERY HERE --}}
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <label for="role">Role</label>
-                    <div class="">
-                    <select name="role" id="role" style="width: 290px; height: 38px;">
-                                  <option value="admin">Admin</option>
-                                  <option value="agent">Agent</option>
-                                  <option value="encoder">Encoder</option>
-                    </select>
-                    </div>
-                </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="form-row">
-                    <div class="col-md-6">
-                        <label for="status">Status</label>
-                        <div class="">
-                        <select name="status" id="status" style="width: 290px; height: 38px;">
-                                  <option value="active" selected>Active</option>
-                                  <option value="inactive">Inactive</option>
-                        </select>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="form-row">
-                <div class="col-md-6">
-
-                </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="form-row">
-                    <div class="col-md-6">
-                        <label for="password"><b>Password</b></label>
-                    </div>
-                </div>
-            </div>
-            <form method="" action=""> {{-- FORM GROUP --}}
-                <div class="form-group">
-                    <div class="form-row">
-                        <div class="col-md-6">
-                            <div class="form-label-group">
-                                    <input type="password" minlength="8" maxlength="16" id="oldPassword" class="form-control" required="required" autofocus="autofocus">
-                                    <label for="firstName">Old Password</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="form-row">
-                        <div class="col-md-6">
-                            <div class="form-label-group">
-                                    <input type="password" minlength="8" maxlength="16" id="newPassword" class="form-control" required="required">
-                                    <label for="firstName">New Password (8-16 characters)</label>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-label-group">
-                                    <input type="password" minlength="8" maxlength="16" id="confirmPassword" class="form-control" required="required" onkeyup="checkPasswordMatch();">
-                                    <label for="firstName">Confirm Password</label>
-                            </div>
-                            <div class="registrationFormAlert" id="divCheckPasswordMatch"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="form-row">
-                        <div class="col-md-6">
-
-                        </div>
-                    </div>
-                </div>
                 <div class="form-group">
                     <center>
                         <button class="btn btn-primary btn-block col-md-3" type="submit" value="submit">Save</button>
@@ -618,7 +432,9 @@
 
     <!-- Page level plugin JavaScript-->
     <script src="bower_components/vendor/datatables/jquery.dataTables.js"></script>
+    <script src="bower_components/vendor/datatables/jquery.dataTables.min.js"></script>
     <script src="bower_components/vendor/datatables/dataTables.bootstrap4.js"></script>
+    <script src="bower_components/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
     <!-- Custom scripts for all pages-->
     <script src="bower_components/js/sb-admin.min.js"></script>
@@ -626,6 +442,26 @@
     <!-- Demo scripts for this page-->
     <script src="bower_components/js/demo/datatables-demo.js"></script>
 
-  </body>
+    <script>
+            $('#editInformation').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget)
+                var userid = button.data('userid')
+                var username = button.data('username')
+                var firstname = button.data('firstname')
+                var lastname = button.data('lastname')
+                var role = button.data('role')
+                var userstatus = button.data('userstatus')
 
+                var modal = $(this)
+                modal.find('.modal-body #useridOne').val(userid)
+                modal.find('.modal-body #username').val(username)
+                modal.find('.modal-body #firstName').val(firstname)
+                modal.find('.modal-body #lastName').val(lastname)
+                modal.find('.modal-body #role').val(role)
+                modal.find('.modal-body #userStatus').val(userstatus)
+              })
+    </script>
+
+  </body>
+  @endguest
 </html>

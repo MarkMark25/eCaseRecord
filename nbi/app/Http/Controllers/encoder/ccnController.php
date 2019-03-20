@@ -15,7 +15,7 @@ class ccnController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('preventBackHistory'); $this->middleware('auth');
     }
     /**
      * Display a listing of the resource.
@@ -41,6 +41,7 @@ class ccnController extends Controller
             DB::raw('case_victims.caseid'),
             DB::raw('case_suspects.caseid'))
             ->orderby('cases.docketnumber','ASC')
+            ->where('cases.caseStatus','=','Available')
             ->whereNull('ccn')
             ->get();
             return view ('encoder.ccnUpdate',['showData'=>$showData]);

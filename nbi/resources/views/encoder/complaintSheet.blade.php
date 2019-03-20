@@ -29,6 +29,7 @@
     <!--TAB IMAGE -->
     <link rel="icon"  href="bower_components/image/nbi-logo.png">
 
+    <!--DATE PICKER AND ADD FIELDS START HERE-->
     <!--DATE PICKER1-->
     <!-- EXTRA CSS
     <link href="bower_components/datepicker/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
@@ -43,6 +44,14 @@
 
     <!-- JS Datepicker -->
     <script src="bower_components/datepicker/date.js"></script>
+
+    <!-- Add Fields
+    <script src="bower_components/datepicker/addFields.js"></script>
+    -->
+
+    <style>
+            .input-group:not(:first-of-type) { margin-top: 10px; }
+    </style>
 
   </head>
 
@@ -125,233 +134,300 @@
       </ul>
 
       <div id="content-wrapper">
-        <div class="container-fluid">
-            <div class="card mb-3">
-                <div class="card-header">
-                    <h6 style="text-align:center">Complaint Sheet</h6>
-                </div>
-                <div class="card-body">
-                    <form action="" method="">
-                        <section>
-                            <div class="form-group">
-                                <p style="font-weight:bold;">1. Complainant (nagsusumbong) </p>
-                                <div class="form-row">
-                                    <div class="col-md-6">
-                                        <label for="complainantName">Name (Lastname, Firstname) </label>
-                                        <input type="text" class="form-control" name="complainantName">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="complainantAddress">Address</label>
-                                        <input type="text" class="form-control" name="complainantAddress">
-                                        <label for="complainantTelNumber">Telephone Number</label>
-                                        <input type="text" id="complainantTelNumber" name= "complainantTelNumber" autocomplete="off" class="ccNumber form-control" value="" placeholder="0000-000-0000" maxlength="13" pattern="^\d{4}-\d{3}-\d{4}$" title="Follow the following format. e.g. 0912-122-1212" onkeypress='validate(event)'> {{-- QUERY HERE --}}
-                                    </div>
+            <form method="POST" action="/encoderAddComplaintSheet">
+                {{ csrf_field() }}
+              <div class="container-fluid" style="padding-bottom:3%; padding-top:2%;">
+                <div class="card mb-3" style="width:100%%;">
+                  <center><div class="card-header"><h4>Complaint Sheet</div></center>
+                    <div class="card-body">
+                        <div class="flash-message">
+                            @if ($errors->any())
+                                <div class="alert alert-danger">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
                                 </div>
-                            </div>
-                        </section>
-                        <hr>
-                        <section>
-                            <div class="form-group">
-                                <p style="font-weight:bold;">2. Persons Complained Against or Suspects (Isinusumbong)</p>
-                                <div class="form-row">
-                                    <div class="col-md-6">
-                                        <label for="suspectName">Name (Lastname, Firstname)</label>
-                                        <input type="text" class="form-control" name="suspectName">
-                                        <div class="form-group">
-                                            <div class="form-row">
-                                                <div class="col-md-3">
-                                                    <label for="suspectSex">Sex</label><br>
-                                                    <input type="radio" name="suspectSex" value="male">Male <br>
-                                                    <input type="radio" name="suspectSex" value="female"> Female
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <label for="suspectCivilStatus">Civil Status</label> <br>
-                                                    <div class="form-group">
-                                                        <div class="form-row">
-                                                            <div class="col-md-6">
-                                                                <input type="radio" name="civilStatus" value="single">Single <br>
-                                                                <input type="radio" name="civilStatus" value="married">Married <br>
-                                                                <input type="radio" name="civilStatus" value="widowed">Divorce
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <input type="radio" name="civilStatus" value="widowed">Widowed <br>
-                                                                <input type="radio" name="civilStatus" value="widowed">Separated <br>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <label for="suspectOtherInfo">Other Information</label> <br>
-                                        <textarea name="" id="" style="width:100%;font-size:15px;resize:none;" rows="2"></textarea>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="suspectAddress">Address</label>
-                                        <input type="text" class="form-control" name="suspectAddress">
-                                        <label for="suspectTelNumber">Telephone Number</label>
-                                        <input type="text" id="suspectTelNumber" name= "suspectTelNumber" autocomplete="off" class="ccNumber form-control" value="" placeholder="0000-000-0000" maxlength="13" pattern="^\d{4}-\d{3}-\d{4}$" title="Follow the following format. e.g. 0912-122-1212" onkeypress='validate(event)'> {{-- QUERY HERE --}}
-                                        <label for="suspectOccupation">Occupation</label>
-                                        <input type="text" name="" class="form-control" name="suspectOccupation">
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
-                        <hr>
-                        <section>
-                            <div class="form-group">
-                                <p style="font-weight:bold;">3. Nature of act complained (Uri ng sumbong) </p>
-                                <textarea name="natureOfAct" id="" style="width:100%;font-size:15px;resize:none;" rows="2"></textarea>
-                            </div>
-                        </section>
-                        <hr>
-                        <section>
-                            <div class="form-group">
-                                <p style="font-weight:bold;">4. Where and when committed (Saan at Kailan Nangyari) </p>
-                                <div class="form-row">
-                                    <div class="col-md-6">
-                                        <label for="whereCommitted">Place Committed</label>
-                                        <input type="text" name="whereCommitted" id="" class="form-control">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="whenCommitted">When Committed</label>
-                                        <div class="input-group mb-2">
-                                            <div class="input-group-prepend">
-                                                <div class="btn btn-secondary">
-                                                    <i class="fas fa-fw fa-calendar"></i>
-                                                </div>
-                                            </div>
-                                            <input type="text" id="datepickers" name="whenCommitted" class="form-control" value="" placeholder="Choose" required> {{-- QUERY HERE --}}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
-                        <hr>
-                        <section>
-                            <!--VICTIM A -->
-                            <div class="form-group">
-                                <p style="font-weight:bold;">5. Victim/s If any </p>
-                                <div class="form-row">
-                                    <div class="col-md-6">
-                                        <label for="victimNameA">A. Name (Lastname, Firstname)</label>
-                                        <input type="text" class="form-control" name="victimNameA">
-                                        <div class="form-group">
-                                            <div class="form-row">
-                                                <div class="col-md-3">
-                                                    <label for="victimSexA">Sex</label><br>
-                                                    <input type="radio" name="victimSexA" value="male">Male <br>
-                                                    <input type="radio" name="victimSexA" value="female"> Female
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <label for="victimCivilStatusA">Civil Status</label> <br>
-                                                    <div class="form-group">
-                                                        <div class="form-row">
-                                                            <div class="col-md-6">
-                                                                <input type="radio" name="victimCivilStatusA" value="single">Single <br>
-                                                                <input type="radio" name="victimCivilStatusA" value="married">Married <br>
-                                                                <input type="radio" name="victimCivilStatusA" value="widowed">Divorce
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <input type="radio" name="victimCivilStatusA" value="widowed">Widowed <br>
-                                                                <input type="radio" name="victimCivilStatusA" value="widowed">Separated <br>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="victimAddressA">Address</label>
-                                        <input type="text" class="form-control" name="victimAddressA">
-                                        <label for="victimTelNumberA">Telephone Number</label>
-                                        <input type="text" id="victimTelNumberA" name= "victimTelNumberA" autocomplete="off" class="ccNumber form-control" value="" placeholder="0000-000-0000" maxlength="13" pattern="^\d{4}-\d{3}-\d{4}$" title="Follow the following format. e.g. 0912-122-1212" onkeypress='validate(event)'> {{-- QUERY HERE --}}
-                                        <label for="victimOccupationA">Occupation</label>
-                                        <input type="text" name="" class="form-control" name="victimOccupationA">
-                                    </div>
-                                </div>
-                            </div>
-                            <hr>
-                            <!--VICTIM B -->
-                            <div class="form-group">
-                                <div class="form-row">
-                                    <div class="col-md-6">
-                                        <label for="victimNameB">B. Name (Lastname, Firstname)</label>
-                                        <input type="text" class="form-control" name="victimNameB">
-                                        <div class="form-group">
-                                            <div class="form-row">
-                                                <div class="col-md-3">
-                                                    <label for="victimSexB">Sex</label><br>
-                                                    <input type="radio" name="victimSexB" value="male">Male <br>
-                                                    <input type="radio" name="victimSexB" value="female"> Female
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <label for="victimCivilStatusB">Civil Status</label> <br>
-                                                    <div class="form-group">
-                                                        <div class="form-row">
-                                                            <div class="col-md-6">
-                                                                <input type="radio" name="victimCivilStatusB" value="single">Single <br>
-                                                                <input type="radio" name="victimCivilStatusB" value="married">Married <br>
-                                                                <input type="radio" name="victimCivilStatusB" value="widowed">Divorce
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <input type="radio" name="victimCivilStatusB" value="widowed">Widowed <br>
-                                                                <input type="radio" name="victimCivilStatusB" value="widowed">Separated <br>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="victimAddressB">Address</label>
-                                        <input type="text" class="form-control" name="victimAddressB">
-                                        <label for="victimTelNumberB">Telephone Number</label>
-                                        <input type="text" id="victimTelNumberB" name= "victimTelNumberB" autocomplete="off" class="ccNumber form-control" value="" placeholder="0000-000-0000" maxlength="13" pattern="^\d{4}-\d{3}-\d{4}$" title="Follow the following format. e.g. 0912-122-1212" onkeypress='validate(event)'> {{-- QUERY HERE --}}
-                                        <label for="victimOccupationB">Occupation</label>
-                                        <input type="text" class="form-control" name="victimOccupationB">
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
-                        <hr>
-                        <section>
-                            <div class="form-group">
-                                <p style="font-weight:bold;">6. Narration of Facts (Salaysay ng mga Pangyayari) </p>
-                                <textarea name="narrationOfFacts" id="" style="width:100%;font-size:15px;resize:none;" rows="3"></textarea>
-                            </div>
-                        </section>
-                        <hr>
-                        <section>
-                            <div class="form-group">
-                                <p style="font-weight:bold;">7. Has the matter been reported to any agency, If so, to what people agency? (Ang bagay bang ito ay naulat na sa ibang sangay ng pagsisiyasat? Kung naulat na, saang sangay?) </p>
-                                <textarea name="hasTheMatter" id="" style="width:100%;font-size:15px;resize:none;" rows="3"></textarea>
-                                <br>
-                                <p style="font-weight:bold;">Status of investigation, If any (Kalagayan ng pagsisiyasat kung mayroon?)</p>
-                                <textarea name="statusOfInvestigation" id="" style="width:100%;font-size:15px;resize:none;" rows="3"></textarea>
-                            </div>
-                        </section>
-                        <hr>
-                        <section>
-                            <div class="form-group">
-                                <p style="font-weight:bold;">8.Is the matter complained of the subject of any court action of proceedings? If so, where? (Ang bagay bang may kinalaman sa pagsusumbong ay nasa hukuman na? Kung gaanoon, saan?)</p>
-                                <textarea name="isTheMatterComplained" id="" style="width:100%;font-size:15px;resize:none;" rows="3"></textarea>
-                            </div>
-                        </section>
-                        <br>
-                        <section>
-                            <div class="form-group">
-                                <p style="font-weight:bold;">9.What Consideration/s impelled you to report to the NBI? (Ano ang nag-udyok sa iyo para magreklamo dito sa NBI?)</p>
-                                <textarea name="whatConsidirations" id="" style="width:100%;font-size:15px;resize:none;" rows="3"></textarea>
-                            </div>
-                        </section>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <!-- /.container-fluid -->
+                            @endif
+                            @foreach (['danger', 'warning', 'success', 'info'] as $msg)
+                                @if(Session::has('alert-' . $msg))
 
+                                <p class="alert alert-{{ $msg }}">{{ Session::get('alert-' . $msg) }} <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
+                                @endif
+                            @endforeach
+                        </div> <!-- end .flash-message -->
+                        <div class="form-group">
+                          <div class="form-row">
+                              <div class="col-md-4">
+                                  <label for="caseNumber">NBI-CAR Case Number</label>
+                                  <div class="input-group mb-2">
+                                      <input type="text" id="" name="" class="form-control col-md-5" value="NBI-CAR-" readonly>
+                                      <input type="text" id="docketnumber" name="docketnumber" class="form-control" value="" placeholder="0-00-000" maxlength="8" pattern="^\w{1}-\d{2}-\d{3}$" onkeypress='validate(event)' title="Follow the following format. e.g. C-10-001" autocomplete="off" required> {{-- QUERY HERE --}}
+                                  </div>
+                              </div>
+                              <div class="col-md-4">
+                                  <label for="ccn">CCN</label>
+                                  <div class="input-group mb-2">
+                                      <input type="text" id="" name="" class="form-control col-md-5" value="NBI-CCN-" readonly>
+                                      <input type="text" id="ccn" name= "ccn" class="ccNumber form-control" value="" placeholder="I-00-00000" maxlength="10" pattern="^\w{1}-\d{2}-\d{5}$" title="Follow the following format. e.g. I-10-00001" onkeypress='validateCCN(event)' autocomplete="off"> {{-- QUERY HERE --}}
+                                  </div>
+                              </div>
+                              <div class="col-md-4">
+                                    <label for="ccn">ACMO No.</label>
+                                    <div class="input-group mb-2">
+                                        <input type="text" id="acmo" placeholder="00-0-00000" title="Follow the following format. e.g. 10-C-00001" maxlength="10" pattern="^\d{2}-\w{1}-\d{5}$" name= "acmo" class="form-control" value="" onkeypress='validateACMO(event)' autocomplete="off" required> {{-- QUERY HERE --}}
+                                    </div>
+                                </div>
+                          </div>
+                        </div>
+                      <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md-4">
+                                <label for="agent">Agent</label>
+                                <div class="fld_wrap" id="fld2">
+                                    <div class="input-group">
+                                            <select name="fld_val2[]" id="fld_val2"  class="form-control" required>
+                                                <option value=""></option>
+                                                @foreach($agent as $agent)
+                                                <option value="{{ $agent->userid }}">{{ $agent->firstName }} {{ $agent->lastName }}</option>@endforeach
+                                            </select>
+                                            <div class="input-group-prepend">
+                                                <button class="btn btn-success btn-add add_button2" fldnum="2" type="button">
+                                                    <span class="fas">+</span>
+                                                </button>
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="status">Status</label>
+                                <div class="input-group">
+                                    <select name="status" class="form-control">
+                                        <option value=""></option>
+                                        @foreach($status as $status)
+                                            <option value="{{ $status->statusid }}">{{ $status->status }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md-4">
+                                <label for="dateAssigned">Date Assigned</label>
+                                <div class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                        <div class="btn btn-secondary">
+                                            <i class="fas fa-fw fa-calendar"></i>
+                                        </div>
+                                    </div>
+                                    <input type="text" id="datepicker" name= "dateAssigned"  class="form-control" value="" placeholder="Choose" autocomplete="off" required> {{-- QUERY HERE --}}
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="dateTerminated">Date Terminated</label>
+                                <div class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                        <div class="btn btn-secondary">
+                                            <i class="fas fa-fw fa-calendar"></i>
+                                        </div>
+                                    </div>
+                                    <input type="text" id="datepickers" name="dateTerminated" class="form-control" value="" placeholder="Choose" autocomplete="off" required> {{-- QUERY HERE --}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="form-group">
+                        <p style="font-weight:bold;">1. Complainant (nagsusumbong) </p>
+                        <div class="form-row">
+                            <div class="col-md-4">
+                                    <label for="suspectName">Name (Lastname, Firstname)</label>
+                                <div class="">
+                                    <input type="text" id="complainant" name="complainant"  class="form-control" onkeypress='validateComplainant(event)' autocomplete="off" required/>  {{-- QUERY HERE --}}
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="">Address</label>
+                                <div class="">
+                                    <input type="text" id="complainantAddress" name="complainantAddress"  class="form-control" autocomplete="off"/>  {{-- QUERY HERE --}}
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="">Telephone Number</label>
+                                <div class="">
+                                    <input type="text" id="complainantTelNumber" name="complainantTelNumber"  class="form-control" autocomplete="off"/>  {{-- QUERY HERE --}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="form-group">
+                        <p style="font-weight:bold;">2. Persons Complained Against or Suspects (Isinusumbong)</p>
+                        <div class="form-row">
+                            <div class="control-group">
+                                <div class="fld_wrap" id="fld3">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <button class="btn btn-success btn-add add_button3" fldnum="3" type="button">
+                                                <span class="fas">+</span>
+                                            </button>
+                                        </div>
+                                        <br>
+                                        <br>
+                                        <div class="col-md-3">
+                                            <input type="text" class="form-control" name="suspectNameA[]" placeholder="Name" autocomplete="off">
+                                            <input type="text" class="form-control" name="suspectAgeA[]" placeholder="Age" onkeypress='validateDate(event)' autocomplete="off">
+                                        </div>
+                                        <div class="col-md-3">
+                                            <input type="text" class="form-control" name="suspectAddressA[]" placeholder="Address" autocomplete="off">
+                                            <input type="text" class="form-control" name="suspectCivilStatusA[]" placeholder="Civil Status" autocomplete="off">
+                                        </div>
+                                        <div class="col-md-3">
+                                            <input type="text" id="suspectTelNumberA" name= "suspectTelNumberA[]" autocomplete="off" placeholder="Telephone Number" class="ccNumber form-control" value="" autocomplete="off">
+                                            <input type="text" class="form-control" name="suspectOccupationA[]" placeholder="Occupation" autocomplete="off">
+                                        </div>
+                                            <input type="text" class="form-control" name="suspectSexA[]" placeholder="sex" autocomplete="off">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <p style="font-weight:bold;">3. Nature of act complained (Uri ng sumbong) </p>
+                    <section>
+                        <div class="form-group">
+                            <div class="form-row">
+                                <div class="col-md-6">
+                                    <div class="control-group">
+                                        <div class="fld_wrap" id="fld1">
+                                            <div class="input-group">
+                                                <select  name="fld_val1[]" id="fld_val1" class="form-control" required>
+                                                    <option value=""></option>
+                                                    @foreach($nature as $nature)
+                                                        <option value="{{ $nature->natureid }}">{{ $nature->nature }}</option>
+                                                    @endforeach
+                                                </select>
+                                                <div class="input-group-prepend">
+                                                    <button class="btn btn-success btn-add add_button1" fldnum="1" type="button">
+                                                        <span class="fas">+</span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <hr>
+                    <section>
+                        <div class="form-group">
+                            <p style="font-weight:bold;">4. Where and when committed (Saan at Kailan Nangyari) </p>
+                            <div class="form-row">
+                                <div class="col-md-6">
+                                    <label for="whereCommitted">Place Committed</label>
+                                    <input type="text" name="whereCommitted" id="whereCommitted" class="form-control">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="whenCommitted">When Committed</label>
+                                    <div class="input-group mb-2">
+                                        <div class="input-group-prepend">
+                                            <div class="btn btn-secondary">
+                                                <i class="fas fa-fw fa-calendar"></i>
+                                            </div>
+                                        </div>
+                                        <input type="date" name="whenCommitted" id="whenCommitted" class="form-control" value="" placeholder="Choose" autocomplete="off" required> {{-- QUERY HERE --}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <hr>
+                    <div class="form-group">
+                        <p style="font-weight:bold;">5. Victim/s If any </p>
+                        <div class="form-row">
+                            <div class="control-group">
+                                <div class="fld_wrap" id="fld4">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <button class="btn btn-success btn-add add_button4" fldnum="4" type="button">
+                                                <span class="fas">+</span>
+                                            </button>
+                                        </div>
+                                        <br>
+                                        <br>
+                                        <div class="col-md-3">
+                                            <input type="text" class="form-control" name="victimNameA[]" placeholder="Name" autocomplete="off">
+                                            <input type="text" class="form-control" name="victimAgeA[]" placeholder="Age" onkeypress='validateDate(event)' autocomplete="off">
+                                        </div>
+                                        <div class="col-md-3">
+                                            <input type="text" class="form-control" name="victimAddressA[]" placeholder="Address" autocomplete="off">
+                                            <input type="text" class="form-control" name="victimCivilStatusA[]" placeholder="Civil Status" autocomplete="off">
+                                        </div>
+                                        <div class="col-md-3">
+                                            <input type="text" id="suspectTelNumberA" name= "victimTelNumberA[]" autocomplete="off" placeholder="Telephone Number" class="ccNumber form-control" value="" autocomplete="off">
+                                            <input type="text" class="form-control" name="victimOccupationA[]" placeholder="Occupation" autocomplete="off">
+                                        </div>
+                                            <input type="text" class="form-control" name="victimSexA[]" placeholder="sex" autocomplete="off">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <section>
+                        <div class="form-group">
+                            <p style="font-weight:bold;">6. Narration of Facts (Salaysay ng mga Pangyayari) </p>
+                            <textarea name="narrationOfFacts" id="narrationOfFacts" style="width:100%;font-size:15px;resize:none;" rows="3"></textarea>
+                        </div>
+                    </section>
+                    <hr>
+                    <section>
+                        <div class="form-group">
+                            <p style="font-weight:bold;">7. Has the matter been reported to any agency, If so, to what people agency? (Ang bagay bang ito ay naulat na sa ibang sangay ng pagsisiyasat? Kung naulat na, saang sangay?) </p>
+                            <textarea name="hasTheMatter" id="hasTheMatter" style="width:100%;font-size:15px;resize:none;" rows="3"></textarea>
+                            <br>
+                            <p style="font-weight:bold;">Status of investigation, If any (Kalagayan ng pagsisiyasat kung mayroon?)</p>
+                            <textarea name="statusOfInvestigation" id="statusOfInvestigation" style="width:100%;font-size:15px;resize:none;" rows="3"></textarea>
+                        </div>
+                    </section>
+                    <hr>
+                    <section>
+                        <div class="form-group">
+                            <p style="font-weight:bold;">8.Is the matter complained of the subject of any court action of proceedings? If so, where? (Ang bagay bang may kinalaman sa pagsusumbong ay nasa hukuman na? Kung gaanoon, saan?)</p>
+                            <textarea name="isTheMatterComplained" id="isTheMatterComplained" style="width:100%;font-size:15px;resize:none;" rows="3"></textarea>
+                        </div>
+                    </section>
+                    <br>
+                    <section>
+                        <div class="form-group">
+                            <p style="font-weight:bold;">9.What Consideration/s impelled you to report to the NBI? (Ano ang nag-udyok sa iyo para magreklamo dito sa NBI?)</p>
+                            <textarea name="whatConsidirations" id="whatConsidirations" style="width:100%;font-size:15px;resize:none;" rows="3"></textarea>
+                        </div>
+                    </section>
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                <div class="">
+                                    <input type="hidden" id="description" name="description" class="form-control" value="Encoder add complaint sheet and the log book details">
+                                    <input type="hidden" id="action" name="action" class="form-control" value="Add">
+                                    <input type="hidden" name="userid" id="userid" value="{{ Auth::user()->userid }}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <center> <button class="btn btn-primary btn-block col-md-3" type="submit">Save</button> </center>
+                    </div>
+                    </div> <!--CLOSING CARD HEADER -->
+                </div> <!--CLOSING CARD REGISTER -->
+              </div> <!--CLOSING CONTAINER FLUID -->
+            </form>
+        </div>
         <!-- Sticky Footer -->
         <footer class="sticky-footer">
           <div class="container my-auto">
@@ -361,11 +437,9 @@
           </div>
         </footer>
 
-      </div>
-      <!-- /.content-wrapper -->
+      </div><!-- /.content-wrapper -->
+    </div><!-- /#wrapper -->
 
-    </div>
-    <!-- /#wrapper -->
 
     <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">
@@ -400,6 +474,98 @@
     </div>
 
     <script>
+            $(document).ready(function(){
+                $('.add_button2').click(function(){
+                    var kakoi=$(this).attr('fldnum');
+                    var insHTML = '<div class="input-group"><select name="fld_val2[]" id="fld_val2"  class="form-control"><option value=""></option>@foreach($agent2 as $agent2)<option value="{{ $agent2->userid }}">{{ $agent2->firstName }} {{ $agent2->lastName }}</option>@endforeach</select><div class="input-group-prepend"><button class="btn btn-danger btn-add add_button2 remove_button" fldnum="2" type="button"><span class="fas">x</span></button></div>';
+                    $("#fld2").append(insHTML);
+                });
+
+                $('.fld_wrap').on('click', '.remove_button', function(e){
+                    e.preventDefault();
+                    $(this).parents(':eq(1)').remove();
+                });
+            });
+            $(document).ready(function(){
+                $('.add_button1').click(function(){
+                    var kakoi=$(this).attr('fldnum');
+                    var insHTML = '<div class="input-group"><select  name="fld_val1[]" id="fld_val1" class="form-control" required><option value=""></option>@foreach($nature2 as $nature2)<option value="{{ $nature2->natureid }}">{{ $nature2->nature }}</option>@endforeach</select><div class="input-group-prepend"><button class="btn btn-danger btn-add add_button1 remove_button" fldnum="1" type="button"><span class="fas">x</span></button></div>';
+                    $("#fld1").append(insHTML);
+                });
+
+                $('.fld_wrap').on('click', '.remove_button', function(e){
+                    e.preventDefault();
+                    $(this).parents(':eq(1)').remove();
+                });
+            });
+        function validateDate(evt) {
+            var theEvent = evt || window.event;
+
+            // Handle paste
+            if (theEvent.type === 'paste') {
+                key = event.clipboardData.getData('text/plain');
+            } else {
+            // Handle key press
+                var key = theEvent.keyCode || theEvent.which;
+                key = String.fromCharCode(key);
+            }
+            var regex = /[0-9]/;
+            if( !regex.test(key) ) {
+                theEvent.returnValue = false;
+                if(theEvent.preventDefault) theEvent.preventDefault();
+            }
+        }
+        function validate(evt) {
+            var theEvent = evt || window.event;
+
+            // Handle paste
+            if (theEvent.type === 'paste') {
+                key = event.clipboardData.getData('text/plain');
+            } else {
+            // Handle key press
+                var key = theEvent.keyCode || theEvent.which;
+                key = String.fromCharCode(key);
+            }
+            var regex = /[0-9,C,M,-]/;
+            if( !regex.test(key) ) {
+                theEvent.returnValue = false;
+                if(theEvent.preventDefault) theEvent.preventDefault();
+            }
+        }
+        function validateCCN(evt) {
+            var theEvent = evt || window.event;
+
+            // Handle paste
+            if (theEvent.type === 'paste') {
+                key = event.clipboardData.getData('text/plain');
+            } else {
+            // Handle key press
+                var key = theEvent.keyCode || theEvent.which;
+                key = String.fromCharCode(key);
+            }
+            var regex = /[0-9,I,M,-]/;
+            if( !regex.test(key) ) {
+                theEvent.returnValue = false;
+                if(theEvent.preventDefault) theEvent.preventDefault();
+            }
+        }
+        function validateACMO(evt) {
+            var theEvent = evt || window.event;
+
+            // Handle paste
+            if (theEvent.type === 'paste') {
+                key = event.clipboardData.getData('text/plain');
+            } else {
+            // Handle key press
+                var key = theEvent.keyCode || theEvent.which;
+                key = String.fromCharCode(key);
+            }
+            var regex = /[0-9,C,I,-]/;
+            if( !regex.test(key) ) {
+                theEvent.returnValue = false;
+                if(theEvent.preventDefault) theEvent.preventDefault();
+            }
+        }
         function validateComplainant(evt) {
             var theEvent = evt || window.event;
 
@@ -411,31 +577,96 @@
                 var key = theEvent.keyCode || theEvent.which;
                 key = String.fromCharCode(key);
             }
-            var regex = /0-9]/;
+            var regex = /[a-z,A-Z, ]/;
             if( !regex.test(key) ) {
                 theEvent.returnValue = false;
                 if(theEvent.preventDefault) theEvent.preventDefault();
             }
         }
     </script>
+    <script>
+            $(document).ready(function(){
+                $('.add_button3').click(function(){
+                    var kakoi=$(this).attr('fldnum');
+                    var insHTML =    '<div class="input-group">'+
+                                '<div class="input-group-prepend">'+
+                                    '<button class="btn btn-danger btn-add add_button3 remove_button" fldnum="3" type="button">'+
+                                        '<span class="fas">X</span>'+
+                                    '</button>'+
+                                '</div>'+
+                                '<br>'+
+                                '<br>'+
+                                '<div class="col-md-3">'+
+                                    '<input type="text" class="form-control" name="suspectNameA[]" placeholder="Name" autocomplete="off">'+
+                                    '<input type="text" class="form-control" name="suspectAgeA[]" placeholder="Age" autocomplete="off">'+
+                                '</div>'+
+                                '<div class="col-md-3">'+
+                                    '<input type="text" class="form-control" name="suspectAddressA[]" placeholder="Address" autocomplete="off">'+
+                                    '<input type="text" class="form-control" name="suspectCivilStatusA[]" placeholder="Civil Status" autocomplete="off">'+
+                                '</div>'+
+                                '<div class="col-md-3">'+
+                                    '<input type="text" id="suspectTelNumberA" name= "suspectTelNumberA[]" autocomplete="off" placeholder="Telephone Number" class="ccNumber form-control" value="" >'+
+                                    '<input type="text" class="form-control" name="suspectOccupationA[]" placeholder="Occupation" autocomplete="off">'+
+                                '</div>'+
+                                    '<input type="text" class="form-control" name="suspectSexA[]" placeholder="sex" autocomplete="off">'+
+                            '</div>';
+                    $("#fld3").append(insHTML);
+                });
+
+                $('.fld_wrap').on('click', '.remove_button', function(e){
+                    e.preventDefault();
+                    $(this).parents(':eq(1)').remove();
+                });
+            });
+            $(document).ready(function(){
+                $('.add_button4').click(function(){
+                    var kakoi=$(this).attr('fldnum');
+                    var insHTML ='<div class="input-group">'+
+                                    '<div class="input-group-prepend">'+
+                                        '<button class="btn btn-danger btn-add add_button4 remove_button" fldnum="4" type="button">'+
+                                            '<span class="fas">X</span>'+
+                                        '</button>'+
+                                    '</div>'+
+                                    '<br>'+
+                                    '<br>'+
+                                    '<div class="col-md-3">'+
+                                        '<input type="text" class="form-control" name="victimNameA[]" placeholder="Name" autocomplete="off">'+
+                                        '<input type="text" class="form-control" name="victimAgeA[]" placeholder="Age" autocomplete="off">'+
+                                    '</div>'+
+                                    '<div class="col-md-3">'+
+                                        '<input type="text" class="form-control" name="victimAddressA[]" placeholder="Address" autocomplete="off">'+
+                                        '<input type="text" class="form-control" name="victimCivilStatusA[]" placeholder="Civil Status" autocomplete="off">'+
+                                    '</div>'+
+                                    '<div class="col-md-3">'+
+                                        '<input type="text" class="form-control" name="victimOccupationA[]" placeholder="Occupation" autocomplete="off">'+
+                                    '</div>'+
+                                        '<input type="text" class="form-control" name="victimSexA[]" placeholder="sex" autocomplete="off">'+
+                                '</div>';
+                    $("#fld4").append(insHTML);
+                });
+
+                $('.fld_wrap').on('click', '.remove_button', function(e){
+                    e.preventDefault();
+                    $(this).parents(':eq(1)').remove();
+                });
+            });
+    </script>
+
     <!-- Custom scripts for all pages -->
     <script src="bower_components/js/sb-admin.min.js"></script>
+    <script src="bower_components/js/demo/datatables-demo.js"></script>
+    <script src="bower_components/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 
     <!--THIS IS A COMMENT, BELOW ARE COMMENTS AND IT CANNOT RUN
       Bootstrap core JavaScript
     <script src="bower_components/vendor/jquery/jquery.min.js"></script>
-
      Core plugin JavaScript
     <script src="bower_components/vendor/jquery-easing/jquery.easing.min.js"></script>
-
      Page level plugin JavaScript
     <script src="bower_components/vendor/datatables/jquery.dataTables.js"></script>
     <script src="bower_components/vendor/datatables/dataTables.bootstrap4.js"></script>
-
      Demo scripts for this page-->
-    <script src="bower_components/js/demo/datatables-demo.js"></script>
-    <script src="bower_components/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
   </body>
 @endguest

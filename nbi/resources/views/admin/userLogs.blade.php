@@ -52,16 +52,26 @@
         </div>
       </form>
 
-      <!-- Navbar -->
-      <ul class="navbar-nav ml-auto ml-md-0">
+      @if (session('status'))
+
+      {{ session('status') }}
+
+        @endif
+            <!-- Navbar -->
+            <ul class="navbar-nav ml-auto ml-md-0">
+        @guest
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+            </li>
+        @else
 
         <li class="nav-item dropdown no-arrow">
           <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-user-circle fa-fw"></i>
-            <label name="UserName" id="UserName"> Mark Anthony</label> {{-- QUERY HERE --}}
+            {{ Auth::user()->username }} <span class="caret"></span>
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-            <a class="dropdown-item" href="/encoderProfile">Profile</a>
+            <a class="dropdown-item" href="/profile">Profile</a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Logout</a>
           </div>
@@ -80,15 +90,15 @@
             <span>Home</span>
           </a>
         </li>
-       
+
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-fw fa-briefcase"></i>
             <span>Manage Case</span>
           </a>
           <div class="dropdown-menu" aria-labelledby="pagesDropdown">
-            <a class="dropdown-item" href="/adminCaseReport">Case Records</a> <!-- add page for case records-->
-            <a class="dropdown-item" href="/adminCaseNature">Case Nature</a>  <!-- add page for case nature -->
+            <a class="dropdown-item" href="/caseReport">Case Records</a> <!-- add page for case records-->
+            <a class="dropdown-item" href="/caseNature">Case Nature</a>  <!-- add page for case nature -->
           </div>
         </li>
 
@@ -98,26 +108,32 @@
             <span>Generate Report</span>
           </a>
           <div class="dropdown-menu" aria-labelledby="pagesDropdown">
-            <a class="dropdown-item" href="/adminAcmoCcnRequest">CCN & ACMO No. Req</a>
-            <a class="dropdown-item" href="/adminTransmittal">Transmittal</a>  
-            <a class="dropdown-item" href="/adminStatistics">Statistics</a>  
-            <a class="dropdown-item" href="/adminTerminatedCrimes">Terminated Crimes</a>  
-            <a class="dropdown-item" href="/adminTerminatedMisc">Terminated Misc...</a> 
-            <a class="dropdown-item" href="/adminPendingCrimes">Pending Crimes</a>  
-            <a class="dropdown-item" href="/adminPendingMisc">Pending Misc...</a>  
+            <a class="dropdown-item" href="/">CCN & ACMO No. Request</a> <!-- add page for case records-->
+            <a class="dropdown-item" href="/">Transmittal</a>  <!-- add page -->
+            <a class="dropdown-item" href="/">Statistics</a>  <!-- add page -->
+            <a class="dropdown-item" href="/">Terminated Crimes</a>  <!-- add page -->
+            <a class="dropdown-item" href="/">Terminated Miscellaneous</a>  <!-- add page -->
+            <a class="dropdown-item" href="/">Pending Crimes</a>  <!-- add page -->
+            <a class="dropdown-item" href="/">Pending Miscellaneous</a>  <!-- add page -->
+            <a class="dropdown-item" href="/">Case Report</a>  <!-- add page -->
           </div>
         </li>
-       
-        <li class="nav-item">
-          <a class="nav-link" href="/adminManageAccount">
-            <i class="fas fa-fw fa-user-cog"></i>
-            <span>Manage Accounts</span></a>
+
+        <li class="nav-item dropdown active">
+            <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-fw fa-user-cog"></i>
+                <span>Manage Accounts</span>
+            </a>
+            <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+                <a class="dropdown-item" href="/manageAccounts">User Monitoring</a> <!-- add page for case records-->
+                <a class="dropdown-item" href="/userLogs">User Logs</a>  <!-- add page -->
+                <a class="dropdown-item" href="/userHistory">User History</a>  <!-- add page -->
+            </div>
         </li>
 
 <br>
 <br>
 <!-- Icon Cards-->
-<div class="content-wrapper">
 <div class="col">
             <div class="row-xl-3 row-sm-6 mb-3">
               <div class="card text-black o-hidden h-100">
@@ -135,7 +151,7 @@
                 </a>
               </div>
             </div>
-           
+
             <div class="row-xl-3 ow-sm-6 mb-3">
               <div class="card text-black o-hidden h-100">
                 <div class="card-body">
@@ -152,7 +168,7 @@
                 </a>
               </div>
             </div>
-            
+
             <div class="row-xl-3 row-sm-6 mb-3">
               <div class="card text-black  o-hidden h-100">
                 <div class="card-body">
@@ -170,7 +186,7 @@
               </div>
             </div>
           </div>
-    </ul>  
+    </ul>
 <!-- /.container-fluid -->
 
 <div id="content-wrapper">
@@ -190,18 +206,16 @@
                         <th>Role</th>
                         <th>Date</th>
                         <th>Action</th>
-                        <th>Date</th>
                         <th>Description</th>
                     </tr>
                   </thead>
                   <tbody>
-                    @foreach($Administrator as $showData)
+                    @foreach($showData as $showData)
                     <tr>
-                        <td>{{ $showData->user }}</td>
+                        <td>{{ $showData->name }}</td>
                         <td>{{ $showData->role }}</td>
-                        <td>{{ $showData->date }}</td>
+                        <td>{{ $showData->created_at }}</td>
                         <td>{{ $showData->action }}</td>
-                        <td>{{ $showData->date }}</td>
                         <td>{{ $showData->description }}</td>
                     </tr>
                         @endforeach
@@ -247,7 +261,15 @@
           <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
           <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-            <a class="btn btn-primary" href="">Logout</a><!--LINK HERE -->
+            <a class="btn btn-primary" href="{{ route('logout') }}"
+                onclick="event.preventDefault();
+                            document.getElementById('logout-form').submit();">
+                {{ __('Logout') }}
+            </a>
+
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                @csrf
+            </form>
           </div>
         </div>
       </div>
@@ -271,5 +293,5 @@
     <script src="bower_components/js/demo/datatables-demo.js"></script>
 
   </body>
-
+  @endguest
 </html>

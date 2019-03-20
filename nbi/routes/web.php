@@ -30,9 +30,28 @@ route::resource('/addCase','encoder\addCaseController');
 route::resource('/encoderCCN','encoder\ccnController');
 route::resource('/encoderChangePassword','encoder\changePasswordController');
 route::resource('/complaintSheet','encoder\ComplaintSheetController');
-
+#ENCODER UPDATE
 Route::post('/ccnUpdate','encoder\ccnController@update');
+#ENCODER STORE
 Route::post('/encoderAddCase','encoder\addCaseController@store');
+Route::post('/encoderAddComplaintSheet','encoder\ComplaintSheetController@store');
+#ADMIN
+route::resource('/userHistory','admin\userHistoryController');
+route::resource('/userLogs','admin\userLogsController');
+route::resource('/caseNature','admin\caseNatureController');
+route::resource('/caseReport','admin\caseReportController');
+route::resource('/addNewCase','admin\addCaseController');
+route::resource('/manageAccounts','admin\manageAccountController');
+route::resource('/profile','admin\ProfileController');
+route::resource('/adminChangePassword','admin\changePasswordController');
+#ADMIN UPDATE
+Route::post('/natureUpdate','admin\caseNatureController@update');
+Route::post('/createNature','admin\caseNatureController@store');
+Route::post('/deleteNature','admin\caseNatureController@delete');
+Route::post('/userUpdate','admin\manageAccountController@update');
+Route::post('/addNewUser','admin\manageAccountController@store');
+Route::post('/adminAddCase','admin\addCaseController@store');
+
 
 Route::get('/changePassword','HomeController@showChangePasswordForm');
 Route::post('/changePassword','HomeController@changePassword')->name('changePassword');
@@ -63,7 +82,7 @@ Route::group(['middleware' => ['web', 'auth']], function(){
         DB::raw('case_suspects.caseid'))
         ->orderby('cases.docketnumber','ASC')
         ->get();
-        return view ('encoder.home',['showData'=>$showData]);
+        return view ('encoder.home',compact('showData'));
 
     } else if(Auth::user()->role == 'Agent') {
 
@@ -84,11 +103,22 @@ Route::group(['middleware' => ['web', 'auth']], function(){
         DB::raw('case_victims.caseid'),
         DB::raw('case_suspects.caseid'))
         ->orderby('cases.docketnumber','ASC')
+        ->where('cases.caseStatus','=','Available')
         ->get();
-        return view ('agent.home',['showData'=>$showData]);
+        return view ('agent.home',compact('showData'));
 
     }else {
-        return view();
+        $showData = DB::table('users')
+        ->join('history','users.userid','=','history.userid')
+        ->select('users.*','history.*'
+                ,DB::raw("CONCAT(users.firstName,' ',users.lastName) AS name")
+                ,DB::raw("TIMEDIFF(history.logout,history.login) as durationS")
+                ,DB::raw("DATE(history.logout) as date")
+                ,DB::raw("TIME(history.login) as login")
+                ,DB::raw("TIME(history.logout) as logout")
+                )
+        ->get();
+        return view ('admin.userHistory',compact('showData'));
     }
     });
 });

@@ -29,6 +29,8 @@
     <!--TAB IMAGE -->
     <link rel="icon"  href="bower_components/image/nbi-logo.png">
 
+      <script src="bower_components/vendor/jquery/jquery.min.js"></script>
+      <script src="bower_components/vendor/jquery-easing/jquery.easing.min.js"></script>
     <!--Column search -->
     <style>
         tfoot input {
@@ -37,7 +39,6 @@
             box-sizing: border-box;
         }
     </style>
-
 
   </head>
 
@@ -81,7 +82,7 @@
         <li class="nav-item dropdown no-arrow">
           <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-user-circle fa-fw"></i>
-            {{ Auth::user()->username }} <span class="caret"></span>
+            {{ Auth::user()->firstName}} {{ Auth::user()->lastName}} <span class="caret"></span>
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
             <a class="dropdown-item" href="/encoderProfile">Profile</a>
@@ -105,7 +106,7 @@
           <li class="nav-item active">
               <a class="nav-link" href="/encoderCCN"> <!--LINK HERE -->
               <i class="fas fa-fw fa-paste"></i>
-              <span>Insert CCN</span></a>
+              <span>Update case details</span></a>
           </li>
           <li class="nav-item">
               <a class="nav-link" href="/addCase"> <!--LINK HERE -->
@@ -129,14 +130,23 @@
                 Encoder Update CCN
             </div>
             <div class="card-body">
-                <div class="flash-message">
-                    @foreach (['danger', 'warning', 'success', 'info'] as $msg)
-                        @if(Session::has('alert-' . $msg))
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+            <div class="flash-message">
+                @foreach (['danger', 'warning', 'success', 'info'] as $msg)
+                    @if(Session::has('alert-' . $msg))
 
-                        <p class="alert alert-{{ $msg }}">{{ Session::get('alert-' . $msg) }} <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
-                        @endif
-                    @endforeach
-                </div> <!-- end .flash-message -->
+                    <p class="alert alert-{{ $msg }}">{{ Session::get('alert-' . $msg) }} <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
+                    @endif
+                @endforeach
+            </div> <!-- end .flash-message -->
               <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" style="width:100%;" cellspacing="0">
                   <thead>
@@ -239,7 +249,7 @@
       <div class="modal-dialog modal-lg" role="document" >
           <div class="modal-content">
               <div class="modal-header">
-                  <h4 class="modal-title" id="exampleModalLabel">Criminal Case Number Insert</h4>
+                  <h4 class="modal-title" id="exampleModalLabel">Update Case details!</h4>
                   <button class="close" type="button" data-dismiss="modal" aria-label="Close" onclick="javascript:window.location.reload()">
                     <span aria-hidden="true">×</span>
                   </button>
@@ -273,7 +283,24 @@
                     var key = theEvent.keyCode || theEvent.which;
                     key = String.fromCharCode(key);
                 }
-                var regex = /[0-9,I,M,-]/;
+                var regex = /[0-9,I,-]/;
+                if( !regex.test(key) ) {
+                    theEvent.returnValue = false;
+                    if(theEvent.preventDefault) theEvent.preventDefault();
+                }
+            }
+            function validateACMO(evt) {
+                var theEvent = evt || window.event;
+
+                // Handle paste
+                if (theEvent.type === 'paste') {
+                    key = event.clipboardData.getData('text/plain');
+                } else {
+                // Handle key press
+                    var key = theEvent.keyCode || theEvent.which;
+                    key = String.fromCharCode(key);
+                }
+                var regex = /[0-9,C,I,-]/;
                 if( !regex.test(key) ) {
                     theEvent.returnValue = false;
                     if(theEvent.preventDefault) theEvent.preventDefault();
@@ -281,81 +308,95 @@
             }
         </script>
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="bower_components/vendor/jquery/jquery.min.js"></script>
+    <!-- Custom scripts for all pages -->
+    <script src="bower_components/js/sb-admin.min.js"></script>
+    <script src="bower_components/js/demo/datatables-demo.js"></script>
     <script src="bower_components/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Core plugin JavaScript-->
-    <script src="bower_components/vendor/jquery-easing/jquery.easing.min.js"></script>
 
-    <!-- Page level plugin JavaScript-->
+    <!--THIS IS A COMMENT, BELOW ARE COMMENTS AND IT CANNOT RUN
+      Bootstrap core JavaScript
+    <script src="bower_components/vendor/jquery/jquery.min.js"></script>
+     Core plugin JavaScript
+    <script src="bower_components/vendor/jquery-easing/jquery.easing.min.js"></script>
+     Page level plugin JavaScript-->
     <script src="bower_components/vendor/datatables/jquery.dataTables.js"></script>
-    <script src="bower_components/vendor/datatables/jquery.dataTables.min.js"></script>
     <script src="bower_components/vendor/datatables/dataTables.bootstrap4.js"></script>
-    <script src="bower_components/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
 
     <script>
-            $(document).ready(function() {
-                // Setup - add a text input to each footer cell
-                $('#dataTable tfoot th').each( function (i) {
-                    var title = $('#dataTable thead th').eq( $(this).index() ).text();
-                    $(this).html( '<input type="text" class="inputTable" placeholder="'+title+'" data-index="'+i+'" />' );
-                } );
+        $('#caseRecordModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget)
+            var caseid = button.data('caseid')
+            var docketnumber = button.data('docketnumber')
+            var acmo = button.data('acmo')
+            var complainantname = button.data('complainantname')
+            var status = button.data('status')
+            var dateassigned = button.data('dateassigned')
+            var natureName = button.data('nature_name')
+            var dateTerminated = button.data('date_terminated')
+            var full_name = button.data('full_name')
+            var suspectName = button.data('suspect_name')
+            var ccn = button.data('ccn')
 
-                // DataTable
-                var table = $('#dataTable').DataTable( {
-                    scrollY:        "auto",
-                    scrollX:        true,
-                    scrollCollapse: true,
-                    paging:         false,
-                    fixedColumns:   true
-                } );
-
-                // Filter event handler
-                $( table.table().container() ).on( 'keyup', 'tfoot input', function () {
-                    table
-                        .column( $(this).data('index') )
-                        .search( this.value )
-                        .draw();
-                } );
-            } );
+            var modal = $(this)
+            modal.find('.modal-body #caseid').val(caseid)
+            modal.find('.modal-body #docketnumber').val(docketnumber)
+            modal.find('.modal-body #acmo').val(acmo)
+            modal.find('.modal-body #complainantname').val(complainantname)
+            modal.find('.modal-body #status').val(status)
+            modal.find('.modal-body #dateassigned').val(dateassigned)
+            modal.find('.modal-body #nameOfNature').val(natureName)
+            modal.find('.modal-body #dateTerminated').val(dateTerminated)
+            modal.find('.modal-body #full_name').val(full_name)
+            modal.find('.modal-body #suspectName').val(suspectName)
+            modal.find('.modal-body #ccn').val(ccn)
+          })
     </script>
-
-
-    <!-- Custom scripts for all pages-->
-    <script src="bower_components/js/sb-admin.min.js"></script>
-
     <!-- Demo scripts for this page-->
     <script src="bower_components/js/demo/datatables-demo.js"></script>
-    <script>
-            $('#caseRecordModal').on('show.bs.modal', function (event) {
-                var button = $(event.relatedTarget)
-                var caseid = button.data('caseid')
-                var docketnumber = button.data('docketnumber')
-                var acmo = button.data('acmo')
-                var complainantname = button.data('complainantname')
-                var status = button.data('status')
-                var dateassigned = button.data('dateassigned')
-                var natureName = button.data('nature_name')
-                var dateTerminated = button.data('date_terminated')
-                var full_name = button.data('full_name')
-                var suspectName = button.data('suspect_name')
-                var ccn = button.data('ccn')
 
-                var modal = $(this)
-                modal.find('.modal-body #caseid').val(caseid)
-                modal.find('.modal-body #docketnumber').val(docketnumber)
-                modal.find('.modal-body #acmo').val(acmo)
-                modal.find('.modal-body #complainantname').val(complainantname)
-                modal.find('.modal-body #status').val(status)
-                modal.find('.modal-body #dateassigned').val(dateassigned)
-                modal.find('.modal-body #natureName').val(natureName)
-                modal.find('.modal-body #dateTerminated').val(dateTerminated)
-                modal.find('.modal-body #full_name').val(full_name)
-                modal.find('.modal-body #suspectName').val(suspectName)
-                modal.find('.modal-body #ccn').val(ccn)
-              })
+
+    <script>
+        $(document).ready(function() {
+            // Setup - add a text input to each footer cell
+            $('#dataTable tfoot th').each( function (i) {
+                var title = $('#dataTable thead th').eq( $(this).index() ).text();
+                $(this).html( '<input type="text" class="inputTable" placeholder="'+title+'" data-index="'+i+'" />' );
+            } );
+
+            // DataTable
+            var table = $('#dataTable').DataTable( {
+                scrollY:        "auto",
+                scrollX:        true,
+                scrollCollapse: true,
+                paging:         true,
+                destroy:        true,
+                fixedColumns:   true
+            } );
+
+            // Filter event handler
+            $( table.table().container() ).on( 'keyup', 'tfoot input', function () {
+                table
+                    .column( $(this).data('index') )
+                    .search( this.value )
+                    .draw();
+            } );
+        } );
+    </script>
+    <script>
+        $(document).ready(function(){
+            $('.add_button1').click(function(){
+                var kakoi=$(this).attr('fldnum');
+                var insHTML = '<div class="input-group"><select  name="fld_val1[]" id="fld_val1" class="form-control" required><option value=""></option>@foreach($nature2 as $nature2)<option value="{{ $nature2->natureid }}">{{ $nature2->nature }}</option>@endforeach</select><div class="input-group-prepend"><button class="btn btn-danger btn-add add_button1 remove_button" fldnum="1" type="button"><span class="fas">x</span></button></div>';
+                $("#fld1").append(insHTML);
+            });
+
+            $('.fld_wrap').on('click', '.remove_button', function(e){
+                e.preventDefault();
+                $(this).parents(':eq(1)').remove();
+            });
+        });
     </script>
 
   </body>

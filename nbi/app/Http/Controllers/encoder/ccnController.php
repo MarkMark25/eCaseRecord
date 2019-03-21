@@ -24,6 +24,13 @@ class ccnController extends Controller
      */
     public function index()
     {
+        $nature = DB::table('nature')
+        ->where('natureAvailability','=','Available')
+        ->get();
+        $nature2 = DB::table('nature')
+        ->where('natureAvailability','=','Available')
+        ->get();
+
             $showData = DB::table('nature')
             ->join('casenature','nature.natureid','=','casenature.natureid')
             ->join('caseagent','casenature.caseid','=','caseagent.caseid')
@@ -43,8 +50,9 @@ class ccnController extends Controller
             ->orderby('cases.docketnumber','ASC')
             ->where('cases.caseStatus','=','Available')
             ->whereNull('ccn')
+            ->orwhereNull('acmo')
             ->get();
-            return view ('encoder.ccnUpdate',['showData'=>$showData]);
+            return view ('encoder.ccnUpdate',compact('showData','nature','nature2'));
     }
 
     /**
@@ -99,22 +107,28 @@ class ccnController extends Controller
      */
     public function update(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'ccn' => 'required|unique:cases|max:255',
+        $validator = Validator::make($request->all(),[
+            'ccn' => 'bail|required|unique:cases|max:255',
+            'acmo' => 'required|unique:cases|max:255',
         ]);
+
         if ($validator->fails()){
-            $request->session()->flash('alert-danger', 'CCN was already taken!');
-            return redirect()->back();
+            return redirect()
+                ->back()
+                ->withErrors($validator)
+                ->withInput();
         }else {
             $cases = Cases::findOrFail($request->caseid);
             $cases->update($request->all());
-
+            $caseID = $request['caseid'];
+            $formDescription = $request['description'];
+            $insertDescription = $formDescription. ' '.$caseID;
             Logs::create([
                 'userid' => $request['userid'],
                 'action' => $request['action'],
-                'description' => $request['description'],
+                'description' =>$insertDescription,
             ]);
-            $request->session()->flash('alert-success', 'CCN was successful inserted!');
+            $request->session()->flash('alert-success', 'Case details successfully updated');
             return redirect()->back();
         }
 

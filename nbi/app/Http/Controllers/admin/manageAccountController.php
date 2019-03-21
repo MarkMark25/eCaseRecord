@@ -50,21 +50,24 @@ class manageAccountController extends Controller
      */
     public function store(addNewUser $request)
     {
-        User::create([
-            'firstName' => $request['firstName'],
-            'middleInitial' => $request['middleInitial'],
-            'lastName' => $request['lastName'],
-            'role' => $request['role'],
-            'username' => $request['username'],
-            'password' => Hash::make($request['password'])
-        ]);
-        Logs::create([
-            'userid' => $request['userid'],
-            'action' => $request['action'],
-            'description' => $request['description'],
-        ]);
-        $request->session()->flash('alert-success', 'Successfully register new user!');
-        return redirect()->back();
+            $users = User::create([
+                'firstName' => $request['firstName'],
+                'middleInitial' => $request['middleInitial'],
+                'lastName' => $request['lastName'],
+                'role' => $request['role'],
+                'username' => $request['username'],
+                'password' => Hash::make($request['password'])
+            ])->userid;
+            $lastid = $users;
+            $formDescription = $request['description'];
+            $insertDescription = $formDescription. ' '.$lastid;
+            Logs::create([
+                'userid' => $request['userid'],
+                'action' => $request['action'],
+                'description' => $insertDescription,
+            ]);
+            $request->session()->flash('alert-success', 'Successfully register new user!');
+            return redirect()->back();
     }
 
     /**
@@ -98,16 +101,24 @@ class manageAccountController extends Controller
      */
     public function update(Request $request)
     {
-        $user = User::findOrFail($request->useridOne);
-        $user->update($request->all());
+        if($request==true){
+            $user = User::findOrFail($request->useridOne);
+            $user->update($request->all());
+            $userID = $request['useridOne'];
+            $formDescription = $request['description'];
+            $insertDescription = $formDescription. ' '.$userID;
+            Logs::create([
+                'userid' => $request['userid'],
+                'action' => $request['action'],
+                'description' => $insertDescription,
+            ]);
+            $request->session()->flash('alert-success', 'User details successfully updated!');
+            return redirect()->back();
+        }else {
+            $request->session()->flash('alert-success', 'ERROR!');
+            return redirect()->back();
+        }
 
-        Logs::create([
-            'userid' => $request['userid'],
-            'action' => $request['action'],
-            'description' => $request['description'],
-        ]);
-        $request->session()->flash('alert-success', 'User details successfully updated!');
-        return redirect()->back();
     }
 
     /**

@@ -81,7 +81,7 @@
                 <li class="nav-item dropdown no-arrow">
                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="fas fa-user-circle fa-fw"></i>
-                    {{ Auth::user()->username }} <span class="caret"></span>
+                    {{ Auth::user()->firstName}} {{ Auth::user()->lastName}} <span class="caret"></span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
                     <a class="dropdown-item" href="/encoderProfile">Profile</a>
@@ -105,7 +105,7 @@
           <li class="nav-item">
               <a class="nav-link" href="/encoderCCN"> <!--LINK HERE -->
               <i class="fas fa-fw fa-paste"></i>
-              <span>Insert CCN</span></a>
+              <span>Update case details</span></a>
           </li>
           <li class="nav-item">
               <a class="nav-link" href="/addCase"> <!--LINK HERE -->
@@ -137,6 +137,7 @@
                         <th>CCN</th>
                         <th>ACMO</th>
                         <th>Complainant</th>
+                        <th>Subject</th>
                         <th>Case Nature</th>
                         <th>Date Assigned</th>
                         <th>Date Terminated</th>
@@ -153,6 +154,7 @@
                             </td>
                             <td>{{ $showData->acmo }}</td>
                             <td>{{ $showData->complainantname }}</td>
+                            <td>{{ $showData->suspectName }}</td>
                             <td>{{ $showData->natureName }}</td>
                             <td>{{ $showData->dateassigned }}</td>
                             <td>{{ $showData->dateTerminated }}</td>
@@ -167,6 +169,7 @@
                         <th>CCN</th>
                         <th>ACMO</th>
                         <th>Complainant</th>
+                        <th>Subject</th>
                         <th>Case Nature</th>
                         <th>Date Assigned</th>
                         <th>Date Terminated</th>
@@ -231,11 +234,14 @@
     <!-- Custom scripts for all pages-->
     <script src="bower_components/js/sb-admin.min.js"></script>
 
+    <!-- Demo scripts for this page-->
+    <script src="bower_components/js/demo/datatables-demo.js"></script>
+
     <script>
             $(document).ready(function() {
                 // Setup - add a text input to each footer cell
-                $('#dataTable thead th').each( function (i) {
-                    var title = $('#dataTable thead th').eq( $(this).index() ).text();
+                $('#dataTable tfoot th').each( function (i) {
+                    var title = $('#dataTable tfoot th').eq( $(this).index() ).text();
                     $(this).html( '<input type="text" class="inputTable" placeholder="'+title+'" data-index="'+i+'" />' );
                 } );
 
@@ -244,12 +250,13 @@
                     scrollY:        "auto",
                     scrollX:        true,
                     scrollCollapse: true,
-                    paging:         false,
+                    paging:         true,
+                    destroy:        true,
                     fixedColumns:   true
                 } );
 
                 // Filter event handler
-                $( table.table().container() ).on( 'keyup', 'thead input', function () {
+                $( table.table().container() ).on( 'keyup', 'tfoot input', function () {
                     table
                         .column( $(this).data('index') )
                         .search( this.value )

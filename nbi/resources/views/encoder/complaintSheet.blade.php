@@ -51,6 +51,12 @@
 
     <style>
             .input-group:not(:first-of-type) { margin-top: 10px; }
+            input::placeholder {
+                font-style: italic;
+            }
+            textarea::placeholder{
+                font-style: italic;
+            }
     </style>
 
   </head>
@@ -95,7 +101,7 @@
         <li class="nav-item dropdown no-arrow">
           <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-user-circle fa-fw"></i>
-            {{ Auth::user()->username }} <span class="caret"></span>
+            {{ Auth::user()->firstName}} {{ Auth::user()->lastName}} <span class="caret"></span>
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
             <a class="dropdown-item" href="/encoderProfile">Profile</a>
@@ -119,7 +125,7 @@
         <li class="nav-item">
             <a class="nav-link" href="/encoderCCN"> <!--LINK HERE -->
               <i class="fas fa-fw fa-paste"></i>
-              <span>Update CCN</span></a>
+              <span>Update case details</span></a>
           </li>
         <li class="nav-item">
             <a class="nav-link" href="/addCase"> <!--LINK HERE -->
@@ -176,7 +182,7 @@
                               <div class="col-md-4">
                                     <label for="ccn">ACMO No.</label>
                                     <div class="input-group mb-2">
-                                        <input type="text" id="acmo" placeholder="00-0-00000" title="Follow the following format. e.g. 10-C-00001" maxlength="10" pattern="^\d{2}-\w{1}-\d{5}$" name= "acmo" class="form-control" value="" onkeypress='validateACMO(event)' autocomplete="off" required> {{-- QUERY HERE --}}
+                                        <input type="text" id="acmo" placeholder="00-0-00000" title="Follow the following format. e.g. 10-C-00001" maxlength="10" pattern="^\d{2}-\w{1}-\d{5}$" name= "acmo" class="form-control" value="" onkeypress='validateACMO(event)' autocomplete="off"> {{-- QUERY HERE --}}
                                     </div>
                                 </div>
                           </div>
@@ -235,7 +241,7 @@
                                             <i class="fas fa-fw fa-calendar"></i>
                                         </div>
                                     </div>
-                                    <input type="text" id="datepickers" name="dateTerminated" class="form-control" value="" placeholder="Choose" autocomplete="off" required> {{-- QUERY HERE --}}
+                                    <input type="text" id="datepickers" name="dateTerminated" class="form-control" value="" placeholder="Choose" autocomplete="off"> {{-- QUERY HERE --}}
                                 </div>
                             </div>
                         </div>
@@ -382,38 +388,38 @@
                     <section>
                         <div class="form-group">
                             <p style="font-weight:bold;">6. Narration of Facts (Salaysay ng mga Pangyayari) </p>
-                            <textarea name="narrationOfFacts" id="narrationOfFacts" style="width:100%;font-size:15px;resize:none;" rows="3"></textarea>
+                            <textarea name="narrationOfFacts" placeholder="Don't leave this portion blank" id="narrationOfFacts" style="width:100%;font-size:15px;resize:none;" rows="3" autocomplete="off" required></textarea>
                         </div>
                     </section>
                     <hr>
                     <section>
                         <div class="form-group">
                             <p style="font-weight:bold;">7. Has the matter been reported to any agency, If so, to what people agency? (Ang bagay bang ito ay naulat na sa ibang sangay ng pagsisiyasat? Kung naulat na, saang sangay?) </p>
-                            <textarea name="hasTheMatter" id="hasTheMatter" style="width:100%;font-size:15px;resize:none;" rows="3"></textarea>
+                            <textarea name="hasTheMatter" placeholder="Don't leave this portion blank" id="hasTheMatter" style="width:100%;font-size:15px;resize:none;" rows="3" autocomplete="off"></textarea>
                             <br>
                             <p style="font-weight:bold;">Status of investigation, If any (Kalagayan ng pagsisiyasat kung mayroon?)</p>
-                            <textarea name="statusOfInvestigation" id="statusOfInvestigation" style="width:100%;font-size:15px;resize:none;" rows="3"></textarea>
+                            <textarea name="statusOfInvestigation" placeholder="Don't leave this portion blank" id="statusOfInvestigation" style="width:100%;font-size:15px;resize:none;" rows="3" autocomplete="off" required></textarea>
                         </div>
                     </section>
                     <hr>
                     <section>
                         <div class="form-group">
                             <p style="font-weight:bold;">8.Is the matter complained of the subject of any court action of proceedings? If so, where? (Ang bagay bang may kinalaman sa pagsusumbong ay nasa hukuman na? Kung gaanoon, saan?)</p>
-                            <textarea name="isTheMatterComplained" id="isTheMatterComplained" style="width:100%;font-size:15px;resize:none;" rows="3"></textarea>
+                            <textarea name="isTheMatterComplained" placeholder="Don't leave this portion blank" id="isTheMatterComplained" style="width:100%;font-size:15px;resize:none;" rows="3" autocomplete="off" required></textarea>
                         </div>
                     </section>
                     <br>
                     <section>
                         <div class="form-group">
                             <p style="font-weight:bold;">9.What Consideration/s impelled you to report to the NBI? (Ano ang nag-udyok sa iyo para magreklamo dito sa NBI?)</p>
-                            <textarea name="whatConsidirations" id="whatConsidirations" style="width:100%;font-size:15px;resize:none;" rows="3"></textarea>
+                            <textarea name="whatConsidirations" placeholder="Don't leave this portion blank" id="whatConsidirations" style="width:100%;font-size:15px;resize:none;" rows="3" autocomplete="off" required></textarea>
                         </div>
                     </section>
                     <div class="form-group">
                         <div class="form-row">
                             <div class="col-md-12">
                                 <div class="">
-                                    <input type="hidden" id="description" name="description" class="form-control" value="Encoder add complaint sheet and the log book details">
+                                    <input type="hidden" id="description" name="description" class="form-control" value="Encoder add complaint sheet and the log book details with Case ID = ">
                                     <input type="hidden" id="action" name="action" class="form-control" value="Add">
                                     <input type="hidden" name="userid" id="userid" value="{{ Auth::user()->userid }}">
                                 </div>

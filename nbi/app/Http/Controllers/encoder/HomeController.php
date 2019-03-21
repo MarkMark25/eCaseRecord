@@ -45,6 +45,7 @@ class HomeController extends Controller
             DB::raw('case_suspects.caseid'))
             ->orderby('cases.docketnumber','ASC')
             ->where('cases.caseStatus','=','Available')
+            ->where('nature.natureAvailability','=','Available')
             ->get();
             return view ('encoder.home',['showData'=>$showData]);
     }

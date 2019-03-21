@@ -26,14 +26,13 @@ class addNewCase extends FormRequest
         return [
             'ccn' => 'nullable|unique:cases,ccn|max:255',
             'docketnumber' => 'required|unique:cases,docketnumber|max:255',
-            'acmo' => 'required|unique:cases,acmo|max:255',
+            'acmo' => 'nullable|unique:cases,acmo|max:255',
         ];
     }
     public function messages()
         {
             return [
                 'docketnumber.required'  => 'CAR case number attribute is required',
-                'acmo.required' => 'ACMO attribute is required'
             ];
         }
 }

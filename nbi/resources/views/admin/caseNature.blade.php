@@ -25,6 +25,11 @@
 
     <!--TAB IMAGE -->
     <link rel="icon"  href="bower_components/image/nbi-logo.png">
+    <style>
+        input::placeholder {
+            font-style: italic;
+        }
+    </style>
 
   </head>
 
@@ -68,7 +73,7 @@
         <li class="nav-item dropdown no-arrow">
           <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-user-circle fa-fw"></i>
-            {{ Auth::user()->username }} <span class="caret"></span>
+            {{ Auth::user()->firstName}} {{ Auth::user()->lastName}} <span class="caret"></span>
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
             <a class="dropdown-item" href="/profile">Profile</a>
@@ -115,7 +120,7 @@
             <a class="dropdown-item" href="/">Terminated Miscellaneous</a>  <!-- add page -->
             <a class="dropdown-item" href="/">Pending Crimes</a>  <!-- add page -->
             <a class="dropdown-item" href="/">Pending Miscellaneous</a>  <!-- add page -->
-            <a class="dropdown-item" href="/">Case Report</a>  <!-- add page -->
+
           </div>
         </li>
 
@@ -216,10 +221,10 @@
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                   <thead>
                     <tr>
-                        <th style="display:none">ID</th>
+                        <th >ID</th>
                         <th style="width:10%">Nature</th>
-                        <th style="width:70%">Description</th>
                         <th style="width:10%">Cases Type</th>
+                        <th style="width:70%">Description</th>
                         <th style="width:20%">Actions</th>
                     </tr>
                     </thead>
@@ -227,10 +232,10 @@
                     <tbody>
                         @foreach($showData as $showData)
                         <tr>
-                            <td style="display:none">{{ $showData->natureid }}</td>
+                            <td >{{ $showData->natureid }}</td>
                             <td>{{ $showData->nature }}</td>
+                            <td>{{ $showData->republicAct }}</td>
                             <td>{{ $showData->description }}</td>
-                            <td>{{ $showData->casetype }}</td>
                             <td>
                               <div>
                                 <button type="button" class="btn btn-default btn-xs btn-filter"
@@ -238,7 +243,7 @@
                                     data-natureid = "{{ $showData->natureid }}"
                                     data-nature= "{{ $showData->nature }}"
                                     data-description= "{{ $showData->description }}"
-                                    data-casetype= "{{ $showData->casetype }}"
+                                    data-casetype= "{{ $showData->republicAct }}"
                                 >
                                      <span style="color:#0460f4;" class="fas fa-edit"></span>
                                 </button>
@@ -248,7 +253,7 @@
                                     data-natureidone = "{{ $showData->natureid }}"
                                     data-natureone= "{{ $showData->nature }}"
                                     data-descriptionone= "{{ $showData->description }}"
-                                    data-casetypeone= "{{ $showData->casetype }}"
+                                    data-casetypeone= "{{ $showData->republicAct }}"
                                 >
                                     <span style="color:#FF0000;" class="fas fa-trash"></span>
                                 </button>
@@ -418,7 +423,7 @@
                 var modal = $(this)
                 modal.find('.modal-body #natureid').val(natureid)
                 modal.find('.modal-body #nature').val(nature)
-                modal.find('.modal-body #casetype').val(casetype)
+                modal.find('.modal-body #republicAct').val(casetype)
                 modal.find('.modal-body #description').val(description)
               })
     </script>
@@ -433,7 +438,7 @@
                 var modal = $(this)
                 modal.find('.modal-body #natureid').val(natureid)
                 modal.find('.modal-body #nature').val(nature)
-                modal.find('.modal-body #casetype').val(casetype)
+                modal.find('.modal-body #republicAct').val(casetype)
                 modal.find('.modal-body #description').val(description)
               })
     </script>

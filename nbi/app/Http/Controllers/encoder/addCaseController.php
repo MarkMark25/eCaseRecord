@@ -32,9 +32,11 @@ class addCaseController extends Controller
     {
         $agent = DB::table('users')
         ->where('role','=','Agent')
+        ->where('userStatus','=','Active')
         ->get();
         $agent2 = DB::table('users')
         ->where('role','=','Agent')
+        ->where('userStatus','=','Active')
         ->get();
 
         $nature = DB::table('nature')
@@ -67,8 +69,8 @@ class addCaseController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(addNewCase $request)
-    {
+    public function store(Request $request)
+    {/*
         $cases = Cases::create([
             'docketnumber' => $request['docketnumber'],
             'ccn' => $request['ccn'],
@@ -123,25 +125,77 @@ class addCaseController extends Controller
         ]);
         $request->session()->flash('alert-success', 'Case record successfully inserted!');
         return redirect()->back();
-        /*
+        */
             $validator = Validator::make($request->all(), [
-                'ccn' => 'required|unique:cases,ccn|max:255',
+                'ccn' => 'nullable|unique:cases,ccn|max:255',
                 'docketnumber' => 'required|unique:cases|max:255',
-                'acmo' => 'required|unique:cases|max:255',
+                'acmo' => 'nullable|unique:cases|max:255',
             ]);
-            $validator->after(function ($validator) {
-                if ($this->somethingElseIsInvalid()) {
-                    $validator->errors()->add('field', 'Something is wrong with this field!');
-                }
-            });
 
             if ($validator->fails()){
-                $request->session()->flash('alert-danger', 'Error: Adding of case records was unsucessful, maybe some records was already added like CCN, Docketnumber or ACMO.');
-            return redirect()->back();
+                return redirect()
+                    ->back()
+                    ->withErrors($validator)
+                    ->withInput();
             }else {
-                $data=$request->all();
+                $cases = Cases::create([
+                    'docketnumber' => $request['docketnumber'],
+                    'ccn' => $request['ccn'],
+                    'acmo' => $request['acmo'],
+                    'complainantname' => $request['complainant'],
+                    'dateTerminated' =>  $request['dateTerminated'],
+                    'statusid' => $request['status'],
+                ])->caseid;
+                $lastid = $cases;
+
+                if(count($request->fld_val2)>0) {
+                    foreach($request->fld_val2 as $item => $v){
+                        $data2 = array(
+                            'caseid' => $lastid,
+                            'userid' => $request->fld_val2[$item],
+                            'dateassigned'=> $request->dateAssigned,
+                        );
+                        CaseAgent::create($data2);
+                    }
+                }
+                if(count($request->fld_val1)>0) {
+                    foreach($request->fld_val1 as $item => $v){
+                        $data3 = array(
+                            'caseid' => $lastid,
+                            'natureid' => $request->fld_val1[$item],
+                        );
+                        CaseNature::create($data3);
+                    }
+                }
+                if(count($request->subject)>0) {
+                    foreach($request->subject as $item => $v){
+                        $data4 = array(
+                            'caseid' => $lastid,
+                            'suspect_name' => $request->subject[$item],
+                        );
+                        CaseSuspect::create($data4);
+                    }
+                }
+                if(count($request->victim)>0) {
+                    foreach($request->victim as $item => $v){
+                        $data5 = array(
+                            'caseid' => $lastid,
+                            'victim_name' => $request->victim[$item],
+                        );
+                        CaseVictims::create($data5);
+                    }
+                }
+                $formDescription = $request['description'];
+                $insertDescription = $formDescription. ' '.$lastid;
+                Logs::create([
+                    'userid' => $request['userid'],
+                    'action' => $request['action'],
+                    'description' =>$insertDescription,
+                ]);
+                $request->session()->flash('alert-success', 'Case record successfully inserted!');
+                return redirect()->back();
             }
-        */
+
     }
 
     /**

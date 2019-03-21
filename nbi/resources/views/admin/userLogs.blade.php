@@ -68,7 +68,7 @@
         <li class="nav-item dropdown no-arrow">
           <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-user-circle fa-fw"></i>
-            {{ Auth::user()->username }} <span class="caret"></span>
+            {{ Auth::user()->firstName}} {{ Auth::user()->lastName}} <span class="caret"></span>
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
             <a class="dropdown-item" href="/profile">Profile</a>
@@ -115,7 +115,7 @@
             <a class="dropdown-item" href="/">Terminated Miscellaneous</a>  <!-- add page -->
             <a class="dropdown-item" href="/">Pending Crimes</a>  <!-- add page -->
             <a class="dropdown-item" href="/">Pending Miscellaneous</a>  <!-- add page -->
-            <a class="dropdown-item" href="/">Case Report</a>  <!-- add page -->
+
           </div>
         </li>
 
@@ -202,6 +202,7 @@
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                   <thead>
                   <tr>
+                        <th>User ID</th>
                         <th>User</th>
                         <th>Role</th>
                         <th>Date</th>
@@ -212,6 +213,7 @@
                   <tbody>
                     @foreach($showData as $showData)
                     <tr>
+                        <td>{{ $showData->userid }}</td>
                         <td>{{ $showData->name }}</td>
                         <td>{{ $showData->role }}</td>
                         <td>{{ $showData->created_at }}</td>

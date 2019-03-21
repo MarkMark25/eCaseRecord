@@ -41,7 +41,7 @@
     <div class="form-group">
         <div class="form-row">
         <div class="col-md-6">
-            <label for="username" class="col-md-4 col-form-label text-md-right">{{ __('Username') }}</label>
+            <label for="username" class="">Username</label>
             <div class="">
                 <input id="username" type="text" class="form-control{{ $errors->has('username') ? ' is-invalid' : '' }}" name="username" value="{{ old('username') }}" required>
 
@@ -53,10 +53,10 @@
             </div>
         </div>
         <div class="col-md-6">
-            <label for="role" class="col-md-4 col-form-label text-md-right">{{ __('Role') }}</label>
+            <label for="role" class="">{{ __('Role') }}</label>
             <div class="">
                 <select name="role" id="role" class="form-control{{ $errors->has('role') ? ' is-invalid' : '' }}" required>
-                    <option value=""></option>
+
                     <option value="Agent">Agent</option>
                     <option value="Encoder">Encoder</option>
                     <option value="Administrator">Administrator</option>
@@ -73,7 +73,7 @@
     <div class="form-group">
         <div class="form-row">
             <div class="col-md-6">
-                <label for="password" class="col-form-label text-md-right">{{ __('Password') }}</label>
+                <label for="password" class="">{{ __('Password') }}</label>
                 <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
 
                 @if ($errors->has('password'))
@@ -83,7 +83,7 @@
                 @endif
             </div>
             <div class="col-md-6">
-                <label for="password-confirm" class="col-form-label text-md-right">{{ __('Confirm Password') }}</label>
+                <label for="password-confirm" class="">{{ __('Confirm Password') }}</label>
                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
             </div>
         </div>
@@ -92,7 +92,7 @@
         <div class="form-row">
             <div class="col-md-12">
                 <div class="">
-                    <input type="hidden" id="description" name="description" class="form-control" value="Administrator register new User">
+                    <input type="hidden" id="description" name="description" class="form-control" value="Administrator register new User with user id = ">
                     <input type="hidden" id="action" name="action" class="form-control" value="Add"> {{-- QUERY HERE --}}
                     <input type="hidden" name="userid" id="userid" value="{{ Auth::user()->userid }}">
                 </div>

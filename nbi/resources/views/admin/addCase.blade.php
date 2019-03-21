@@ -97,7 +97,7 @@
         <li class="nav-item dropdown no-arrow">
           <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-user-circle fa-fw"></i>
-            {{ Auth::user()->username }} <span class="caret"></span>
+            {{ Auth::user()->firstName}} {{ Auth::user()->lastName}} <span class="caret"></span>
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
             <a class="dropdown-item" href="/encoderProfile">Profile</a>
@@ -144,7 +144,7 @@
                        <a class="dropdown-item" href="/">Terminated Miscellaneous</a>  <!-- add page -->
                        <a class="dropdown-item" href="/">Pending Crimes</a>  <!-- add page -->
                        <a class="dropdown-item" href="/">Pending Miscellaneous</a>  <!-- add page -->
-                       <a class="dropdown-item" href="/">Case Report</a>  <!-- add page -->
+
                      </div>
                    </li>
 
@@ -395,7 +395,7 @@
                     <div class="form-row">
                         <div class="col-md-12">
                             <div class="">
-                                <input type="hidden" id="description" name="description" class="form-control" value="Administrator add new case">
+                                <input type="hidden" id="description" name="description" class="form-control" value="Administrator add new case, with case id = ">
                                 <input type="hidden" id="action" name="action" class="form-control" value="Add">
                                 <input type="hidden" name="userid" id="userid" value="{{ Auth::user()->userid }}">
                             </div>

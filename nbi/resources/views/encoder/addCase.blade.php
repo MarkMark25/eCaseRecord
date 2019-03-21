@@ -97,7 +97,7 @@
         <li class="nav-item dropdown no-arrow">
           <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-user-circle fa-fw"></i>
-            {{ Auth::user()->username }} <span class="caret"></span>
+            {{ Auth::user()->firstName}} {{ Auth::user()->lastName}} <span class="caret"></span>
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
             <a class="dropdown-item" href="/encoderProfile">Profile</a>
@@ -121,7 +121,7 @@
         <li class="nav-item ">
             <a class="nav-link" href="/encoderCCN"> <!--LINK HERE -->
             <i class="fas fa-fw fa-paste"></i>
-            <span>Insert CCN</span></a>
+            <span>Update case details</span></a>
         </li>
         <li class="nav-item active">
             <a class="nav-link" href="/addCase"> <!--LINK HERE -->
@@ -165,7 +165,7 @@
                               <label for="caseNumber">NBI-CAR Case Number</label>
                               <div class="input-group mb-2">
                                   <input type="text" id="" name="" class="form-control col-md-5" value="NBI-CAR-" readonly>
-                                  <input type="text" id="docketnumber" name="docketnumber" class="form-control" value="" placeholder="0-00-000" maxlength="8" pattern="^\w{1}-\d{2}-\d{3}$" onkeypress='validate(event)' title="Follow the following format. e.g. C-10-001" required> {{-- QUERY HERE --}}
+                                  <input type="text" id="docketnumber" autofocus name="docketnumber" class="form-control" value="" placeholder="0-00-000" maxlength="8" pattern="^\w{1}-\d{2}-\d{3}$" onkeypress='validate(event)' title="Follow the following format. e.g. C-10-001" required> {{-- QUERY HERE --}}
                               </div>
                           </div>
 
@@ -173,7 +173,7 @@
                               <label for="ccn">CCN</label>
                               <div class="input-group mb-2">
                                   <input type="text" id="" name="" class="form-control col-md-5" value="NBI-CCN-" readonly>
-                                  <input type="text" id="ccn" name= "ccn" class="ccNumber form-control" value="" placeholder="I-00-00000" maxlength="10" pattern="^\w{1}-\d{2}-\d{5}$" title="Follow the following format. e.g. I-10-00001" onkeypress='validateCCN(event)'> {{-- QUERY HERE --}}
+                                  <input type="text" id="ccn" autocomplete="off" name= "ccn" class="ccNumber form-control" value="" placeholder="I-00-00000" maxlength="10" pattern="^\w{1}-\d{2}-\d{5}$" title="Follow the following format. e.g. I-10-00001" onkeypress='validateCCN(event)'> {{-- QUERY HERE --}}
                               </div>
                           </div>
                       </div>
@@ -183,7 +183,7 @@
                           <div class="col-md-6">
                               <label for="ccn">ACMO No.</label>
                               <div class="input-group mb-2">
-                                  <input type="text" id="acmo" placeholder="00-0-00000" title="Follow the following format. e.g. 10-C-00001" maxlength="10" pattern="^\d{2}-\w{1}-\d{5}$" name= "acmo" class="form-control" value="" onkeypress='validateACMO(event)' required> {{-- QUERY HERE --}}
+                                  <input type="text" id="acmo" autocomplete="off" placeholder="00-0-00000" title="Follow the following format. e.g. 10-C-00001" maxlength="10" pattern="^\d{2}-\w{1}-\d{5}$" name= "acmo" class="form-control" value="" onkeypress='validateACMO(event)'> {{-- QUERY HERE --}}
                               </div>
                           </div>
                           <div class="col-md-6">
@@ -313,7 +313,7 @@
                     <div class="form-row">
                         <div class="col-md-12">
                             <div class="">
-                                <input type="hidden" id="description" name="description" class="form-control" value="Encoder Add new case">
+                                <input type="hidden" id="description" name="description" class="form-control" value="Encoder add new case, with case ID = ">
                                 <input type="hidden" id="action" name="action" class="form-control" value="Add">
                                 <input type="hidden" name="userid" id="userid" value="{{ Auth::user()->userid }}">
                             </div>
@@ -448,7 +448,7 @@
                 var key = theEvent.keyCode || theEvent.which;
                 key = String.fromCharCode(key);
             }
-            var regex = /[0-9,C,M,-]/;
+            var regex = /[0-9,C,-]/;
             if( !regex.test(key) ) {
                 theEvent.returnValue = false;
                 if(theEvent.preventDefault) theEvent.preventDefault();
@@ -465,7 +465,7 @@
                 var key = theEvent.keyCode || theEvent.which;
                 key = String.fromCharCode(key);
             }
-            var regex = /[0-9,I,M,-]/;
+            var regex = /[0-9,I,-]/;
             if( !regex.test(key) ) {
                 theEvent.returnValue = false;
                 if(theEvent.preventDefault) theEvent.preventDefault();

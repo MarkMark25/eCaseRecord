@@ -93,7 +93,7 @@
         <li class="nav-item dropdown no-arrow">
           <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-user-circle fa-fw"></i>
-            {{ Auth::user()->username }} <span class="caret"></span>
+            {{ Auth::user()->firstName}} {{ Auth::user()->lastName}} <span class="caret"></span>
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
             <a class="dropdown-item" href="/encoderProfile">Profile</a>
@@ -140,7 +140,7 @@
             <a class="dropdown-item" href="/">Terminated Miscellaneous</a>  <!-- add page -->
             <a class="dropdown-item" href="/">Pending Crimes</a>  <!-- add page -->
             <a class="dropdown-item" href="/">Pending Miscellaneous</a>  <!-- add page -->
-            <a class="dropdown-item" href="/">Case Report</a>  <!-- add page -->
+
           </div>
         </li>
 

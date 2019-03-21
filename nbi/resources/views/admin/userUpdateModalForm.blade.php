@@ -24,11 +24,7 @@
     </div>
     <div class="col-md-6">
         <label for="role">Role</label>
-        <select name="role" id="role" class="form-control">
-            <option value="Administrator">Administrator</option>
-            <option value="Agent">Agent</option>
-            <option value="Encoder">Encoder</option>
-        </select>
+        <input type="text" id="role" name="role" class="form-control" value="" disabled> {{-- QUERY HERE --}}
     </div>
     </div>
 </div>
@@ -39,6 +35,7 @@
             <select name="userStatus" id="userStatus" class="form-control">
                 <option value="Active">Active</option>
                 <option value="Inactive">Inactive</option>
+                <option value="Reassigned">Reassigned</option>
             </select>
         </div>
     </div>
@@ -47,7 +44,7 @@
         <div class="form-row">
             <div class="col-md-12">
                 <div class="">
-                    <input type="hidden" id="description" name="description" class="form-control" value="Administrator user details update">
+                    <input type="hidden" id="description" name="description" class="form-control" value="Administrator user details update, with user ID = ">
                     <input type="hidden" id="action" name="action" class="form-control" value="Update"> {{-- QUERY HERE --}}
                     <input type="hidden" name="userid" id="userid" value="{{ Auth::user()->userid }}">
                 </div>

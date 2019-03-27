@@ -96,7 +96,7 @@
             {{ Auth::user()->firstName}} {{ Auth::user()->lastName}} <span class="caret"></span>
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-            <a class="dropdown-item" href="/encoderProfile">Profile</a>
+            <a class="dropdown-item" href="/profile">Profile</a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Logout</a>
           </div>
@@ -275,15 +275,19 @@
                             <td>{{ $showData->status }}</td>
                             <td>{{ $showData->full_name }}</td>
                             <td>
-                                    <div>
-                                        <a href="/editModal" data-target="#editModal" data-toggle="modal"> <button type="button" class="btn btn-default btn-xs btn-filter"> <span style="color:#0460f4;" class="fas fa-edit"> </span></button></a>
-                                        <a href="/deleteModal" data-target="#deleteModal" data-toggle="modal"> <button type="button" class="btn btn-default btn-xs btn-filter"> <span style="color:#FF0000;" class="fas fa-trash"> </span></button></a>
-                                    </div>
+                                <div>
+                                    <a href="/editModal" data-target="#editModal" data-toggle="modal"> <button type="button" class="btn btn-default btn-xs btn-filter"> <span style="color:#0460f4;" class="fas fa-edit"> </span></button></a>
+                                    <a href="/deleteModal" data-target="#deleteModal" data-toggle="modal"> <button type="button" class="btn btn-default btn-xs btn-filter"> <span style="color:#FF0000;" class="fas fa-trash"> </span></button></a>
+                                </div>
                             </td>
                             <td>
-                                    <div>
-                                        <a href="" data-target="#moreButton" data-toggle="modal"> <button type="button" class="btn btn-default btn-xs btn-filter"><span style="color:#0460f4;" class="fas fa-plus-circle"> </span></button></a>
-                                    </div>
+                                <div>
+                                    <a href="" data-target="#moreButton" data-toggle="modal">
+                                        <button type="button" class="btn btn-default btn-xs btn-filter">
+                                            <span style="color:#0460f4;" class="fas fa-plus-circle"></span>
+                                        </button>
+                                    </a>
+                                </div>
                             </td>
                         </tr>
                         @endforeach
@@ -320,14 +324,14 @@
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
-          <div class="modal-header">
+          <div class="modal-header" style="background-color:#dd8282;">
             <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
             <button class="close" type="button" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
           </div>
-          <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-          <div class="modal-footer">
+          <div class="modal-body" style="background-color:#edcbcb;">Select "Logout" below if you are ready to end your current session.</div>
+          <div class="modal-footer" style="background-color:#dd8282;">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
             <a class="btn btn-primary" href="{{ route('logout') }}"
                 onclick="event.preventDefault();
@@ -345,14 +349,14 @@
 
 
 
-<!-- Exit Modal -->
-<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <!-- Exit Modal -->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
             <button class="close" type="button" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
+            </div>
         </div>
-      </div>
     </div>
 
 
@@ -493,290 +497,92 @@
             </div>
         </div>
 
-<!-- Exit Modal -->
-<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">×</span>
-            </button>
-        </div>
-      </div>
-    </div>
-
-
-<!-- Exit Modal -->
-<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">×</span>
-            </button>
-        </div>
-      </div>
-    </div>
-
-
- <!-- Delete Modal-->
- <div class="modal fade" id="deleteModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="container-fluid" style="padding-bottom:3%; padding-top:4%;">
-    <div class="card card-register mx-auto" style="width:40%;">
-       <div class="card-header"><h4 align="center">ALERT
-       <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">x</span></div>
-            </button>
-
-  <div class="card-body">
-    <h5 class="card-title" align="center">Are you sure you want to delete this case?</h5>
-      <center> <img src="https://cdn4.iconfinder.com/data/icons/bulletin-board/95/stop-512.png" class="img-thumbnail" alt="Stop Sign" width="40%" height="40%">
-    <div class="card-body">
-      <div class="form-group">
-      <center> <button class="btn btn-danger col-md-3" type="submit" value="submit">No</button>
-        <button class="btn btn-success col-md-3" type="submit" value="submit">Yes</button>
-      </div>
-      </div>
-    </div>
-  </div>
-  </div>
-
-<!-- Exit Modal -->
-<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">×</span>
-            </button>
-        </div>
-      </div>
-    </div>
-
-<!-- More Button -->
-<div id="content-wrapper">
-<div class="modal fade" id="moreButton" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-<div class="container-fluid" style="padding-bottom:3%; padding-top:4%;">
-    <div class="card card-register mx-auto" style="width:100%;">
-      <div class="card-header" href="#" data-toggle="modal" data-target="#moreButton"><h4 align="center">Case Summary
-       <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">x</span></div>
-      </button>
-
-      <div class="card-body">
-        <div class="form-group">
-            <div class="form-row">
-                <div class="col-md-6">
-                    <label for="caseNumber">CAR Case Number</label>
-                    <div class="input-group mb-2">
-                        <input type="text" id="caseNumber" name="caseNumber" class="form-control" value="" required> {{-- QUERY HERE --}}
-                    </div>
-                </div>
-
-                <div class="col-md-6">
-                    <label for="caseId">Case ID</label>
-                    <div class="input-group mb-2">
-                        <input type="text" id="caseId" name= "caseId" class="form-control" value=""> {{-- QUERY HERE --}}
-                    </div>
-                </div>
+    <!-- Exit Modal -->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+                </button>
             </div>
+        </div>
+    </div>
+
+
+    <!-- Exit Modal -->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Delete Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document" >
+            <div class="modal-content">
+                <div class="modal-header" style="background-color:#dd8282;">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                            Review the case and click <strong style="color:red;">"Delete"</strong> in order to process deletion.
+                    </h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body" style="background-color:#edcbcb;">
+                    <input type="hidden" id="caseid" name="caseid" class="form-control" value="">
+                    @include('admin.caseReport.deleteModalForm')
+                </div>
+                <div class="modal-footer" style="background-color:#dd8282;">
+                    <button type="submit" class="btn btn-danger">DELETE</button>
+                </div>
           </div>
+        </div>
+    </div>
 
-            <div class="form-group">
-                <div class="form-row">
-                <div class="col-md-6">
-                    <label for="ccn">CCN</label>
-                    <div class="input-group mb-2">
-                        <input type="text" id="ccn" name= "ccn" class="form-control" value="" required> {{-- QUERY HERE --}}
-                    </div>
-                </div>
-
-                <div class="col-md-6">
-                    <label for="encodedBy">Encoded By:</label>
-                        <div class="">
-                            <input type="text" id="encodedBy" name="encodedBy" class="form-control" value="" required> {{-- QUERY HERE --}}
-                        </div>
-                   </div>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="form-row">
-                <div class="col-md-6">
-                        <label for="acmo" for="subject1">ACMO No.</label>
-                        <div class="input-group mb-2">
-                        <input type="text" id="acmo" name= "acmo" class="form-control" value="" required> {{-- QUERY HERE --}}
-                    </div>
-                </div>
-
-
-                    <div class="col-md-6">
-                        <label for="dateAssigned">Date Assigned</label>
-                        <div class="input-group mb-2">
-                            <div class="input-group-prepend">
-                                <div class="btn btn-secondary">
-                                    <i class="fas fa-fw fa-calendar"></i>
-                                </div>
-                            </div>
-                            <input type="text" id="datepicker" name="dateAssigned" class="form-control" value="" placeholder="Choose" required> {{-- QUERY HERE --}}
-                        </div>
-
-                    <div class="control-group fld_wrap" id="fld4">
-                    <label for="lastUpdate">Last Update</label>
-                        <div class="input-group mb-2">
-                            <div class="input-group-prepend">
-                                <div class="btn btn-secondary">
-                                    <i class="fas fa-fw fa-calendar"></i>
-                                </div>
-                            </div>
-                            <input type="text" id="datepicker" name="lastUpdate" class="form-control" value="" placeholder="Choose" required> {{-- QUERY HERE --}}
-                        </div>
-
-                    <div class="control-group fld_wrap" id="fld4">
-                        <label for="updatedBy">Updated By: </label>
-                        <input class="form-control" name="updatedBy" type="text" required/>
-                        </div>
-                    </div>
-                </div>
+    <!-- Exit Modal -->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+                </button>
             </div>
         </div>
+    </div>
 
-             <div class="form-group">
-                <div class="form-row">
-                <div class="col-md-6">
-                    <div class="control-group fld_wrap" id="fld3">
-                        <label class="control-label" for="complainant">Complainant</label>
-                        <div class="input-group">
-                            <input class="form-control" name="complainant[]" type="text" required/>
-                            <div class="input-group-prepend">
-
-                            </div>
-                        </div>
-                    </div>
+    <!-- More Details -->
+    <div class="modal fade" id="moreButton" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document" >
+            <div class="modal-content">
+                <div class="modal-header" style="background-color:#dd8282;">
+                    <h4 class="modal-title" id="exampleModalLabel">
+                        <center>Case Summary</center>
+                    </h4>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">×</span>
+                    </button>
                 </div>
-              </div>
-            </div>
-
-               <div class="form-group">
-                <div class="form-row">
-                <div class="col-md-6">
-                    <div class="control-group fld_wrap" id="fld3">
-                        <label class="control-label" for="suspect">Suspects</label>
-                        <div class="input-group">
-                            <input class="form-control" name="suspect[]" type="text" required/>
-                            <div class="input-group-prepend">
-
-                            </div>
-                        </div>
-                    </div>
+                <div class="modal-body" style="background-color:#edcbcb;">
+                    <input type="hidden" id="caseid" name="caseid" class="form-control" value="">
+                    @include('admin.caseReport.showModalForm')
                 </div>
-
-
-                <div class="col-md-6">
-                <div class="control-group fld_wrap" id="fld3">
-                        <label class="control-label" for="victim">Victim/s</label>
-                        <div class="input-group">
-                            <input class="form-control" name="victim[]" type="text" required/>
-                            <div class="input-group-prepend">
-
-                            </div>
-                        </div>
-                    </div>
+                <div class="modal-footer" style="background-color:#dd8282;">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
-                </div>
-                </div>
-                <br>
+          </div>
+        </div>
+    </div>
 
-             <div class="form-group">
-                <div class="form-row">
-                <div class="col-md-4">
-                    <label for="caseNature">Case Nature</label>
-                    <div class="input-group mb-2">
-                        <input type="text" id="caseNature" name= "caseNature" class="form-control" value="" required> {{-- QUERY HERE --}}
-                    </div>
-                </div>
-
-                <div class="col-md-4">
-                    <label for="status">Status</label>
-                        <div class="">
-                            <input type="text" id="status" name="status" class="form-control" value="" required> {{-- QUERY HERE --}}
-                        </div>
-                   </div>
-
-            <div class="col-md-4">
-                        <label for="dateTerminated">Date Terminatted</label>
-                        <div class="input-group mb-2">
-                            <div class="input-group-prepend">
-                                <div class="btn btn-secondary">
-                                    <i class="fas fa-fw fa-calendar"></i>
-                                </div>
-                            </div>
-                            <input type="text" id="datepicker" name="dateTerminated" class="form-control" value="" placeholder="Choose" required> {{-- QUERY HERE --}}
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="form-row">
-                <div class="col-md-6">
-                    <label for="agentOnCase">Agent/s-On-Case</label>
-                    <div class="input-group mb-2">
-                        <input type="text" id="agentOnCase" name= "agentOnCase" class="form-control" value="" required> {{-- QUERY HERE --}}
-                    </div>
-                </div>
-
-                <div class="col-md-6">
-                        <label for="dateAssigned">Date Assigned</label>
-                        <div class="input-group mb-2">
-                            <div class="input-group-prepend">
-                                <div class="btn btn-secondary">
-                                    <i class="fas fa-fw fa-calendar"></i>
-                                </div>
-                            </div>
-                            <input type="text" id="datepicker" name="dateAssigned" class="form-control" value="" placeholder="Choose" required> {{-- QUERY HERE --}}
-                        </div>
-                    </div>
-              </div>
-
-            <br>
-              <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                  <thead>
-                    <tr>
-                        <th>Case Reports</th>
-                        <th>Date Uploaded</th>
-                        <th>Agent</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                        <!--
-                        foreach($showData as $showData)
-                        -->
-                        <tr>
-                            <td>SAMPLE</td>
-                            <td>SAMPLE</td>
-                            <td>SAMPLE</td>
-                        </tr>
-                        <!--
-                        endforeach
-                        -->
-                    </tbody>
-                </table>
-              </div>
-            </div>
-
-
-          <div class="form-group">
-            <center> <button class="btn btn-primary btn-block col-md-3" type="submit" value="submit">Save</button> </center>
-            </div>
-                    </form>
-                </div>
+    <!-- Exit Modal -->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+                </button>
             </div>
         </div>
-
-<!-- Exit Modal -->
-<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">×</span>
-            </button>
-        </div>
-      </div>
     </div>
 
 

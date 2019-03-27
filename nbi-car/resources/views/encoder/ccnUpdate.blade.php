@@ -153,8 +153,8 @@
                     <tr>
                         <th  style="display:none;">ID</th>
                         <th>CAR Case Number</th>
-                        <th>ACMO</th>
                         <th>Complainant</th>
+                        <th>Subject</th>
                         <th>Case Nature</th>
                         <th>Agent</th>
                         <th>Action</th>
@@ -165,8 +165,8 @@
                         <tr>
                             <td  style="display:none;">{{ $showData->caseid }}</td>
                             <td>NBI-CAR-{{ $showData->docketnumber }}</td>
-                            <td>{{ $showData->acmo }}</td>
                             <td>{{ $showData->complainantname }}</td>
+                            <td>{{ $showData->suspectName }}</td>
                             <td>{{ $showData->natureName }}</td>
                             <td>{{ $showData->full_name }}</td>
                             <td>
@@ -195,8 +195,8 @@
                     <tr>
                         <th style="display:none;">ID</th>
                         <th>CAR Case Number</th>
-                        <th>ACMO</th>
                         <th>Complainant</th>
+                        <th>Subject</th>
                         <th>Case Nature</th>
                         <th>Agent</th>
                         <th>Action</th>
@@ -221,14 +221,14 @@
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
-          <div class="modal-header">
+          <div class="modal-header" style="background-color:#dd8282;">
             <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
             <button class="close" type="button" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
           </div>
-          <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-          <div class="modal-footer">
+          <div class="modal-body" style="background-color:#edcbcb;">Select "Logout" below if you are ready to end your current session.</div>
+          <div class="modal-footer" style="background-color:#dd8282;">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
                 <a class="btn btn-primary" href="{{ route('logout') }}"
                     onclick="event.preventDefault();
@@ -248,13 +248,13 @@
   <div class="modal fade" id="caseRecordModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-lg" role="document" >
           <div class="modal-content">
-              <div class="modal-header">
+              <div class="modal-header" style="background-color:#dd8282;">
                   <h4 class="modal-title" id="exampleModalLabel">Update Case details!</h4>
                   <button class="close" type="button" data-dismiss="modal" aria-label="Close" onclick="javascript:window.location.reload()">
                     <span aria-hidden="true">×</span>
                   </button>
               </div>
-              <div class="modal-body">
+              <div class="modal-body" style="background-color:#edcbcb;">
                 <form action="/ccnUpdate" method="POST">
                     {{csrf_field()}}
                   <input type="hidden" id="caseid" name="caseid" class="form-control" value=""> {{-- QUERY HERE --}}

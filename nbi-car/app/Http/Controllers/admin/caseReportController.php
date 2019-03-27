@@ -21,6 +21,7 @@ class caseReportController extends Controller
         $agent = DB::table('users')
         ->where('role','=','Agent')
         ->get();
+
         $agent2 = DB::table('users')
         ->where('role','=','Agent')
         ->get();
@@ -41,11 +42,12 @@ class caseReportController extends Controller
         ->join('caseagent','casenature.caseid','=','caseagent.caseid')
         ->join('users','users.userid','=','caseagent.userid')
         ->join('cases','caseagent.caseid','=','cases.caseid')
+        ->join('complaintsheet','complaintsheet.caseid','=','cases.caseid')
         ->join('agent','caseagent.userid','=','agent.userid')
         ->join('case_suspects','case_suspects.caseid','=','cases.caseid')
         ->join('case_status','case_status.statusid','=','cases.statusid')
         ->join('case_victims','case_victims.caseid','=','cases.caseid')
-        ->select('nature.*','case_status.*','caseagent.*','users.*','agent.*','cases.*','case_suspects.*','case_victims.*'
+        ->select('nature.*','case_status.*','caseagent.*','users.*','agent.*','cases.*','case_suspects.*','case_victims.*', 'complaintsheet.*'
         ,DB::raw("GROUP_CONCAT(DISTINCT CONCAT (agent.position, ' ', users.firstName,' ',users.lastName) SEPARATOR ' and ') as full_name")
         ,DB::raw("GROUP_CONCAT(DISTINCT CONCAT (nature.nature) SEPARATOR ' and ') as natureName")
         ,DB::raw("GROUP_CONCAT(DISTINCT CONCAT(case_suspects.suspect_name) SEPARATOR ' and ') as suspectName"))

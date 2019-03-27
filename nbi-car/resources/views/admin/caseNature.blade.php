@@ -102,9 +102,11 @@
             <span>Manage Case</span>
           </a>
           <div class="dropdown-menu" aria-labelledby="pagesDropdown">
-            <a class="dropdown-item" href="/caseReport">Case Report</a> <!-- add page for case records-->
+            <a class="dropdown-item" href="/caseReport">Case Records</a> <!-- add page for case records-->
             <a class="dropdown-item" href="/caseNature">Case Nature</a>  <!-- add page for case nature -->
-          </div>
+            <a class="dropdown-item" href="/addNewCase">Add New Case</a>
+            <a class="dropdown-item" href="/ComplaintSheet">Complaint Sheet</a>
+            </div>
         </li>
 
         <li class="nav-item dropdown">
@@ -294,14 +296,14 @@
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
-          <div class="modal-header">
+          <div class="modal-header" style="background-color:#dd8282;">
             <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
             <button class="close" type="button" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
           </div>
-          <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-          <div class="modal-footer">
+          <div class="modal-body" style="background-color:#edcbcb;">Select "Logout" below if you are ready to end your current session.</div>
+          <div class="modal-footer" style="background-color:#dd8282;">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
             <a class="btn btn-primary" href="{{ route('logout') }}"
                 onclick="event.preventDefault();
@@ -321,13 +323,13 @@
     <div class="modal fade" id="newNatureModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document" >
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header" style="background-color:#dd8282;">
                     <h4 class="modal-title" id="exampleModalLabel">Add new case nature details</h4>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close" onclick="javascript:window.location.reload()">
                       <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body" style="background-color:#edcbcb;">
                   <form action="/createNature" method="POST">
                       {{csrf_field()}}
                     @include('admin.caseNature.caseNatureAddModalForm')
@@ -346,13 +348,13 @@
     <div class="modal fade" id="updateNatureModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document" >
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header" style="background-color:#dd8282;">
                     <h4 class="modal-title" id="exampleModalLabel">Update Case nature details</h4>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close" onclick="javascript:window.location.reload()">
                       <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body" style="background-color:#edcbcb;">
                   <form action="/natureUpdate" method="POST">
                       {{csrf_field()}}
                     <input type="hidden" id="natureid" name="natureid" class="form-control" value=""> {{-- QUERY HERE --}}
@@ -372,13 +374,13 @@
     <div class="modal fade" id="deleteNatureModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document" >
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header" style="background-color:#dd8282;">
                     <h5 class="modal-title" id="exampleModalLabel">You are about to delete case nature, click <strong style="color:red;">"Delete"</strong> in order to process deletion.</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close" onclick="javascript:window.location.reload()">
                       <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body" style="background-color:#edcbcb;">
                   <form action="/deleteNature" method="POST">
                       {{csrf_field()}}
                     <input type="hidden" id="natureid" name="natureid" class="form-control" value=""> {{-- QUERY HERE --}}

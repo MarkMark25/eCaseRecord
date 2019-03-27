@@ -69,16 +69,7 @@
         <div class="col-md-6">
             <label for="natureName">Nature of Case</label>
             <div class="">
-                <input class="form-control" name="nameOfNature" id="nameOfNature" disabled></input>{{-- QUERY HERE --}}
-            </div>
-            <p style="font-style:italic;">(Input <strong>ID</strong> for updates. See details below.)</p>
-            <div class="input-group">
-                <select  name="natureName" id="natureName" class="form-control">
-                    <option readonly="readonly" style="font-weight:bold;font-style:italic;">List of Natures</option>
-                    @foreach($nature as $nature)
-                        <option value="">{{ $nature->natureid }} - {{ $nature->nature }}</option>
-                    @endforeach
-                </select>
+                <textarea class="form-control" name="nameOfNature" id="nameOfNature" style="width:100%;font-size:15px;resize:none;" rows="2" disabled></textarea>{{-- QUERY HERE --}}
             </div>
         </div>
         <div class="col-md-6">

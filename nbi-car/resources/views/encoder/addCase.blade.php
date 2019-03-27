@@ -189,7 +189,7 @@
                           <div class="col-md-6">
                               <label for=complainant>Complainant</label>
                                   <div class="">
-                                      <input type="text" id="complainant" name="complainant"  class="form-control" onkeypress='validateComplainant(event)' required/>  {{-- QUERY HERE --}}
+                                      <input type="text" id="complainant" name="complainant"  class="form-control" onkeypress='validateComplainant(event)' minlength="5" maxlength="40" required/>  {{-- QUERY HERE --}}
                                   </div>
                           </div>
                         </div>
@@ -200,7 +200,7 @@
                               <div class="control-group fld_wrap" id="fld3">
                                   <label class="control-label" for="subject1">Subject</label>
                                   <div class="input-group">
-                                      <input class="form-control" name="subject[]" type="text" onkeypress='validateComplainant(event)' required/>
+                                      <input class="form-control" name="subject[]" type="text" onkeypress='validateComplainant(event)' minlength="5" maxlength="40" required/>
                                       <div class="input-group-prepend">
                                           <button class="btn btn-success btn-add add_button3" fldnum="3" type="button">
                                               <span class="fas">+</span>
@@ -214,7 +214,7 @@
                               <div class="control-group fld_wrap" id="fld4">
                                   <label class="control-label" for="victim1">Victim/s</label>
                                   <div class="input-group">
-                                      <input class="form-control" name="victim[]" type="text" onkeypress='validateComplainant(event)' required/>
+                                      <input class="form-control" name="victim[]" type="text" onkeypress='validateComplainant(event)' minlength="5" maxlength="40" required/>
                                       <div class="input-group-prepend">
                                           <button class="btn btn-success btn-add add_button4" fldnum="4" type="button">
                                               <span class="fas">+</span>
@@ -345,14 +345,14 @@
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
-          <div class="modal-header">
+          <div class="modal-header" style="background-color:#dd8282;">
             <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
             <button class="close" type="button" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
           </div>
-          <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-          <div class="modal-footer">
+          <div class="modal-body" style="background-color:#edcbcb;">Select "Logout" below if you are ready to end your current session.</div>
+          <div class="modal-footer" style="background-color:#dd8282;">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
                 <a class="btn btn-primary" href="{{ route('logout') }}"
                     onclick="event.preventDefault();

@@ -253,19 +253,19 @@
                             <div class="col-md-4">
                                     <label for="suspectName">Name (Lastname, Firstname)</label>
                                 <div class="">
-                                    <input type="text" id="complainant" name="complainant"  class="form-control" onkeypress='validateComplainant(event)' autocomplete="off" required/>  {{-- QUERY HERE --}}
+                                    <input type="text" id="complainant" name="complainant"  class="form-control" onkeypress='validateComplainant(event)' autocomplete="off" minlength="5" maxlength="40" required/>  {{-- QUERY HERE --}}
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <label for="">Address</label>
                                 <div class="">
-                                    <input type="text" id="complainantAddress" name="complainantAddress"  class="form-control" autocomplete="off"/>  {{-- QUERY HERE --}}
+                                    <input type="text" id="complainantAddress" name="complainantAddress"  class="form-control" autocomplete="off" minlength="5" maxlength="40" />  {{-- QUERY HERE --}}
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <label for="">Telephone Number</label>
                                 <div class="">
-                                    <input type="text" id="complainantTelNumber" name="complainantTelNumber"  class="form-control" autocomplete="off"/>  {{-- QUERY HERE --}}
+                                    <input type="text" id="complainantTelNumber" name="complainantTelNumber"  class="form-control" autocomplete="off" minlength="5" maxlength="15" />  {{-- QUERY HERE --}}
                                 </div>
                             </div>
                         </div>
@@ -285,18 +285,18 @@
                                         <br>
                                         <br>
                                         <div class="col-md-3">
-                                            <input type="text" class="form-control" name="suspectNameA[]" placeholder="Name" autocomplete="off">
-                                            <input type="text" class="form-control" name="suspectAgeA[]" placeholder="Age" onkeypress='validateDate(event)' autocomplete="off">
+                                            <input type="text" class="form-control" name="suspectNameA[]" placeholder="Name" autocomplete="off" minlength="5" maxlength="40">
+                                            <input type="text" class="form-control" name="suspectAgeA[]" placeholder="Age" onkeypress='validateDate(event)' autocomplete="off" minlength="1" maxlength="3">
                                         </div>
                                         <div class="col-md-3">
-                                            <input type="text" class="form-control" name="suspectAddressA[]" placeholder="Address" autocomplete="off">
-                                            <input type="text" class="form-control" name="suspectCivilStatusA[]" placeholder="Civil Status" autocomplete="off">
+                                            <input type="text" class="form-control" name="suspectAddressA[]" placeholder="Address" autocomplete="off" minlength="5" maxlength="40">
+                                            <input type="text" class="form-control" name="suspectCivilStatusA[]" placeholder="Civil Status" autocomplete="off" minlength="5" maxlength="20">
                                         </div>
                                         <div class="col-md-3">
-                                            <input type="text" id="suspectTelNumberA" name= "suspectTelNumberA[]" autocomplete="off" placeholder="Telephone Number" class="ccNumber form-control" value="" autocomplete="off">
-                                            <input type="text" class="form-control" name="suspectOccupationA[]" placeholder="Occupation" autocomplete="off">
+                                            <input type="text" id="suspectTelNumberA" name= "suspectTelNumberA[]" autocomplete="off" placeholder="Telephone Number" class="ccNumber form-control" value="" autocomplete="off" minlength="5" maxlength="15">
+                                            <input type="text" class="form-control" name="suspectOccupationA[]" placeholder="Occupation" autocomplete="off" minlength="4" maxlength="20">
                                         </div>
-                                            <input type="text" class="form-control" name="suspectSexA[]" placeholder="sex" autocomplete="off">
+                                            <input type="text" class="form-control" name="suspectSexA[]" placeholder="sex" autocomplete="off" minlength="4" maxlength="6">
                                     </div>
                                 </div>
                             </div>
@@ -336,7 +336,7 @@
                             <div class="form-row">
                                 <div class="col-md-6">
                                     <label for="whereCommitted">Place Committed</label>
-                                    <input type="text" name="whereCommitted" id="whereCommitted" class="form-control">
+                                    <input type="text" name="whereCommitted" id="whereCommitted" class="form-control" minlength="5" maxlength="40">
                                 </div>
                                 <div class="col-md-6">
                                     <label for="whenCommitted">When Committed</label>
@@ -367,18 +367,18 @@
                                         <br>
                                         <br>
                                         <div class="col-md-3">
-                                            <input type="text" class="form-control" name="victimNameA[]" placeholder="Name" autocomplete="off">
-                                            <input type="text" class="form-control" name="victimAgeA[]" placeholder="Age" onkeypress='validateDate(event)' autocomplete="off">
+                                            <input type="text" class="form-control" name="victimNameA[]" placeholder="Name" autocomplete="off" minlength="5" maxlength="40">
+                                            <input type="text" class="form-control" name="victimAgeA[]" placeholder="Age" onkeypress='validateDate(event)' autocomplete="off" minlength="1" maxlength="3">
                                         </div>
                                         <div class="col-md-3">
-                                            <input type="text" class="form-control" name="victimAddressA[]" placeholder="Address" autocomplete="off">
-                                            <input type="text" class="form-control" name="victimCivilStatusA[]" placeholder="Civil Status" autocomplete="off">
+                                            <input type="text" class="form-control" name="victimAddressA[]" placeholder="Address" autocomplete="off" minlength="5" maxlength="40">
+                                            <input type="text" class="form-control" name="victimCivilStatusA[]" placeholder="Civil Status" autocomplete="off" minlength="5" maxlength="20">
                                         </div>
                                         <div class="col-md-3">
-                                            <input type="text" id="suspectTelNumberA" name= "victimTelNumberA[]" autocomplete="off" placeholder="Telephone Number" class="ccNumber form-control" value="" autocomplete="off">
-                                            <input type="text" class="form-control" name="victimOccupationA[]" placeholder="Occupation" autocomplete="off">
+                                            <input type="text" id="suspectTelNumberA" name= "victimTelNumberA[]" autocomplete="off" placeholder="Telephone Number" class="ccNumber form-control" value="" autocomplete="off" minlength="5" maxlength="15">
+                                            <input type="text" class="form-control" name="victimOccupationA[]" placeholder="Occupation" autocomplete="off" minlength="4" maxlength="20">
                                         </div>
-                                            <input type="text" class="form-control" name="victimSexA[]" placeholder="sex" autocomplete="off">
+                                            <input type="text" class="form-control" name="victimSexA[]" placeholder="sex" autocomplete="off" minlength="4" maxlength="6">
                                     </div>
                                 </div>
                             </div>
@@ -388,31 +388,31 @@
                     <section>
                         <div class="form-group">
                             <p style="font-weight:bold;">6. Narration of Facts (Salaysay ng mga Pangyayari) </p>
-                            <textarea name="narrationOfFacts" placeholder="Don't leave this portion blank" id="narrationOfFacts" style="width:100%;font-size:15px;resize:none;" rows="3" autocomplete="off" required></textarea>
+                            <textarea name="narrationOfFacts" placeholder="Don't leave this portion blank" id="narrationOfFacts" style="width:100%;font-size:15px;resize:none;" rows="3" autocomplete="off" minlength="4" maxlength="65,535" required></textarea>
                         </div>
                     </section>
                     <hr>
                     <section>
                         <div class="form-group">
                             <p style="font-weight:bold;">7. Has the matter been reported to any agency, If so, to what people agency? (Ang bagay bang ito ay naulat na sa ibang sangay ng pagsisiyasat? Kung naulat na, saang sangay?) </p>
-                            <textarea name="hasTheMatter" placeholder="Don't leave this portion blank" id="hasTheMatter" style="width:100%;font-size:15px;resize:none;" rows="3" autocomplete="off"></textarea>
+                            <textarea name="hasTheMatter" placeholder="Don't leave this portion blank" id="hasTheMatter" style="width:100%;font-size:15px;resize:none;" rows="3" autocomplete="off" minlength="4" maxlength="65,535" required></textarea>
                             <br>
                             <p style="font-weight:bold;">Status of investigation, If any (Kalagayan ng pagsisiyasat kung mayroon?)</p>
-                            <textarea name="statusOfInvestigation" placeholder="Don't leave this portion blank" id="statusOfInvestigation" style="width:100%;font-size:15px;resize:none;" rows="3" autocomplete="off" required></textarea>
+                            <textarea name="statusOfInvestigation" placeholder="Don't leave this portion blank" id="statusOfInvestigation" style="width:100%;font-size:15px;resize:none;" rows="3" autocomplete="off" minlength="4" maxlength="65,535" required></textarea>
                         </div>
                     </section>
                     <hr>
                     <section>
                         <div class="form-group">
                             <p style="font-weight:bold;">8.Is the matter complained of the subject of any court action of proceedings? If so, where? (Ang bagay bang may kinalaman sa pagsusumbong ay nasa hukuman na? Kung gaanoon, saan?)</p>
-                            <textarea name="isTheMatterComplained" placeholder="Don't leave this portion blank" id="isTheMatterComplained" style="width:100%;font-size:15px;resize:none;" rows="3" autocomplete="off" required></textarea>
+                            <textarea name="isTheMatterComplained" placeholder="Don't leave this portion blank" id="isTheMatterComplained" style="width:100%;font-size:15px;resize:none;" rows="3" autocomplete="off" minlength="4" maxlength="65,535" required></textarea>
                         </div>
                     </section>
                     <br>
                     <section>
                         <div class="form-group">
                             <p style="font-weight:bold;">9.What Consideration/s impelled you to report to the NBI? (Ano ang nag-udyok sa iyo para magreklamo dito sa NBI?)</p>
-                            <textarea name="whatConsidirations" placeholder="Don't leave this portion blank" id="whatConsidirations" style="width:100%;font-size:15px;resize:none;" rows="3" autocomplete="off" required></textarea>
+                            <textarea name="whatConsidirations" placeholder="Don't leave this portion blank" id="whatConsidirations" style="width:100%;font-size:15px;resize:none;" rows="3" autocomplete="off" minlength="4" maxlength="65,535" required></textarea>
                         </div>
                     </section>
                     <div class="form-group">
@@ -456,14 +456,14 @@
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
-          <div class="modal-header">
+          <div class="modal-header" style="background-color:#dd8282;">
             <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
             <button class="close" type="button" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
           </div>
-          <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-          <div class="modal-footer">
+          <div class="modal-body" style="background-color:#edcbcb;">Select "Logout" below if you are ready to end your current session.</div>
+          <div class="modal-footer" style="background-color:#dd8282;">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
                 <a class="btn btn-primary" href="{{ route('logout') }}"
                     onclick="event.preventDefault();
@@ -532,7 +532,7 @@
                 var key = theEvent.keyCode || theEvent.which;
                 key = String.fromCharCode(key);
             }
-            var regex = /[0-9,C,M,-]/;
+            var regex = /[0-9,C,-]/;
             if( !regex.test(key) ) {
                 theEvent.returnValue = false;
                 if(theEvent.preventDefault) theEvent.preventDefault();
@@ -549,7 +549,7 @@
                 var key = theEvent.keyCode || theEvent.which;
                 key = String.fromCharCode(key);
             }
-            var regex = /[0-9,I,M,-]/;
+            var regex = /[0-9,I,-]/;
             if( !regex.test(key) ) {
                 theEvent.returnValue = false;
                 if(theEvent.preventDefault) theEvent.preventDefault();

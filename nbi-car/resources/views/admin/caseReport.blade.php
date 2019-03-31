@@ -276,17 +276,93 @@
                             <td>{{ $showData->full_name }}</td>
                             <td>
                                 <div>
-                                    <a href="/editModal" data-target="#editModal" data-toggle="modal"> <button type="button" class="btn btn-default btn-xs btn-filter"> <span style="color:#0460f4;" class="fas fa-edit"> </span></button></a>
-                                    <a href="/deleteModal" data-target="#deleteModal" data-toggle="modal"> <button type="button" class="btn btn-default btn-xs btn-filter"> <span style="color:#FF0000;" class="fas fa-trash"> </span></button></a>
+                                    <button type="button" class="btn btn-default btn-xs btn-filter" data-target="#editModal" data-toggle="modal">
+                                        <span style="color:#0460f4;" class="fas fa-edit"> </span>
+                                    </button>
+                                    <button type="button" class="btn btn-default btn-xs btn-filter"
+                                        data-target="#deleteModal"
+                                        data-toggle="modal"
+                                        data-caseid="{{ $showData->caseid}}"
+                                        data-ccn="{{ $showData->ccn}}"
+                                        data-docketnumber="{{ $showData->docketnumber}}"
+                                        data-acmo="{{ $showData->acmo}}"
+                                        data-date_terminated="{{ $showData->dateTerminated}}"
+                                        data-dateassigned="{{ $showData->dateassigned}}"
+                                        data-full_name="{{ $showData->full_name}}"
+                                        data-status="{{ $showData->status}}"
+                                        data-complainantname="{{ $showData->complainantname}}"
+                                        data-complainant_address="{{ $showData->complainant_Address}}"
+                                        data-complainant_number="{{ $showData->complainant_Contact_Number}}"
+                                        data-suspect_name = "{{ $showData->suspect_name }}"
+                                        data-suspect_address ="{{ $showData->suspect_Address }}"
+                                        data-suspect_number ="{{ $showData->suspect_Contact_Number }}"
+                                        data-suspect_sex ="{{ $showData->suspect_Sex }}"
+                                        data-suspect_age ="{{ $showData->suspect_Age }}"
+                                        data-suspect_status ="{{ $showData->suspect_Civil_Status }}"
+                                        data-suspect_occupation ="{{ $showData->suspect_Occupation }}"
+                                        data-nature_name="{{ $showData->natureName}}"
+                                        data-place ="{{ $showData->place_Committed }}"
+                                        data-when_committed ="{{ $showData->date_Committed }}"
+                                        data-victim_name = "{{ $showData->victim_name }}"
+                                        data-victim_address ="{{ $showData->victim_Address }}"
+                                        data-victim_number ="{{ $showData->victim_Contact_Number }}"
+                                        data-victim_sex ="{{ $showData->victim_Sex }}"
+                                        data-victim_age ="{{ $showData->victim_Age }}"
+                                        data-victim_status ="{{ $showData->victim_Civil_Status }}"
+                                        data-victim_occupation ="{{ $showData->victim_Occupation }}"
+                                        data-narration_facts = "{{ $showData->narration_Of_Facts }}"
+                                        data-matter ="{{ $showData->reported_Any_Agency }}"
+                                        data-investigation ="{{ $showData->status_of_Investigation }}"
+                                        data-complained ="{{ $showData->where_court_Proceedings }}"
+                                        data-consideration ="{{ $showData->report_Considerations }}"
+                                    >
+                                        <span style="color:#FF0000;" class="fas fa-trash"> </span>
+                                    </button>
+                                    </a>
                                 </div>
                             </td>
                             <td>
                                 <div>
-                                    <a href="" data-target="#moreButton" data-toggle="modal">
-                                        <button type="button" class="btn btn-default btn-xs btn-filter">
-                                            <span style="color:#0460f4;" class="fas fa-plus-circle"></span>
-                                        </button>
-                                    </a>
+                                    <button type="button" class="btn btn-default btn-xs btn-filter"
+                                        data-target="#moreButton"
+                                        data-toggle="modal"
+                                        data-caseid="{{ $showData->caseid}}"
+                                        data-ccn="{{ $showData->ccn}}"
+                                        data-docketnumber="{{ $showData->docketnumber}}"
+                                        data-acmo="{{ $showData->acmo}}"
+                                        data-date_terminated="{{ $showData->dateTerminated}}"
+                                        data-dateassigned="{{ $showData->dateassigned}}"
+                                        data-full_name="{{ $showData->full_name}}"
+                                        data-status="{{ $showData->status}}"
+                                        data-complainantname="{{ $showData->complainantname}}"
+                                        data-complainant_address="{{ $showData->complainant_Address}}"
+                                        data-complainant_number="{{ $showData->complainant_Contact_Number}}"
+                                        data-suspect_name = "{{ $showData->suspect_name }}"
+                                        data-suspect_address ="{{ $showData->suspect_Address }}"
+                                        data-suspect_number ="{{ $showData->suspect_Contact_Number }}"
+                                        data-suspect_sex ="{{ $showData->suspect_Sex }}"
+                                        data-suspect_age ="{{ $showData->suspect_Age }}"
+                                        data-suspect_status ="{{ $showData->suspect_Civil_Status }}"
+                                        data-suspect_occupation ="{{ $showData->suspect_Occupation }}"
+                                        data-nature_name="{{ $showData->natureName}}"
+                                        data-place ="{{ $showData->place_Committed }}"
+                                        data-when_committed ="{{ $showData->date_Committed }}"
+                                        data-victim_name = "{{ $showData->victim_name }}"
+                                        data-victim_address ="{{ $showData->victim_Address }}"
+                                        data-victim_number ="{{ $showData->victim_Contact_Number }}"
+                                        data-victim_sex ="{{ $showData->victim_Sex }}"
+                                        data-victim_age ="{{ $showData->victim_Age }}"
+                                        data-victim_status ="{{ $showData->victim_Civil_Status }}"
+                                        data-victim_occupation ="{{ $showData->victim_Occupation }}"
+                                        data-narration_facts = "{{ $showData->narration_Of_Facts }}"
+                                        data-matter ="{{ $showData->reported_Any_Agency }}"
+                                        data-investigation ="{{ $showData->status_of_Investigation }}"
+                                        data-complained ="{{ $showData->where_court_Proceedings }}"
+                                        data-consideration ="{{ $showData->report_Considerations }}"
+
+                                    >
+                                        <span style="color:#0460f4;" class="fas fa-plus-circle"></span>
+                                    </button>
                                 </div>
                             </td>
                         </tr>
@@ -531,6 +607,7 @@
                       <span aria-hidden="true">×</span>
                     </button>
                 </div>
+            <form action="/deleteCase" method="POST">
                 <div class="modal-body" style="background-color:#edcbcb;">
                     <input type="hidden" id="caseid" name="caseid" class="form-control" value="">
                     @include('admin.caseReport.deleteModalForm')
@@ -538,6 +615,7 @@
                 <div class="modal-footer" style="background-color:#dd8282;">
                     <button type="submit" class="btn btn-danger">DELETE</button>
                 </div>
+            </form>
           </div>
         </div>
     </div>
@@ -609,7 +687,18 @@
 
     <!-- Demo scripts for this page-->
     <script src="bower_components/js/demo/datatables-demo.js"></script>
+    <!-- MODAL -->
+    <script src="bower_components/datepicker/caseReport.js"></script>
 
+    <script>
+        $('#moreButton').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget)
+            var  = button.data('')
+
+            var modal = $(this)
+            modal.find('.modal-body #').val()
+          })
+    </script>
   </body>
   @endguest
 </html>

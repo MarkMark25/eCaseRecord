@@ -149,30 +149,42 @@
     <section>
         <div class="form-group">
             <p style="font-weight:bold;">6. Narration of Facts (Salaysay ng mga Pangyayari) </p>
-            <textarea id="narrationOfFacts" name="narrationOfFacts"  style="width:100%;font-size:15px;resize:none;" rows="3" disabled></textarea>
+            <textarea id="narrationOfFacts" name="narrationOfFacts"  style="width:100%;font-size:15px;resize:none;" rows="5" disabled></textarea>
         </div>
     </section>
 <hr>
     <section>
         <div class="form-group">
             <p style="font-weight:bold;">7. Has the matter been reported to any agency, If so, to what people agency? (Ang bagay bang ito ay naulat na sa ibang sangay ng pagsisiyasat? Kung naulat na, saang sangay?) </p>
-            <textarea name="hasTheMatter" id="hasTheMatter" style="width:100%;font-size:15px;resize:none;" rows="3" disabled></textarea>
+            <textarea name="hasTheMatter" id="hasTheMatter" style="width:100%;font-size:15px;resize:none;" rows="5" disabled></textarea>
             <br>
             <p style="font-weight:bold;">Status of investigation, If any (Kalagayan ng pagsisiyasat kung mayroon?)</p>
-            <textarea name="statusOfInvestigation" id="statusOfInvestigation" style="width:100%;font-size:15px;resize:none;" rows="3" disabled></textarea>
+            <textarea name="statusOfInvestigation" id="statusOfInvestigation" style="width:100%;font-size:15px;resize:none;" rows="5" disabled></textarea>
         </div>
     </section>
 <hr>
     <section>
         <div class="form-group">
             <p style="font-weight:bold;">8.Is the matter complained of the subject of any court action of proceedings? If so, where? (Ang bagay bang may kinalaman sa pagsusumbong ay nasa hukuman na? Kung gaanoon, saan?)</p>
-            <textarea name="isTheMatterComplained" id="isTheMatterComplained" style="width:100%;font-size:15px;resize:none;" rows="3" disabled></textarea>
+            <textarea name="isTheMatterComplained" id="isTheMatterComplained" style="width:100%;font-size:15px;resize:none;" rows="5" disabled></textarea>
         </div>
     </section>
 <hr>
     <section>
         <div class="form-group">
             <p style="font-weight:bold;">9.What Consideration/s impelled you to report to the NBI? (Ano ang nag-udyok sa iyo para magreklamo dito sa NBI?)</p>
-            <textarea name="whatConsidirations" id="whatConsidirations" style="width:100%;font-size:15px;resize:none;" rows="3" disabled></textarea>
+            <textarea name="whatConsidirations" id="whatConsidirations" style="width:100%;font-size:15px;resize:none;" rows="5" disabled></textarea>
         </div>
     </section>
+    <div class="form-group">
+            <div class="form-row">
+                <div class="col-md-12">
+                    <div class="">
+                        <input type="hidden" id="caseStatus" name="caseStatus" class="form-control" value="Deleted">
+                        <input type="hidden" id="descriptionOne" name="descriptionOne" class="form-control" value="Administrator delete case with case id = ">
+                        <input type="hidden" id="action" name="action" class="form-control" value="Delete"> {{-- QUERY HERE --}}
+                        <input type="hidden" name="userid" id="userid" value="{{ Auth::user()->userid }}">
+                    </div>
+                </div>
+            </div>
+        </div>

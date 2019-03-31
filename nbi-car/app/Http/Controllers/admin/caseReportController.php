@@ -42,7 +42,7 @@ class caseReportController extends Controller
         ->join('caseagent','casenature.caseid','=','caseagent.caseid')
         ->join('users','users.userid','=','caseagent.userid')
         ->join('cases','caseagent.caseid','=','cases.caseid')
-        ->join('complaintsheet','complaintsheet.caseid','=','cases.caseid')
+        ->leftJoin('complaintsheet','complaintsheet.caseid','=','cases.caseid')
         ->join('agent','caseagent.userid','=','agent.userid')
         ->join('case_suspects','case_suspects.caseid','=','cases.caseid')
         ->join('case_status','case_status.statusid','=','cases.statusid')
@@ -59,7 +59,30 @@ class caseReportController extends Controller
         ->get();
         return view ('admin.caseReport',compact('showData','agent','nature','status','agent2','nature2'));
     }
-
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function delete(Request $request)
+    {
+        $cases = Cases::findOrFail($request->caseid);
+        $cases->update($request->all());
+        /**
+        *  Concatenate description for logs.
+        */
+        $caseID = $request['caseid'];
+        $formDescription = $request['description'];
+        $insertDescription = $formDescription. ' '.$caseID;
+        Logs::create([
+            'userid' => $request['userid'],
+            'action' => $request['action'],
+            'description' =>$insertDescription,
+        ]);
+        $request->session()->flash('alert-success', 'Case successfully " DELETED "');
+        return redirect()->back();
+    }
     /**
      * Show the form for creating a new resource.
      *

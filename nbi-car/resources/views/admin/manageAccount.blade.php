@@ -265,7 +265,8 @@
                             </td>
                             <td>
                                 <div>
-                                <center><button type="button" class="btn btn-default btn-xs btn-filter" data-target="#resetPassword" data-toggle="modal" style="width: 100px; height: 40px;">
+                                <center>
+                                    <button type="button" class="btn btn-default btn-xs btn-filter" data-target="#resetPassword" data-toggle="modal" style="width: 100px; height: 40px;">
                                         <span style="color:#008000;" class="fas fa-redo"> Reset </span>
                                     </button>
                                 </center>

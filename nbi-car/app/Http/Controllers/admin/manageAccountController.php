@@ -81,7 +81,7 @@ class manageAccountController extends Controller
      */
     public function show($id)
     {
-        //
+
     }
 
     /**

@@ -59,6 +59,7 @@ Route::group(['middleware' => ['web','admin']], function() {
 Route::post('/natureUpdate','admin\caseNatureController@update');
 Route::post('/createNature','admin\caseNatureController@store');
 Route::post('/deleteNature','admin\caseNatureController@delete');
+Route::post('/deleteCase','admin\caseReportController@delete');
 Route::post('/userUpdate','admin\manageAccountController@update');
 Route::post('/addNewUser','admin\manageAccountController@store');
 Route::post('/adminAddCase','admin\addCaseController@store');

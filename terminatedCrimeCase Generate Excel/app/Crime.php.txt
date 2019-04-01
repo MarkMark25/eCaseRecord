@@ -1,0 +1,24 @@
+<?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Crime extends Model
+{
+    protected $table = 'crime';
+    protected $primaryKey = 'no';
+    protected $fillable = [
+        'no', 
+        'ccn_acmo_no', 
+        'car_no', 
+        'nature', 
+        'victim_complainant', 
+        'subjects', 
+        'date_assigned', 
+        'date_terminated', 
+        'agent_on_case', 
+        'status'
+    ];
+}
+

@@ -1,0 +1,31 @@
+Installation
+Require this package in the composer.json of your Laravel project. 
+This will download the package and PhpSpreadsheet.
+
+1. composer require maatwebsite/excel
+The Maatwebsite\Excel\ExcelServiceProvider is auto-discovered and 
+registered by default, but if you want to register it yourself:
+
+Add the ServiceProvider in config/app.php
+
+2. 'providers' => [
+    /*
+     * Package Service Providers...
+     */
+    Maatwebsite\Excel\ExcelServiceProvider::class,
+]
+
+The Excel facade is also auto-discovered, but if you want to add 
+it manually:
+
+Add the Facade in config/app.php
+
+3. 'aliases' => [
+    ...
+    'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+]
+To publish the config, run the vendor publish command:
+
+4. php artisan vendor:publish
+This will create a new config file named config/excel.php.
+

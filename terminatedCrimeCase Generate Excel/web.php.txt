@@ -1,0 +1,3 @@
+#TerminatedCrimeCase Report
+Route::get('/downloadcrime', 'ExportCrimeController@index');
+Route::get('/downloadcrime/crime', 'ExportCrimeController@export');

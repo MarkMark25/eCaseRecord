@@ -60,6 +60,7 @@ Route::post('/natureUpdate','admin\caseNatureController@update');
 Route::post('/createNature','admin\caseNatureController@store');
 Route::post('/deleteNature','admin\caseNatureController@delete');
 Route::post('/deleteCase','admin\caseReportController@delete');
+Route::get('/updateCase','admin\caseReportController@show');
 Route::post('/userUpdate','admin\manageAccountController@update');
 Route::post('/addNewUser','admin\manageAccountController@store');
 Route::post('/adminAddCase','admin\addCaseController@store');

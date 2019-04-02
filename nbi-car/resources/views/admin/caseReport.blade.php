@@ -157,65 +157,7 @@
                 <a class="dropdown-item" href="/userHistory">User History</a>  <!-- add page -->
             </div>
         </li>
-
-<br>
-<br>
-<!-- Icon Cards-->
-<div class="col">
-            <div class="row-xl-3 row-sm-6 mb-3">
-              <div class="card text-black o-hidden h-100">
-                <div class="card-body">
-                  <div class="card-body-icon">
-                    <i class="fas fa-fw fa-user-friends"></i>
-                  </div>
-                  <div class="mr-5"># active users</div>
-                </div>
-                <a class="card-footer text-white clearfix small z-1 bg-success" href="#">
-                  <span class="float-left" bg-primary>View Details</span>
-                  <span class="float-right">
-                    <i class="fas fa-angle-right"></i>
-                  </span>
-                </a>
-              </div>
-            </div>
-
-            <div class="row-xl-3 ow-sm-6 mb-3">
-              <div class="card text-black o-hidden h-100">
-                <div class="card-body">
-                  <div class="card-body-icon">
-                    <i class="fas fa-fw fa-copy"></i>
-                  </div>
-                  <div class="mr-5"># closed cases</div>
-                </div>
-                <a class="card-footer text-white clearfix small z-1 bg-primary" href="#">
-                  <span class="float-left">View Details</span>
-                  <span class="float-right">
-                    <i class="fas fa-angle-right"></i>
-                  </span>
-                </a>
-              </div>
-            </div>
-
-            <div class="row-xl-3 row-sm-6 mb-3">
-              <div class="card text-black  o-hidden h-100">
-                <div class="card-body">
-                  <div class="card-body-icon">
-                    <i class="fas fa-fw fa-download"></i>
-                  </div>
-                  <div class="mr-5">Total No. of Records</div>
-                </div>
-                <a class="card-footer text-white clearfix small z-1 bg-warning" href="#">
-                  <span class="float-left">View Details</span>
-                  <span class="float-right">
-                    <i class="fas fa-angle-right"></i>
-                  </span>
-                </a>
-              </div>
-            </div>
-          </div>
     </ul>
-
-
     <div id="content-wrapper">
     <div class="container-fluid" style="padding-top:3%;padding-bottom:2%;">
       <a class="btn btn-secondary" style="float: right">Backup Records <i class="fa fa-file-download"></i></a>
@@ -276,9 +218,9 @@
                             <td>{{ $showData->full_name }}</td>
                             <td>
                                 <div>
-                                    <button type="button" class="btn btn-default btn-xs btn-filter" data-target="#editModal" data-toggle="modal">
+                                    <a href="/updateCase/{{ $showData->caseid }}" class="btn btn-default btn-xs btn-filter">
                                         <span style="color:#0460f4;" class="fas fa-edit"> </span>
-                                    </button>
+                                    </a>
                                     <button type="button" class="btn btn-default btn-xs btn-filter"
                                         data-target="#deleteModal"
                                         data-toggle="modal"
@@ -423,155 +365,6 @@
       </div>
     </div>
 
-
-
-    <!-- Exit Modal -->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">×</span>
-            </button>
-            </div>
-        </div>
-    </div>
-
-
- <!-- Edit Modal-->
- <div class="modal fade" id="editModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="container-fluid" style="padding-bottom:3%; padding-top:4%;">
-    <div class="card card-register mx-auto" style="width:40%;">
-       <div class="card-header"><h4 align="center">Update Case:
-       <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">x</span></div>
-            </button>
-            </h4>
-            <div class="card-body">
-
-            <form>
-            <div class="form-group row">
-              <label for="docketno" class="col-sm-3 col-form-label">Docket Number</label>
-              <div class="col-sm-7">
-                <input type="text" class="form-control" id="docketno">
-              </div>
-            </div>
-
-            <div class="form-group row">
-              <label for="ccn" class="col-sm-3 col-form-label">CCN</label>
-              <div class="col-sm-7">
-                <input type="text" class="form-control" id="ccn">
-              </div>
-            </div>
-
-            <div class="form-group row">
-              <label for="acmo" class="col-sm-3 col-form-label">ACMO</label>
-              <div class="col-sm-7">
-                <input type="text" class="form-control" id="acmo">
-              </div>
-            </div>
-
-            <div class="form-group row">
-              <label for="subject" class="col-sm-3 col-form-label">Subject</label>
-              <div class="col-sm-7">
-              <div class="input-group-prepend">
-                <input type="text" class="form-control" id="subject">
-                <div class="input-group-prepend">
-                   <button class="btn btn-success btn-add add_button2" fldnum="5">
-                      <span class="fas">+</span>
-                    </button>
-                </div>
-              </div>
-            </div>
-            </div>
-
-            <div class="form-group row">
-              <label for="complainant" class="col-sm-3 col-form-label">Complainant</label>
-              <div class="col-sm-7">
-                <input type="text" class="form-control" id="complainant">
-              </div>
-            </div>
-
-           <div class="form-group row">
-            <label for="natureofcase" class="col-sm-3 col-form-label">Nature of Case</label>
-              <div class="col-sm-7">
-              <div class="input-group-prepend" id="fld2">
-                    <select name="fld_val2" class="form-control">
-                       <option >......</option>
-                       <option value="status1">Nature 1</option>
-                       <option value="status2">Nature 2</option>
-                       <option value="status3">Nature 3</option>
-                       <option value="status4">Nature 4</option>
-                      </select>
-                        <div class="input-group-prepend">
-                             <button class="btn btn-success btn-add add_button2" fldnum="5">
-                                <span class="fas">+</span>
-                              </button>
-                            </div>
-                           </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-              <label for="status" class="col-sm-3 col-form-label">Status</label>
-              <div class="col-sm-7">
-                <input type="text" class="form-control" id="status" placeholder="Case Status">
-              </div>
-            </div>
-
-            <div class="form-group row">
-            <label for="agent" class="col-sm-3 col-form-label">Agent</label>
-            <div class="col-sm-7">
-              <div class="input-group-prepend" id="fld2">
-                    <select name="agent" class="form-control" placeholder="Choose Agent">
-                                <option >......</option>
-                                <option value="status1">Agent 1</option>
-                                <option value="status2">Agent 2</option>
-                                <option value="status3">Agent 3</option>
-                                <option value="status4">Agent 4</option>
-                            </select>
-                            <div class="input-group-prepend">
-                              <button class="btn btn-success btn-add add_button2" fldnum="5">
-                                <span class="fas">+</span>
-                              </button>
-                                    </div>
-                        </div>
-                    </div>
-                    </div>
-
-                <div class="form-group row">
-                    <label for="dateAssigned" class="col-sm-3 col-form-label">Date Assigned</label>
-                        <div class="col-sm-7">
-                            <div class="input-group-prepend">
-                                <div class="btn btn-secondary">
-                                    <i class="fas fa-fw fa-calendar"></i>
-                                 </div>
-                            <input type="text" id="datepicker" name="dateAssigned" class="form-control" value="" required> {{-- QUERY HERE --}}
-                        </div>
-                      </div>
-                  </div>
-
-                  <div class="form-group row">
-                    <label for="dateTerminated" class="col-sm-3 col-form-label">Date Terminated</label>
-                        <div class="col-sm-7">
-                            <div class="input-group-prepend">
-                                <div class="btn btn-secondary">
-                                    <i class="fas fa-fw fa-calendar"></i>
-                            </div>
-                            <input type="text" id="datepicker" name="dateTerminated" class="form-control" value="" required> {{-- QUERY HERE --}}
-                        </div>
-                  </div>
-                  </div>
-
-
-                    <br>
-                        <div class="form-group">
-                           <center>
-                                <button class="btn btn-primary  col-md-3" type="submit" value="submit">Save</button>
-                                <button class="btn btn-danger  col-md-3" type="submit" value="submit">Cancel</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
 
     <!-- Exit Modal -->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

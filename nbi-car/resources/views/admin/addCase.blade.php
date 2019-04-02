@@ -161,62 +161,6 @@
                            <a class="dropdown-item" href="/userHistory">User History</a>  <!-- add page -->
                        </div>
                    </li>
-
-           <br>
-           <br>
-           <!-- Icon Cards-->
-           <div class="col">
-                       <div class="row-xl-3 row-sm-6 mb-3">
-                         <div class="card text-black o-hidden h-100">
-                           <div class="card-body">
-                             <div class="card-body-icon">
-                               <i class="fas fa-fw fa-user-friends"></i>
-                             </div>
-                             <div class="mr-5"># active users</div>
-                           </div>
-                           <a class="card-footer text-white clearfix small z-1 bg-success" href="#">
-                             <span class="float-left" bg-primary>View Details</span>
-                             <span class="float-right">
-                               <i class="fas fa-angle-right"></i>
-                             </span>
-                           </a>
-                         </div>
-                       </div>
-
-                       <div class="row-xl-3 ow-sm-6 mb-3">
-                         <div class="card text-black o-hidden h-100">
-                           <div class="card-body">
-                             <div class="card-body-icon">
-                               <i class="fas fa-fw fa-copy"></i>
-                             </div>
-                             <div class="mr-5"># closed cases</div>
-                           </div>
-                           <a class="card-footer text-white clearfix small z-1 bg-primary" href="#">
-                             <span class="float-left">View Details</span>
-                             <span class="float-right">
-                               <i class="fas fa-angle-right"></i>
-                             </span>
-                           </a>
-                         </div>
-                       </div>
-
-                       <div class="row-xl-3 row-sm-6 mb-3">
-                         <div class="card text-black  o-hidden h-100">
-                           <div class="card-body">
-                             <div class="card-body-icon">
-                               <i class="fas fa-fw fa-download"></i>
-                             </div>
-                             <div class="mr-5">Total No. of Records</div>
-                           </div>
-                           <a class="card-footer text-white clearfix small z-1 bg-warning" href="#">
-                             <span class="float-left">View Details</span>
-                             <span class="float-right">
-                               <i class="fas fa-angle-right"></i>
-                             </span>
-                           </a>
-                         </div>
-                       </div>
-                     </div>
                </ul>
 
       <div id="content-wrapper">

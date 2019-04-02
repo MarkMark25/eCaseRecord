@@ -54,7 +54,19 @@ $(document).ready(function(){
     $(document).ready(function(){
     $('.add_button1').click(function(){
         var kakoi=$(this).attr('fldnum');
-        var insHTML = '<div class="input-group"> <select  name="fld_val1" class="form-control"><option >......</option><option value="caseNature1">Case Nature 1</option><option value="caseNature2">Case Nature 2</option><option value="caseNature3">Case Nature 3</option><option value="caseNature">Case Nature 4</option></select><div class="input-group-prepend"><button class="btn btn-danger btn-add add_button1 remove_button" fldnum="1" type="button"><span class="fas">x</span></button></div>';
+        var insHTML = '
+        <div class="input-group">
+            <select  name="fld_val1" class="form-control">
+            <option >......</option>
+            <option value="caseNature1">Case Nature 1</option>
+            <option value="caseNature2">Case Nature 2</option>
+            <option value="caseNature3">Case Nature 3</option>
+            <option value="caseNature">Case Nature 4</option>
+            </select><div class="input-group-prepend">
+            <button class="btn btn-danger btn-add add_button1 remove_button" fldnum="1" type="button">
+                <span class="fas">x</span>
+            </button>
+        </div>';
         $("#fld1").append(insHTML);
     });
 

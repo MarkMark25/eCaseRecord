@@ -1,4 +1,4 @@
-        $('#moreButton').on('show.bs.modal', function (event) {
+       $('#moreButton').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget)
             var caseid = button.data('caseid')
             var ccn = button.data('ccn')
@@ -69,6 +69,7 @@
             modal.find('.modal-body #isTheMatterComplained').val(complained)
             modal.find('.modal-body #whatConsidirations').val(consideration)
           })
+
           $('#deleteModal').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget)
             var caseid = button.data('caseid')

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\admin;
 use DB;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
+use App\Cases;
 
 class caseReportController extends Controller
 {
@@ -110,9 +112,12 @@ class caseReportController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($caseid)
     {
-        //
+        $users = DB::select('select * from cases where caseid = ?',[$caseid]);
+
+        dd($users);
+        //return view('admin.caseUpdate',compact('showData'));
     }
 
     /**
@@ -123,7 +128,7 @@ class caseReportController extends Controller
      */
     public function edit($id)
     {
-        //
+
     }
 
     /**

@@ -15,38 +15,38 @@
     <title>NBI-CAR</title>
 
     <!-- Bootstrap core CSS-->
-    <link href="bower_components/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="bower_components/vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="{{URL::to('bower_components/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet')}}">
+    <link href="{{URL::to('bower_components/vendor/bootstrap/css/bootstrap.css')}}" rel="stylesheet">
     <!-- Custom fonts for this template-->
-    <link href="bower_components/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="{{URL::to('bower_components/vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
 
     <!-- Page level plugin CSS-->
-    <link href="bower_components/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+    <link href="{{URL::to('bower_components/vendor/datatables/dataTables.bootstrap4.css')}}" rel="stylesheet">
 
     <!-- Custom styles for this template-->
-    <link href="bower_components/css/sb-admin.css" rel="stylesheet">
+    <link href="{{URL::to('bower_components/css/sb-admin.css')}}" rel="stylesheet">
 
     <!--TAB IMAGE -->
-    <link rel="icon"  href="bower_components/image/nbi-logo.png">
+    <link rel="icon"  href="{{URL::to('bower_components/image/nbi-logo.png')}}">
 
     <!--DATE PICKER AND ADD FIELDS START HERE-->
     <!--DATE PICKER1-->
     <!-- EXTRA CSS
-    <link href="bower_components/datepicker/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link href="{{URL::to('bower_components/datepicker/bootstrap.min.css')}}" rel="stylesheet" id="bootstrap-css">
     -->
-    <script src="bower_components/datepicker/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="bower_components/datepicker/jquery-ui.css">
-    <script src="bower_components/datepicker/jquery-1.11.1.min.js"></script>
-    <script src="bower_components/datepicker/jquery-ui.js"></script>
+    <script src="{{URL::to('bower_components/datepicker/bootstrap.min.js')}}"></script>
+    <link rel="stylesheet" href="{{URL::to('bower_components/datepicker/jquery-ui.css')}}">
+    <script src="{{URL::to('bower_components/datepicker/jquery-1.11.1.min.js')}}"></script>
+    <script src="{{URL::to('bower_components/datepicker/jquery-ui.js')}}"></script>
     <!--DATE PICKER2-->
-    <link rel="stylesheet" href="bower_components/datepicker/jquery-ui1.css">
-    <script src="bower_components/datepicker/jquery-ui1.js"></script>
+    <link rel="stylesheet" href="{{URL::to('bower_components/datepicker/jquery-ui1.css')}}">
+    <script src="{{URL::to('bower_components/datepicker/jquery-ui1.js')}}"></script>
 
     <!-- JS Datepicker -->
-    <script src="bower_components/datepicker/date.js"></script>
+    <script src="{{URL::to('bower_components/datepicker/date.js')}}"></script>
 
     <!-- Add Fields
-    <script src="bower_components/datepicker/addFields.js"></script>
+    <script src="{{URL::to('bower_components/datepicker/addFields.js')}}"></script>
     -->
 
     <style>
@@ -166,10 +166,15 @@
                     </li>
                 </ul>
       <div id="content-wrapper">
+            <a href="/caseReport" class="btn btn-secondary" style="margin-left:20px;">
+                <i class="fas fa-backward"></i>
+                <span>Back</span>
+            </a>
             <form method="POST" action="">
                 @method('PUT')
                 @csrf
                 {{ csrf_field() }}
+            @foreach ($showData as $showData)
               <div class="container-fluid" style="padding-bottom:3%; padding-top:2%;">
                 <div class="card mb-3" style="width:100%%;">
                   <center><div class="card-header" style="background-color:#dd8282;"><h4>Complaint Sheet</div></center>
@@ -179,19 +184,19 @@
                                 <div class="col-md-4">
                                     <label for="ccn">CCN</label>
                                     <div class="input-group mb-2">
-                                        <input type="text" id="ccn" name= "ccn" class="form-control" disabled value="{{ @$showData[0]->ccn }}">
+                                        <input type="text" id="ccn" name= "ccn" class="form-control"  value="{{ $showData->ccn }}">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <label for="acmo">ACMO No.</label>
                                     <div class="">
-                                            <input type="text" id="acmo" class="form-control" disabled value="{{ @$showData[0]->acmo}}">
+                                            <input type="text" id="acmo" class="form-control"  value="{{ $showData->acmo}}">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <label for="caseNumber">Car Case Number</label>
                                     <div class="input-group mb-2">
-                                        <input type="text" id="docketnumber" name="docketnumber" class="form-control" disabled value="{{ @$showData[0]->docketnumber }}">
+                                        <input type="text" id="docketnumber" name="docketnumber" class="form-control"  value="{{ $showData->docketnumber }}">
                                     </div>
                                 </div>
                             </div>
@@ -201,19 +206,19 @@
                                 <div class="col-md-4">
                                     <label for="dateassigned">Date Assigned</label>
                                     <div class="">
-                                        <input type="text" id="dateassigned" name="dateassigned" class="form-control" disabled value="{{ @$showData[0]->dateassigned}}">
+                                        <input type="text" id="dateassigned" name="dateassigned" class="form-control"  value="{{ $showData->dateassigned}}">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <label for="dateTerminated">Date Terminated</label>
                                     <div class="">
-                                        <input type="text" id="dateTerminated" name="dateTerminated" class="form-control" disabled value="{{ @$showData[0]->dateTerminated}}">
+                                        <input type="text" id="dateTerminated" name="dateTerminated" class="form-control"  value="{{ $showData->dateTerminated}}">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <label for="status">Status</label>
                                     <div class="">
-                                        <input type="text" id="status" name= "status" class="form-control" disabled value="{{ @$showData[0]->status}}">
+                                        <input type="text" id="status" name= "status" class="form-control"  value="{{ $showData->status}}">
                                     </div>
                                 </div>
                             </div>
@@ -223,7 +228,7 @@
                                 <div class="col-md-6">
                                     <label for="agent">Agent</label>
                                     <div class="">
-                                        <textarea class="form-control" name="full_name" id="full_name" style="width:100%;font-size:15px;resize:none;" rows="2" disabled>{{ @$showData[0]->full_name}}</textarea>{{-- QUERY HERE --}}
+                                        <textarea class="form-control" name="full_name" id="full_name" style="width:100%;font-size:15px;resize:none;" rows="2" >{{ $showData->agentName}}</textarea>{{-- QUERY HERE --}}
                                     </div>
                                 </div>
                             </div>
@@ -235,19 +240,19 @@
                                 <div class="col-md-4">
                                         <label for="suspectName">Name</label>
                                     <div class="">
-                                        <input type="text" id="complainant" name="complainant"  class="form-control" disabled value="{{ @$showData[0]->complainantname}}"/>  {{-- QUERY HERE --}}
+                                        <input type="text" id="complainant" name="complainant"  class="form-control"  value="{{ $showData->complainantname}}"/>  {{-- QUERY HERE --}}
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <label for="">Address</label>
                                     <div class="">
-                                        <input type="text" id="complainantAddress" name="complainantAddress"  class="form-control" disabled value="{{ @$showData[0]->complainant_Address}}"/>  {{-- QUERY HERE --}}
+                                        <input type="text" id="complainantAddress" name="complainantAddress"  class="form-control"  value="{{ $showData->complainant_Address}}"/>  {{-- QUERY HERE --}}
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <label for="">Telephone Number</label>
                                     <div class="">
-                                        <input type="text" id="complainantTelNumber" name="complainantTelNumber"  class="form-control" disabled value="{{ @$showData[0]->complainant_Contact_Number}}"/>  {{-- QUERY HERE --}}
+                                        <input type="text" id="complainantTelNumber" name="complainantTelNumber"  class="form-control"  value="{{ $showData->complainant_Contact_Number}}"/>  {{-- QUERY HERE --}}
                                     </div>
                                 </div>
                             </div>
@@ -257,19 +262,19 @@
                             <p style="font-weight:bold;">2. Persons Complained Against or Suspects (Isinusumbong)</p>
                             <div class="form-row">
                                 <div class="col-md-3">
-                                    <input type="text" class="form-control" id="suspectNameA" name="suspectNameA" placeholder="Name" disabled value="{{ @$showData[0]->suspect_name }}">
-                                    <input type="text" class="form-control" id="suspectAge" name="suspectAge" placeholder="Age" disabled value="{{ @$showData[0]->suspect_Age }}">
+                                    <input type="text" class="form-control" id="suspectNameA" name="suspectNameA" placeholder="Name"  value="{{ $showData->suspect_name }}">
+                                    <input type="text" class="form-control" id="suspectAge" name="suspectAge" placeholder="Age"  value="{{ $showData->suspect_Age }}">
                                 </div>
                                 <div class="col-md-3">
-                                    <input type="text" class="form-control" id="suspectAddressA" name="suspectAddressA" placeholder="Address" disabled value="{{ @$showData[0]->suspect_Address }}">
-                                    <input type="text" class="form-control" id="suspectCivilStatusA" name="suspectCivilStatusA" placeholder="Civil Status" disabled value="{{ @$showData[0]->suspect_Civil_Status }}">
+                                    <input type="text" class="form-control" id="suspectAddressA" name="suspectAddressA" placeholder="Address"  value="{{ $showData->suspect_Address }}">
+                                    <input type="text" class="form-control" id="suspectCivilStatusA" name="suspectCivilStatusA" placeholder="Civil Status"  value="{{ $showData->suspect_Civil_Status }}">
                                 </div>
                                 <div class="col-md-3">
-                                    <input type="text" class="form-control" id="suspectTelNumberA" name= "suspectTelNumberA"  placeholder="Telephone Number" disabled value="{{ @$showData[0]->suspect_Contact_Number }}">
-                                    <input type="text" class="form-control" id="suspectOccupationA" name="suspectOccupationA" placeholder="Occupation" disabled value="{{ @$showData[0]->suspect_Occupation }}">
+                                    <input type="text" class="form-control" id="suspectTelNumberA" name= "suspectTelNumberA"  placeholder="Telephone Number"  value="{{ $showData->suspect_Contact_Number }}">
+                                    <input type="text" class="form-control" id="suspectOccupationA" name="suspectOccupationA" placeholder="Occupation"  value="{{ $showData->suspect_Occupation }}">
                                 </div>
                                 <div class="col-md-3">
-                                    <input type="text" class="form-control" id="suspectSexA" name="suspectSexA" placeholder="sex" disabled value="{{ @$showData[0]->suspect_Sex }}">
+                                    <input type="text" class="form-control" id="suspectSexA" name="suspectSexA" placeholder="sex"  value="{{ $showData->suspect_Sex }}">
                                 </div>
                             </div>
                         </div>
@@ -279,7 +284,7 @@
                             <div class="form-group">
                                 <div class="form-row">
                                     <div class="col-md-6">
-                                        <input class="form-control" name="nameOfNature" id="nameOfNature" disabled value="{{ @$showData[0]->natureName}}"></input>
+                                        <input class="form-control" name="nameOfNature" id="nameOfNature"  value="{{ $showData->nature}}"></input>
                                     </div>
                                 </div>
                             </div>
@@ -291,11 +296,11 @@
                                 <div class="form-row">
                                     <div class="col-md-6">
                                         <label for="whereCommitted">Place Committed</label>
-                                        <input type="text" name="whereCommitted" id="whereCommitted" class="form-control" disabled value="{{ @$showData[0]->place_Committed }}">
+                                        <input type="text" name="whereCommitted" id="whereCommitted" class="form-control"  value="{{ $showData->place_Committed }}">
                                     </div>
                                     <div class="col-md-6">
                                         <label for="whenCommitted">When Committed</label>
-                                        <input type="text" name="wheneCommitted" id="wheneCommitted" class="form-control" disabled value="{{ @$showData[0]->date_Committed }}">
+                                        <input type="text" name="wheneCommitted" id="wheneCommitted" class="form-control"  value="{{ $showData->date_Committed }}">
                                     </div>
                                 </div>
                             </div>
@@ -305,19 +310,19 @@
                             <p style="font-weight:bold;">5. Victim/s If any</p>
                             <div class="form-row">
                                 <div class="col-md-3">
-                                    <input type="text" class="form-control" id="victimNameA" name="victimNameA" placeholder="Name" disabled value="{{ @$showData[0]->victim_name }}">
-                                    <input type="text" class="form-control" id="victimAge" name="victimAge" placeholder="Age" disabled value="{{ @$showData[0]->victim_Age }}">
+                                    <input type="text" class="form-control" id="victimNameA" name="victimNameA" placeholder="Name"  value="{{ $showData->victim_name }}">
+                                    <input type="text" class="form-control" id="victimAge" name="victimAge" placeholder="Age"  value="{{ $showData->victim_Age }}">
                                 </div>
                                 <div class="col-md-3">
-                                    <input type="text" class="form-control" id="victimAddressA" name="victimAddressA" placeholder="Address" disabled value="{{ @$showData[0]->victim_Address }}">
-                                    <input type="text" class="form-control" id="victimCivilStatusA" name="victimCivilStatusA" placeholder="Civil Status" disabled value="{{ @$showData[0]->victim_Civil_Status }}">
+                                    <input type="text" class="form-control" id="victimAddressA" name="victimAddressA" placeholder="Address"  value="{{ $showData->victim_Address }}">
+                                    <input type="text" class="form-control" id="victimCivilStatusA" name="victimCivilStatusA" placeholder="Civil Status"  value="{{ $showData->victim_Civil_Status }}">
                                 </div>
                                 <div class="col-md-3">
-                                    <input type="text" class="form-control" id="victimTelNumberA" name= "victimTelNumberA"  placeholder="Telephone Number" disabled value="{{ @$showData[0]->victim_Contact_Number }}">
-                                    <input type="text" class="form-control" id="victimOccupationA" name="victimOccupationA" placeholder="Occupation" disabled value="{{ @$showData[0]->victim_Occupation }}">
+                                    <input type="text" class="form-control" id="victimTelNumberA" name= "victimTelNumberA"  placeholder="Telephone Number"  value="{{ $showData->victim_Contact_Number }}">
+                                    <input type="text" class="form-control" id="victimOccupationA" name="victimOccupationA" placeholder="Occupation"  value="{{ $showData->victim_Occupation }}">
                                 </div>
                                 <div class="col-md-3">
-                                    <input type="text" class="form-control" id="victimSexA" name="victimSexA" placeholder="sex" disabled value="{{ @$showData[0]->victim_Sex }}">
+                                    <input type="text" class="form-control" id="victimSexA" name="victimSexA" placeholder="sex"  value="{{ $showData->victim_Sex }}">
                                 </div>
                             </div>
                         </div>
@@ -325,37 +330,38 @@
                         <section>
                             <div class="form-group">
                                 <p style="font-weight:bold;">6. Narration of Facts (Salaysay ng mga Pangyayari) </p>
-                                <textarea id="narrationOfFacts" name="narrationOfFacts"  style="width:100%;font-size:15px;resize:none;" rows="5" disabled>{{ @$showData[0]->narration_Of_Facts }}</textarea>
+                                <textarea id="narrationOfFacts" name="narrationOfFacts"  style="width:100%;font-size:15px;resize:none;" rows="5" >{{ $showData->narration_Of_Facts }}</textarea>
                             </div>
                         </section>
                     <hr>
                         <section>
                             <div class="form-group">
                                 <p style="font-weight:bold;">7. Has the matter been reported to any agency, If so, to what people agency? (Ang bagay bang ito ay naulat na sa ibang sangay ng pagsisiyasat? Kung naulat na, saang sangay?) </p>
-                                <textarea name="hasTheMatter" id="hasTheMatter" style="width:100%;font-size:15px;resize:none;" rows="5" disabled>{{ @$showData[0]->reported_Any_Agency }}</textarea>
+                                <textarea name="hasTheMatter" id="hasTheMatter" style="width:100%;font-size:15px;resize:none;" rows="5" >{{ $showData->reported_Any_Agency }}</textarea>
                                 <br>
                                 <p style="font-weight:bold;">Status of investigation, If any (Kalagayan ng pagsisiyasat kung mayroon?)</p>
-                                <textarea name="statusOfInvestigation" id="statusOfInvestigation" style="width:100%;font-size:15px;resize:none;" rows="5" disabled>{{ @$showData[0]->status_of_Investigation }}</textarea>
+                                <textarea name="statusOfInvestigation" id="statusOfInvestigation" style="width:100%;font-size:15px;resize:none;" rows="5" >{{ $showData->status_of_Investigation }}</textarea>
                             </div>
                         </section>
                     <hr>
                         <section>
                             <div class="form-group">
                                 <p style="font-weight:bold;">8.Is the matter complained of the subject of any court action of proceedings? If so, where? (Ang bagay bang may kinalaman sa pagsusumbong ay nasa hukuman na? Kung gaanoon, saan?)</p>
-                                <textarea name="isTheMatterComplained" id="isTheMatterComplained" style="width:100%;font-size:15px;resize:none;" rows="5" disabled>{{ @$showData[0]->where_court_Proceedings }}</textarea>
+                                <textarea name="isTheMatterComplained" id="isTheMatterComplained" style="width:100%;font-size:15px;resize:none;" rows="5" >{{ $showData->where_court_Proceedings }}</textarea>
                             </div>
                         </section>
                     <hr>
                         <section>
                             <div class="form-group">
                                 <p style="font-weight:bold;">9.What Consideration/s impelled you to report to the NBI? (Ano ang nag-udyok sa iyo para magreklamo dito sa NBI?)</p>
-                                <textarea name="whatConsidirations" id="whatConsidirations" style="width:100%;font-size:15px;resize:none;" rows="5" disabled>{{ @$showData[0]->report_Considerations }}</textarea>
+                                <textarea name="whatConsidirations" id="whatConsidirations" style="width:100%;font-size:15px;resize:none;" rows="5" >{{ $showData->report_Considerations }}</textarea>
                             </div>
                         </section>
 
                     </div> <!--CLOSING CARD HEADER -->
                 </div> <!--CLOSING CARD REGISTER -->
               </div> <!--CLOSING CONTAINER FLUID -->
+              @endforeach
             </form>
         </div>
         <!-- Sticky Footer -->
@@ -492,9 +498,9 @@
     </script>
 
     <!-- Custom scripts for all pages -->
-    <script src="bower_components/js/sb-admin.min.js"></script>
-    <script src="bower_components/js/demo/datatables-demo.js"></script>
-    <script src="bower_components/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="{{URL::to('bower_components/js/sb-admin.min.js')}}"></script>
+    <script src="{{URL::to('bower_components/js/demo/datatables-demo.js')}}"></script>
+    <script src="{{URL::to('bower_components/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 
 
     <!--THIS IS A COMMENT, BELOW ARE COMMENTS AND IT CANNOT RUN

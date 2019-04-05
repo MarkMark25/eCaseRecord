@@ -205,7 +205,7 @@
                     <tbody>
                         @foreach($showData as $showData)
                         <tr>
-                            <td style="display:none;">{{ $showData->caseid }}</td>
+                            <td style="display:none">{{ $showData->sample }}</td>
                             <td>{{ $showData->acmo }}</td>
                             <td>{{ $showData->docketnumber }}</td>
                             <td>{{ $showData->ccn }}</td>
@@ -218,7 +218,7 @@
                             <td>{{ $showData->full_name }}</td>
                             <td>
                                 <div>
-                                    <a href="/updateCase/{{ $showData->caseid }}" class="btn btn-default btn-xs btn-filter">
+                                    <a href="/updateCase/{{ $showData->sample }}" class="btn btn-default btn-xs btn-filter">
                                         <span style="color:#0460f4;" class="fas fa-edit"> </span>
                                     </a>
                                     <button type="button" class="btn btn-default btn-xs btn-filter"

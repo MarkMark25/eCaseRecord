@@ -304,20 +304,6 @@ chart.render();
       <td>@twitter</td>
       <td>@mdo</td>
     </tr>
-    <tr>
-     <td>Mark</td>
-      <td>Larry</td>
-      <td>the Bird</td>
-      <td>@twitter</td>
-      <td>@mdo</td>
-    </tr>
-    <tr>
-     <td>Mark</td>
-      <td>Larry</td>
-      <td>the Bird</td>
-      <td>@twitter</td>
-      <td>@mdo</td>
-    </tr>
   </tbody>
 </table>       
 
@@ -382,16 +368,6 @@ chart.render();
       <td>Mark</td>
       <td>Jacob</td>
       <td>Thornton</td>
-    </tr>
-    <tr>
-      <td>Mark</td>
-      <td>Larry</td>
-      <td>the Bird</td>
-    </tr>
-    <tr>
-      <td>Mark</td>
-      <td>Larry</td>
-      <td>the Bird</td>
     </tr>
     <tr>
       <td>Mark</td>

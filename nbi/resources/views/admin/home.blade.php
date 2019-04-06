@@ -58,7 +58,7 @@
         <li class="nav-item dropdown no-arrow">
           <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-user-circle fa-fw"></i>
-            {{ Auth::user()->firstName}} {{ Auth::user()->lastName}}
+            <label name="UserName" id="UserName"> Mark Anthony</label> {{-- QUERY HERE --}}
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
             <a class="dropdown-item" href="/encoderProfile">Profile</a>
@@ -80,15 +80,15 @@
             <span>Home</span>
           </a>
         </li>
-
+       
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-fw fa-briefcase"></i>
             <span>Manage Case</span>
           </a>
           <div class="dropdown-menu" aria-labelledby="pagesDropdown">
-            <a class="dropdown-item" href="/caseReport">Case Records</a> <!-- add page for case records-->
-            <a class="dropdown-item" href="/caseNature">Case Nature</a>  <!-- add page for case nature -->
+            <a class="dropdown-item" href="/">Case Records</a> <!-- add page for case records-->
+            <a class="dropdown-item" href="/">Case Nature</a>  <!-- add page for case nature -->
           </div>
         </li>
 
@@ -105,52 +105,55 @@
             <a class="dropdown-item" href="/">Terminated Miscellaneous</a>  <!-- add page -->
             <a class="dropdown-item" href="/">Pending Crimes</a>  <!-- add page -->
             <a class="dropdown-item" href="/">Pending Miscellaneous</a>  <!-- add page -->
-
+            <a class="dropdown-item" href="/">Case Report</a>  <!-- add page -->
           </div>
         </li>
-
-        <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fas fa-fw fa-user-cog"></i>
-                <span>Manage Accounts</span>
-            </a>
-            <div class="dropdown-menu" aria-labelledby="pagesDropdown">
-                <a class="dropdown-item" href="/manageAccounts">User Monitoring</a> <!-- add page for case records-->
-                <a class="dropdown-item" href="/userLogs">User Logs</a>  <!-- add page -->
-                <a class="dropdown-item" href="/userHistory">User History</a>  <!-- add page -->
-            </div>
+       
+        <li class="nav-item">
+          <a class="nav-link" href="/adminManageAccount">
+            <i class="fas fa-fw fa-user-cog"></i>
+            <span>Manage Accounts</span></a>
         </li>
 
 <br>
 <br>
 <!-- Icon Cards-->
-<div class="col">
-            <div class="row-xl-3 row-sm-6 mb-3">
-              <div class="card text-black o-hidden h-100">
+<div class="col">      
+</div>
+    </ul>  
+<!-- /.container-fluid -->
+
+<div id="content-wrapper">
+
+        <div class="container-fluid">
+
+          <!-- Icon Cards-->
+          <div class="row">
+            <div class="col-xl-4 col-sm-7 mb-4">
+              <div class="card text-white bg-primary o-hidden h-100">
                 <div class="card-body">
                   <div class="card-body-icon">
-                    <i class="fas fa-fw fa-user-friends"></i>
+                  <i class="fas fa-fw fa-user-friends"></i>
                   </div>
                   <div class="mr-5"># active users</div>
                 </div>
-                <a class="card-footer text-white clearfix small z-1 bg-success" href="#">
-                  <span class="float-left" bg-primary>View Details</span>
+                <a class="card-footer text-white clearfix small z-1" href="#">
+                <span class="float-left" bg-primary>View Details</span>
                   <span class="float-right">
                     <i class="fas fa-angle-right"></i>
                   </span>
                 </a>
               </div>
             </div>
-
-            <div class="row-xl-3 ow-sm-6 mb-3">
-              <div class="card text-black o-hidden h-100">
+            <div class="col-xl-4 col-sm-7 mb-4">
+              <div class="card text-white bg-warning o-hidden h-100">
                 <div class="card-body">
                   <div class="card-body-icon">
-                    <i class="fas fa-fw fa-copy"></i>
+                  <i class="fas fa-fw fa-copy"></i>
                   </div>
                   <div class="mr-5"># closed cases</div>
                 </div>
-                <a class="card-footer text-white clearfix small z-1 bg-primary" href="#">
+                <a class="card-footer text-white clearfix small z-1" href="#">
                   <span class="float-left">View Details</span>
                   <span class="float-right">
                     <i class="fas fa-angle-right"></i>
@@ -158,16 +161,15 @@
                 </a>
               </div>
             </div>
-
-            <div class="row-xl-3 row-sm-6 mb-3">
-              <div class="card text-black  o-hidden h-100">
+            <div class="col-xl-4 col-sm-7 mb-4">
+              <div class="card text-white bg-success o-hidden h-100">
                 <div class="card-body">
                   <div class="card-body-icon">
-                    <i class="fas fa-fw fa-download"></i>
+                  <i class="fas fa-fw fa-download"></i>
                   </div>
                   <div class="mr-5">Total No. of Records</div>
                 </div>
-                <a class="card-footer text-white clearfix small z-1 bg-warning" href="#">
+                <a class="card-footer text-white clearfix small z-1" href="#">
                   <span class="float-left">View Details</span>
                   <span class="float-right">
                     <i class="fas fa-angle-right"></i>
@@ -175,10 +177,9 @@
                 </a>
               </div>
             </div>
+            </div>
           </div>
-    </ul>
-<!-- /.container-fluid -->
-
+ 
 <div id="content-wrapper">
 
 <div class="container-fluid">
@@ -189,6 +190,7 @@
               <b>CAR Crime Offenses 2019</b></div>
               <script>
 window.onload = function () {
+
 var chart = new CanvasJS.Chart("chartContainer", {
 	title:{
 		text: "Criminal Offenses"
@@ -196,9 +198,9 @@ var chart = new CanvasJS.Chart("chartContainer", {
 	axisY: {
 		title: "Percentage"
 	},
-	data: [{
-		type: "column",
-		dataPoints: [
+	data: [{        
+		type: "column",  
+		dataPoints: [      
 			{ y: 300878, label: "Murder" },
 			{ y: 266455,  label: "Rape" },
 			{ y: 169709,  label: "Kidnapping" },
@@ -211,36 +213,24 @@ var chart = new CanvasJS.Chart("chartContainer", {
 	}]
 });
 chart.render();
+
 }
 </script>
 <div id="chartContainer" style="height: 200px; width: 98%;"></div>
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 </div>
-            <div class="card-body">
-              <canvas id="myAreaChart" width="50%" height="50"></canvas>
-            </div>
-          </div>
-
-          <div class="card mb-3">
-            <div class="card-header">
-            <i class="fas fa-fw fa-chart-bar"></i>
-              <b>CAR Miscellaneous Offenses 2019</b></div>
+<br>
 
 
+  <!-- pending cases -->
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="card mb-3">
+        <div class="card-header">
+            <i class="fas fa-fw fa-clock"></i>
+              <b>Pending Cases</b></div>
+        <table class="table table-striped">
 
-            <div class="card-body">
-              <canvas id="myAreaChart" width="50%" height="50"></canvas>
-            </div>
-          </div>
-
-          <!-- pending and userlog -->
-          <div class="row">
-            <div class="col-lg-6">
-              <div class="card mb-3">
-                <div class="card-header">
-                  <i class="fas fa-fw fa-clock"></i>
-                  <b>Pending Cases</b></div>
-                  <table class="table table-striped">
   <thead>
     <tr>
       <th scope="col">Subject</th>
@@ -272,21 +262,65 @@ chart.render();
       <td>@twitter</td>
       <td>@mdo</td>
     </tr>
+    <tr>
+      <td>Mark</td>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>@mdo</td>
+      <td>@mdo</td>
+    </tr>
+    <tr>
+      <td>Mark</td>
+      <td>Jacob</td>
+      <td>Thornton</td>
+      <td>@fat</td>
+      <td>@mdo</td>
+    </tr>
+    <tr>
+     <td>Mark</td>
+      <td>Larry</td>
+      <td>the Bird</td>
+      <td>@twitter</td>
+      <td>@mdo</td>
+    </tr>
+    <tr>
+      <td>Mark</td>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>@mdo</td>
+      <td>@mdo</td>
+    </tr>
+    <tr>
+      <td>Mark</td>
+      <td>Jacob</td>
+      <td>Thornton</td>
+      <td>@fat</td>
+      <td>@mdo</td>
+    </tr>
+    <tr>
+     <td>Mark</td>
+      <td>Larry</td>
+      <td>the Bird</td>
+      <td>@twitter</td>
+      <td>@mdo</td>
+    </tr>
   </tbody>
-</table>
-                <div class="card-body">
-                  <canvas id="myBarChart" width="60%" height="80"></canvas>
-                </div>
-              </div>
-            </div>
+</table>       
 
+<!-- userlog -->
+      <div class="card-body">
+          <canvas id="myBarChart" width="60%" height="80"></canvas>
+      </div>
+    </div>
+  </div>
+            
+      <div class="col-lg-6">
+        <div class="card mb-3">
+        <div class="card-header">
+          <i class="fas fa-fw fa-users"></i>
+            <b>User Logs</b></div>
+              <table class="table table-striped">
 
-            <div class="col-lg-6">
-              <div class="card mb-3">
-                <div class="card-header">
-                  <i class="fas fa-fw fa-users"></i>
-                  <b>User Logs</b></div>
-                  <table class="table table-striped">
   <thead>
     <tr>
       <th scope="col">User</th>
@@ -310,16 +344,43 @@ chart.render();
       <td>Larry</td>
       <td>the Bird</td>
     </tr>
+    <tr>
+      <td>Mark</td>
+      <td>Mark</td>
+      <td>Otto</td>
+    </tr>
+    <tr>
+      <td>Mark</td>
+      <td>Jacob</td>
+      <td>Thornton</td>
+    </tr>
+    <tr>
+      <td>Mark</td>
+      <td>Larry</td>
+      <td>the Bird</td>
+    </tr>
+    <tr>
+      <td>Mark</td>
+      <td>Mark</td>
+      <td>Otto</td>
+    </tr>
+    <tr>
+      <td>Mark</td>
+      <td>Jacob</td>
+      <td>Thornton</td>
+    </tr>
+    <tr>
+      <td>Mark</td>
+      <td>Larry</td>
+      <td>the Bird</td>
+    </tr>
   </tbody>
-</table>
-                <div class="card-body">
-                  <canvas id="myBarChart" width="60%" height="80"></canvas>
-                </div>
-              </div>
-            </div>
-          </div>
+</table>         
 
-        </div>
+</div>
+    </div>
+  </div>
+
         </div>
         <!-- /.container-fluid -->
 

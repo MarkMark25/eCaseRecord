@@ -54,13 +54,15 @@ class caseReportController extends Controller
         ,DB::raw("GROUP_CONCAT(DISTINCT CONCAT (agent.position, ' ', users.firstName,' ',users.lastName) SEPARATOR ' and ') as full_name")
         ,DB::raw("GROUP_CONCAT(DISTINCT CONCAT (nature.nature) SEPARATOR ' and ') as natureName")
         ,DB::raw("GROUP_CONCAT(DISTINCT CONCAT(case_suspects.suspect_name) SEPARATOR ' and ') as suspectName")
-        ,DB::raw("cases.caseid AS sample"))
+        ,DB::raw("cases.caseid AS caseID")
+        ,DB::raw("CONCAT(users.firstName,' ',users.middleInitial,'. ',users.lastName,' ',agent.position) AS agentName"))
         ->groupBy(DB::raw('caseagent.caseid'),
         DB::raw('case_victims.caseid'),
         DB::raw('case_suspects.caseid'))
         ->orderby('cases.docketnumber','ASC')
         ->where('cases.caseStatus','=','Available')
         ->get();
+
         return view ('admin.caseReport',compact('showData','agent','nature','status','agent2','nature2'));
     }
     /**

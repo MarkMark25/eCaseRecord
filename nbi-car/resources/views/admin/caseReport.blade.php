@@ -185,27 +185,25 @@
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                   <thead>
                     <tr>
-                        <th style="display:none;">Case ID</th>
-                        <th style="width:8%">ACMO</th>
-                        <th style="width:8%">CAR Case No.</th>
-                        <th style="width:8%">CCN</th>
-                        <th style="width:10%">Subject</th>
-                        <th style="width:10%">Complainant</th>
-                        <th style="width:10%">Nature of Case</th>
-                        <th style="width:10%">Date Assigned</th>
-                        <th style="width:10%">Date Terminated</th>
-                        <th style="width:8%">Status</th>
-                        <th style="width:10%">Agent</th>
-                        <th style="width:8%">Action</th>
-                        <th style="width:5%">More</th>
+                        <th>Case ID</th>
+                        <th>ACMO</th>
+                        <th>CAR Case No.</th>
+                        <th>CCN</th>
+                        <th>Subject</th>
+                        <th>Complainant</th>
+                        <th>Nature of Case</th>
+                        <th>Date Assigned</th>
+                        <th>Date Terminated</th>
+                        <th>Status</th>
+                        <th>Agent</th>
+                        <th>Action</th>
+                        <th>More</th>
                     </tr>
                     </thead>
-
-                    <thead>
                     <tbody>
                         @foreach($showData as $showData)
                         <tr>
-                            <td style="display:none">{{ $showData->sample }}</td>
+                            <td>{{ $showData->caseID }}</td>
                             <td>{{ $showData->acmo }}</td>
                             <td>{{ $showData->docketnumber }}</td>
                             <td>{{ $showData->ccn }}</td>
@@ -218,13 +216,13 @@
                             <td>{{ $showData->full_name }}</td>
                             <td>
                                 <div>
-                                    <a href="/updateCase/{{ $showData->sample }}" class="btn btn-default btn-xs btn-filter">
+                                    <a href="/updateCase/{{ $showData->caseID }}" class="btn btn-default btn-xs btn-filter">
                                         <span style="color:#0460f4;" class="fas fa-edit"> </span>
                                     </a>
                                     <button type="button" class="btn btn-default btn-xs btn-filter"
                                         data-target="#deleteModal"
                                         data-toggle="modal"
-                                        data-caseid="{{ $showData->caseid}}"
+                                        data-caseid="{{ $showData->caseID}}"
                                         data-ccn="{{ $showData->ccn}}"
                                         data-docketnumber="{{ $showData->docketnumber}}"
                                         data-acmo="{{ $showData->acmo}}"
@@ -265,10 +263,11 @@
                             </td>
                             <td>
                                 <div>
+                                    <!-- Some of the data-attributes are not being used. -->
                                     <button type="button" class="btn btn-default btn-xs btn-filter"
-                                        data-target="#moreButton"
+                                        data-target="#moreButton-{{ $showData->caseID }}"
                                         data-toggle="modal"
-                                        data-caseid="{{ $showData->caseid}}"
+                                        data-caseid="{!! $showData->caseID !!}"
                                         data-ccn="{{ $showData->ccn}}"
                                         data-docketnumber="{{ $showData->docketnumber}}"
                                         data-acmo="{{ $showData->acmo}}"
@@ -308,8 +307,47 @@
                                 </div>
                             </td>
                         </tr>
+                        <!-- More Details -->
+                        <div class="modal fade" id="moreButton-{{ $showData->caseID }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-lg" role="document" >
+                                <div class="modal-content">
+                                    <div class="modal-header" style="background-color:#dd8282;">
+                                        <h4 class="modal-title" id="exampleModalLabel">
+                                            <center>Case Summary</center>
+                                        </h4>
+                                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body" style="background-color:#edcbcb;">
+                                        <input type="text" id="caseid" name="caseid" class="form-control" value="{{ $showData->caseID }}">
+                                        @include('admin.caseReport.showModalForm')
+                                    </div>
+                                    <div class="modal-footer" style="background-color:#dd8282;">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    </div>
+                            </div>
+                            </div>
+                        </div>
                         @endforeach
                     </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>Case ID</th>
+                            <th>ACMO</th>
+                            <th>CAR Case No.</th>
+                            <th>CCN</th>
+                            <th>Subject</th>
+                            <th>Complainant</th>
+                            <th>Nature of Case</th>
+                            <th>Date Assigned</th>
+                            <th>Date Terminated</th>
+                            <th>Status</th>
+                            <th>Agent</th>
+                            <th>Action</th>
+                            <th>More</th>
+                        </tr>
+                    </tfoot>
                 </table>
               </div>
             </div>
@@ -365,29 +403,6 @@
       </div>
     </div>
 
-
-    <!-- Exit Modal -->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">×</span>
-                </button>
-            </div>
-        </div>
-    </div>
-
-
-    <!-- Exit Modal -->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">×</span>
-                </button>
-            </div>
-        </div>
-    </div>
-
-
     <!-- Delete Modal -->
     <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document" >
@@ -412,40 +427,6 @@
           </div>
         </div>
     </div>
-
-    <!-- Exit Modal -->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">×</span>
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- More Details -->
-    <div class="modal fade" id="moreButton" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document" >
-            <div class="modal-content">
-                <div class="modal-header" style="background-color:#dd8282;">
-                    <h4 class="modal-title" id="exampleModalLabel">
-                        <center>Case Summary</center>
-                    </h4>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body" style="background-color:#edcbcb;">
-                    <input type="hidden" id="caseid" name="caseid" class="form-control" value="">
-                    @include('admin.caseReport.showModalForm')
-                </div>
-                <div class="modal-footer" style="background-color:#dd8282;">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
-          </div>
-        </div>
-    </div>
-
     <!-- Exit Modal -->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -491,6 +472,33 @@
             var modal = $(this)
             modal.find('.modal-body #').val()
           })
+    </script>
+    <script>
+        $(document).ready(function() {
+            // Setup - add a text input to each footer cell
+            $('#dataTable thead th').each( function (i) {
+                var title = $('#dataTable thead th').eq( $(this).index() ).text();
+                $(this).html( '<input type="text" class="inputTable" placeholder="'+title+'" data-index="'+i+'" />' );
+            } );
+
+            // DataTable
+            var table = $('#dataTable').DataTable( {
+                scrollY:        "auto",
+                scrollX:        true,
+                scrollCollapse: true,
+                paging:         true,
+                destroy:        true,
+                fixedColumns:   true
+            } );
+
+            // Filter event handler
+            $( table.table().container() ).on( 'keyup', 'thead input', function () {
+                table
+                    .column( $(this).data('index') )
+                    .search( this.value )
+                    .draw();
+            } );
+        } );
     </script>
   </body>
   @endguest

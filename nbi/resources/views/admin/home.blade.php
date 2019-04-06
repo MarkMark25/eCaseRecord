@@ -304,12 +304,26 @@ chart.render();
       <td>@twitter</td>
       <td>@mdo</td>
     </tr>
+    <tr>
+     <td>Mark</td>
+      <td>Larry</td>
+      <td>the Bird</td>
+      <td>@twitter</td>
+      <td>@mdo</td>
+    </tr>
+    <tr>
+     <td>Mark</td>
+      <td>Larry</td>
+      <td>the Bird</td>
+      <td>@twitter</td>
+      <td>@mdo</td>
+    </tr>
   </tbody>
 </table>       
 
 <!-- userlog -->
-      <div class="card-body">
-          <canvas id="myBarChart" width="60%" height="80"></canvas>
+      <div class="row">
+          <canvas id="myBarChart" width="50%" height="1"></canvas>
       </div>
     </div>
   </div>
@@ -368,6 +382,16 @@ chart.render();
       <td>Mark</td>
       <td>Jacob</td>
       <td>Thornton</td>
+    </tr>
+    <tr>
+      <td>Mark</td>
+      <td>Larry</td>
+      <td>the Bird</td>
+    </tr>
+    <tr>
+      <td>Mark</td>
+      <td>Larry</td>
+      <td>the Bird</td>
     </tr>
     <tr>
       <td>Mark</td>

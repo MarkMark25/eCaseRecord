@@ -165,7 +165,7 @@
                               <label for="caseNumber">NBI-CAR Case Number</label>
                               <div class="input-group mb-2">
                                   <input type="text" id="" name="" class="form-control col-md-5" value="NBI-CAR-" readonly>
-                                  <input type="text" id="docketnumber" autofocus name="docketnumber" class="form-control" value="" placeholder="0-00-000" maxlength="8" pattern="^\w{1}-\d{2}-\d{3}$" onkeypress='validate(event)' title="Follow the following format. e.g. C-10-001" required> {{-- QUERY HERE --}}
+                                  <input type="text" id="docketnumber" autofocus name="docketnumber" class="form-control" value="" placeholder="C-00-000" maxlength="8" pattern="^\w{1}-\d{2}-\d{3}$" onkeypress='validate(event)' title="Follow the following format. e.g. C-10-001" required> {{-- QUERY HERE --}}
                               </div>
                           </div>
 

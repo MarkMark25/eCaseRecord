@@ -175,85 +175,56 @@
                 {{ csrf_field() }}
               <div class="container-fluid" style="padding-bottom:3%; padding-top:2%;">
                 <div class="card mb-3" style="width:100%%;">
-                  <center><div class="card-header" style="background-color:#dd8282;"><h4>Edit case details and complaint sheet.</div></center>
+                  <center><div class="card-header" style="background-color:#dd8282;"><h4>Review case details and complaint sheet</div></center>
                     <div class="card-body" style="background-color:#edcbcb;">
                         @foreach ($cases as $cases)
-                        <input type="hidden" id="caseID" name= "caseID" class="form-control"  value="{{ $cases->caseID }}">
+                        <input type="hidden" id="caseID" name= "caseID" class="form-control"  value="{{ $cases->caseID }}" disabled>
                         <div class="form-group">
                             <div class="form-row">
                                 <div class="col-md-4">
                                     <label for="ccn">CCN</label>
-                                    <input type="text" id="ccn" name= "ccn" class="ccNumber form-control" value="{{ $cases->ccn }}" placeholder="I-00-00000" maxlength="10" pattern="^\w{1}-\d{2}-\d{5}$" title="Follow the following format. e.g. I-10-00001" onkeypress='validateCCN(event)' autocomplete="off">
+                                    <input type="text" id="ccn" name= "ccn" class="form-control"  value="{{ $cases->ccn }}" disabled>
                                 </div>
                                 <div class="col-md-4">
                                     <label for="acmo">ACMO No.</label>
-                                    <input type="text" id="acmo" value="{{ $cases->acmo}}" placeholder="00-0-00000" title="Follow the following format. e.g. 00-C-00000" maxlength="10" pattern="^\d{2}-\w{1}-\d{5}$" name= "acmo" class="form-control" onkeypress='validateACMO(event)' autocomplete="off">
+                                    <input type="text" id="acmo" class="form-control"  value="{{ $cases->acmo}}" disabled>
                                 </div>
                                 <div class="col-md-4">
                                     <label for="caseNumber">Car Case Number</label>
                                     <div class="input-group mb-2">
-                                            <input type="text" id="docketnumber" name="docketnumber" class="form-control" value="{{ $cases->docketnumber }}" placeholder="C-00-000" maxlength="8" pattern="^\w{1}-\d{2}-\d{3}$" onkeypress='validate(event)' title="Follow the following format. e.g. C-10-001" autocomplete="off" required>
+                                        <input type="text" id="docketnumber" name="docketnumber" class="form-control"  value="{{ $cases->docketnumber }}" disabled>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        @endforeach
                         <div class="form-group">
                             <div class="form-row">
-                                @foreach ($dateAssigned as $dateAssigned)
-                                <div class="col-md-4">
-                                    <label for="dateAssigned">Date Assigned</label>
-                                    <div class="input-group mb-2">
-                                        <div class="input-group-prepend">
-                                            <div class="btn btn-secondary">
-                                                <i class="fas fa-fw fa-calendar"></i>
-                                            </div>
-                                        </div>
-                                        <input type="text" id="datepicker" name="dateassigned" class="form-control"  value="{{ $dateAssigned->dateassigned}}">
-                                    </div>
-                                </div>
-                                @endforeach
-                                @foreach ($dateTerminated as $dateTerminated)
                                 <div class="col-md-4">
                                     <label for="dateTerminated">Date Terminated</label>
-                                    <div class="input-group mb-2">
-                                        <div class="input-group-prepend">
-                                            <div class="btn btn-secondary">
-                                                <i class="fas fa-fw fa-calendar"></i>
-                                            </div>
-                                        </div>
-                                        <input type="text" id="datepickers" name="dateTerminated" class="form-control"  value="{{ $dateTerminated->dateTerminated}}">
-                                    </div>
+                                    <input type="text" id="dateTerminated" name="dateTerminated" class="form-control"  value="{{ $cases->dateTerminated}}" disabled>
                                 </div>
-                                @endforeach
+                            @endforeach
+                            @foreach ($dateAssigned as $dateAssigned)
+                                <div class="col-md-4">
+                                    <label for="dateassigned">Date Assigned</label>
+                                    <input type="text" id="dateassigned" name="dateassigned" class="form-control"  value="{{ $dateAssigned->dateassigned}}" disabled>
+                                </div>
+                            @endforeach
+                            @foreach ($status as $status)
                                 <div class="col-md-4">
                                     <label for="status">Status</label>
-                                    <div class="input-group">
-                                        <select name="status" class="form-control">
-                                            @foreach($status as $status)
-                                                <option value="{{ $status->statusid }}">{{ $status->status }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
+                                    <input type="text" id="status" name= "status" class="form-control"  value="{{ $status->status}}" disabled>
                                 </div>
+                            @endforeach
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="form-row">
                                 <div class="col-md-4">
                                     <label for="agent">Agent</label>
-                                    <div class="fld_wrap" id="fld2">
-                                        <div class="input-group">
-                                            @foreach ($agent as $agent)
-                                            <input type="text" id="full_name" name= "full_name" class="form-control"  value="{{ $agent->agentName}}" disabled>
-                                            @endforeach
-                                            <div class="input-group-prepend">
-                                                <button class="btn btn-success btn-add add_button2" fldnum="2" type="button">
-                                                    <span class="fas">+</span>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    @foreach ($agent as $agent)
+                                    <input type="text" id="full_name" name= "full_name" class="form-control"  value="{{ $agent->agentName}}" disabled>
+                                    @endforeach
                                 </div>
                             </div>
                         </div>
@@ -265,19 +236,19 @@
                                 <div class="col-md-4">
                                         <label for="suspectName">Name</label>
                                     <div class="">
-                                        <input type="text" id="complainant" name="complainant"  class="form-control" onkeypress='validateComplainant(event)'  value="{{ $casesComplaint->complainantname}}"/>  {{-- QUERY HERE --}}
+                                        <input type="text" id="complainant" name="complainant"  class="form-control"  value="{{ $casesComplaint->complainantname}}" disabled/>  {{-- QUERY HERE --}}
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <label for="">Address</label>
                                     <div class="">
-                                        <input type="text" id="complainantAddress" name="complainantAddress"  class="form-control"  value="{{ $casesComplaint->complainant_Address}}"/>  {{-- QUERY HERE --}}
+                                        <input type="text" id="complainantAddress" name="complainantAddress"  class="form-control"  value="{{ $casesComplaint->complainant_Address}}" disabled/>  {{-- QUERY HERE --}}
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <label for="">Telephone Number</label>
                                     <div class="">
-                                        <input type="text" id="complainantTelNumber" name="complainantTelNumber"  class="form-control"  value="{{ $casesComplaint->complainant_Contact_Number}}"/>  {{-- QUERY HERE --}}
+                                        <input type="text" id="complainantTelNumber" name="complainantTelNumber"  class="form-control"  value="{{ $casesComplaint->complainant_Contact_Number}}" disabled/>  {{-- QUERY HERE --}}
                                     </div>
                                 </div>
                             @endforeach
@@ -289,19 +260,19 @@
                             <div class="form-row">
                             @foreach($suspect as $suspect)
                                 <div class="col-md-3">
-                                    <input type="text" class="form-control" id="suspectNameA" name="suspectNameA" placeholder="Name"  value="{{ $suspect->suspect_name }}" style="background-color:#dd8282;">
-                                    <input type="text" class="form-control" id="suspectAge" name="suspectAge" placeholder="Age"  value="{{ $suspect->suspect_Age }}">
+                                    <input type="text" class="form-control" id="suspectNameA" name="suspectNameA" placeholder="Name"  value="{{ $suspect->suspect_name }}" style="background-color:#dd8282;" disabled>
+                                    <input type="text" class="form-control" id="suspectAge" name="suspectAge" placeholder="Age"  value="{{ $suspect->suspect_Age }}" disabled>
                                 </div>
                                 <div class="col-md-3">
-                                    <input type="text" class="form-control" id="suspectAddressA" name="suspectAddressA" placeholder="Address"  value="{{ $suspect->suspect_Address }}">
-                                    <input type="text" class="form-control" id="suspectCivilStatusA" name="suspectCivilStatusA" placeholder="Civil Status"  value="{{ $suspect->suspect_Civil_Status }}">
+                                    <input type="text" class="form-control" id="suspectAddressA" name="suspectAddressA" placeholder="Address"  value="{{ $suspect->suspect_Address }}" disabled>
+                                    <input type="text" class="form-control" id="suspectCivilStatusA" name="suspectCivilStatusA" placeholder="Civil Status"  value="{{ $suspect->suspect_Civil_Status }}" disabled>
                                 </div>
                                 <div class="col-md-3">
-                                    <input type="text" class="form-control" id="suspectTelNumberA" name= "suspectTelNumberA"  placeholder="Telephone Number"  value="{{ $suspect->suspect_Contact_Number }}">
-                                    <input type="text" class="form-control" id="suspectOccupationA" name="suspectOccupationA" placeholder="Occupation"  value="{{ $suspect->suspect_Occupation }}">
+                                    <input type="text" class="form-control" id="suspectTelNumberA" name= "suspectTelNumberA"  placeholder="Telephone Number"  value="{{ $suspect->suspect_Contact_Number }}" disabled>
+                                    <input type="text" class="form-control" id="suspectOccupationA" name="suspectOccupationA" placeholder="Occupation"  value="{{ $suspect->suspect_Occupation }}" disabled>
                                 </div>
                                 <div class="col-md-3">
-                                    <input type="text" class="form-control" id="suspectSexA" name="suspectSexA" placeholder="sex"  value="{{ $suspect->suspect_Sex }}">
+                                    <input type="text" class="form-control" id="suspectSexA" name="suspectSexA" placeholder="sex"  value="{{ $suspect->suspect_Sex }}" disabled>
                                 </div>
                             @endforeach
                             </div>
@@ -312,8 +283,8 @@
                             <div class="form-group">
                                 <div class="form-row">
                                 @foreach($nature as $nature)
-                                    <div class="col-md-6">
-                                        <input class="form-control" name="nameOfNature" id="nameOfNature"  value="{{ $nature->nature}}"></input>
+                                    <div class="col-md-4">
+                                        <input class="form-control" name="nameOfNature" id="nameOfNature"  value="{{ $nature->nature}}" disabled>
                                     </div>
                                 @endforeach
                                 </div>
@@ -324,41 +295,27 @@
                             <div class="form-group">
                                 <p style="font-weight:bold;">4. Where and when committed (Saan at Kailan Nangyari) </p>
                                 <div class="form-row">
-                                @if(!$count)
-                                    <div class="col-md-6">
-                                        <label for="whereCommitted">Place Committed</label>
-                                        <input type="text" name="whereCommitted" id="whereCommitted" class="form-control"  value="">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="whenCommitted">When Committed</label>
-                                        <div class="input-group mb-2">
-                                            <div class="input-group-prepend">
-                                                <div class="btn btn-secondary">
-                                                    <i class="fas fa-fw fa-calendar"></i>
-                                                </div>
-                                            </div>
-                                            <input type="date" name="whenCommitted" id="whenCommitted" class="form-control"  value="">
-                                        </div>
-                                    </div>
-                                @else
-                                    @foreach($whenAndWhere as $whenAndWhere)
-                                        <div class="col-md-6">
-                                            <label for="whereCommitted">Place Committed</label>
-                                            <input type="text" name="whereCommitted" id="whereCommitted" class="form-control"  value="{{ $whenAndWhere->place_Committed }}">
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label for="whenCommitted">When Committed</label>
-                                            <div class="input-group mb-2">
-                                                <div class="input-group-prepend">
-                                                    <div class="btn btn-secondary">
-                                                        <i class="fas fa-fw fa-calendar"></i>
-                                                    </div>
-                                                </div>
-                                                <input type="date" name="whenCommitted" id="whenCommitted" class="form-control"  value="{{ $whenAndWhere->date_Committed }}">
-                                            </div>
-                                        </div>
-                                    @endforeach
-                                @endif
+                            @if (!$count)
+                                <div class="col-md-6">
+                                    <label for="whereCommitted">Place Committed</label>
+                                    <input type="text" name="whereCommitted" id="whereCommitted" class="form-control"  value="" disabled>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="whenCommitted">When Committed</label>
+                                    <input type="text" name="wheneCommitted" id="wheneCommitted" class="form-control"  value="" disabled>
+                                </div>
+                            @else
+                                @foreach($whenAndWhere as $whenAndWhere)
+                                <div class="col-md-6">
+                                    <label for="whereCommitted">Place Committed</label>
+                                    <input type="text" name="whereCommitted" id="whereCommitted" class="form-control"  value="{{ $whenAndWhere->place_Committed }}" disabled>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="whenCommitted">When Committed</label>
+                                    <input type="text" name="wheneCommitted" id="wheneCommitted" class="form-control"  value="{{ $whenAndWhere->date_Committed }}" disabled>
+                                </div>
+                                @endforeach
+                            @endif
                                 </div>
                             </div>
                         </section>
@@ -368,19 +325,19 @@
                             <div class="form-row">
                             @foreach($victim as $victim)
                                 <div class="col-md-3">
-                                    <input type="text" class="form-control" id="victimNameA" name="victimNameA" placeholder="Name"  value="{{ $victim->victim_name }}" style="background-color:#dd8282;">
-                                    <input type="text" class="form-control" id="victimAge" name="victimAge" placeholder="Age"  value="{{ $victim->victim_Age }}">
+                                    <input type="text" class="form-control" id="victimNameA" name="victimNameA" placeholder="Name"  value="{{ $victim->victim_name }}" style="background-color:#dd8282;" disabled>
+                                    <input type="text" class="form-control" id="victimAge" name="victimAge" placeholder="Age"  value="{{ $victim->victim_Age }}" disabled>
                                 </div>
                                 <div class="col-md-3">
-                                    <input type="text" class="form-control" id="victimAddressA" name="victimAddressA" placeholder="Address"  value="{{ $victim->victim_Address }}">
-                                    <input type="text" class="form-control" id="victimCivilStatusA" name="victimCivilStatusA" placeholder="Civil Status"  value="{{ $victim->victim_Civil_Status }}">
+                                    <input type="text" class="form-control" id="victimAddressA" name="victimAddressA" placeholder="Address"  value="{{ $victim->victim_Address }}" disabled>
+                                    <input type="text" class="form-control" id="victimCivilStatusA" name="victimCivilStatusA" placeholder="Civil Status"  value="{{ $victim->victim_Civil_Status }}" disabled >
                                 </div>
                                 <div class="col-md-3">
-                                    <input type="text" class="form-control" id="victimTelNumberA" name= "victimTelNumberA"  placeholder="Telephone Number"  value="{{ $victim->victim_Contact_Number }}">
-                                    <input type="text" class="form-control" id="victimOccupationA" name="victimOccupationA" placeholder="Occupation"  value="{{ $victim->victim_Occupation }}">
+                                    <input type="text" class="form-control" id="victimTelNumberA" name= "victimTelNumberA"  placeholder="Telephone Number"  value="{{ $victim->victim_Contact_Number }}" disabled>
+                                    <input type="text" class="form-control" id="victimOccupationA" name="victimOccupationA" placeholder="Occupation"  value="{{ $victim->victim_Occupation }}" disabled>
                                 </div>
                                 <div class="col-md-3">
-                                    <input type="text" class="form-control" id="victimSexA" name="victimSexA" placeholder="sex"  value="{{ $victim->victim_Sex }}">
+                                    <input type="text" class="form-control" id="victimSexA" name="victimSexA" placeholder="sex"  value="{{ $victim->victim_Sex }}" disabled>
                                 </div>
                             @endforeach
                             </div>
@@ -390,31 +347,31 @@
                     <section>
                         <div class="form-group">
                             <p style="font-weight:bold;">6. Narration of Facts (Salaysay ng mga Pangyayari) </p>
-                            <textarea id="narrationOfFacts" name="narrationOfFacts"  style="width:100%;font-size:15px;resize:none;" rows="5" ></textarea>
+                            <textarea id="narrationOfFacts" name="narrationOfFacts"  style="width:100%;font-size:15px;resize:none;" rows="5" disabled></textarea>
                         </div>
                     </section>
                     <hr>
                     <section>
                         <div class="form-group">
                             <p style="font-weight:bold;">7. Has the matter been reported to any agency, If so, to what people agency? (Ang bagay bang ito ay naulat na sa ibang sangay ng pagsisiyasat? Kung naulat na, saang sangay?) </p>
-                            <textarea name="hasTheMatter" id="hasTheMatter" style="width:100%;font-size:15px;resize:none;" rows="5" ></textarea>
+                            <textarea name="hasTheMatter" id="hasTheMatter" style="width:100%;font-size:15px;resize:none;" rows="5" disabled></textarea>
                             <br>
                             <p style="font-weight:bold;">Status of investigation, If any (Kalagayan ng pagsisiyasat kung mayroon?)</p>
-                            <textarea name="statusOfInvestigation" id="statusOfInvestigation" style="width:100%;font-size:15px;resize:none;" rows="5" ></textarea>
+                            <textarea name="statusOfInvestigation" id="statusOfInvestigation" style="width:100%;font-size:15px;resize:none;" rows="5" disabled></textarea>
                         </div>
                     </section>
                     <hr>
                     <section>
                         <div class="form-group">
                             <p style="font-weight:bold;">8.Is the matter complained of the subject of any court action of proceedings? If so, where? (Ang bagay bang may kinalaman sa pagsusumbong ay nasa hukuman na? Kung gaanoon, saan?)</p>
-                            <textarea name="isTheMatterComplained" id="isTheMatterComplained" style="width:100%;font-size:15px;resize:none;" rows="5" ></textarea>
+                            <textarea name="isTheMatterComplained" id="isTheMatterComplained" style="width:100%;font-size:15px;resize:none;" rows="5" disabled></textarea>
                         </div>
                     </section>
                     <hr>
                     <section>
                         <div class="form-group">
                             <p style="font-weight:bold;">9.What Consideration/s impelled you to report to the NBI? (Ano ang nag-udyok sa iyo para magreklamo dito sa NBI?)</p>
-                            <textarea name="whatConsidirations" id="whatConsidirations" style="width:100%;font-size:15px;resize:none;" rows="5" ></textarea>
+                            <textarea name="whatConsidirations" id="whatConsidirations" style="width:100%;font-size:15px;resize:none;" rows="5" disabled></textarea>
                         </div>
                     </section>
                 @else
@@ -422,31 +379,31 @@
                     <section>
                         <div class="form-group">
                             <p style="font-weight:bold;">6. Narration of Facts (Salaysay ng mga Pangyayari) </p>
-                            <textarea id="narrationOfFacts" name="narrationOfFacts"  style="width:100%;font-size:15px;resize:none;" rows="5" >{{ $complaintSheet->narration_Of_Facts }}</textarea>
+                            <textarea id="narrationOfFacts" name="narrationOfFacts"  style="width:100%;font-size:15px;resize:none;" rows="5" disabled>{{ $complaintSheet->narration_Of_Facts }}</textarea>
                         </div>
                     </section>
                     <hr>
                     <section>
                         <div class="form-group">
                             <p style="font-weight:bold;">7. Has the matter been reported to any agency, If so, to what people agency? (Ang bagay bang ito ay naulat na sa ibang sangay ng pagsisiyasat? Kung naulat na, saang sangay?) </p>
-                            <textarea name="hasTheMatter" id="hasTheMatter" style="width:100%;font-size:15px;resize:none;" rows="5" >{{ $complaintSheet->reported_Any_Agency }}</textarea>
+                            <textarea name="hasTheMatter" id="hasTheMatter" style="width:100%;font-size:15px;resize:none;" rows="5" disabled>{{ $complaintSheet->reported_Any_Agency }}</textarea>
                             <br>
                             <p style="font-weight:bold;">Status of investigation, If any (Kalagayan ng pagsisiyasat kung mayroon?)</p>
-                            <textarea name="statusOfInvestigation" id="statusOfInvestigation" style="width:100%;font-size:15px;resize:none;" rows="5" >{{ $complaintSheet->status_of_Investigation }}</textarea>
+                            <textarea name="statusOfInvestigation" id="statusOfInvestigation" style="width:100%;font-size:15px;resize:none;" rows="5" disabled>{{ $complaintSheet->status_of_Investigation }}</textarea>
                         </div>
                     </section>
                     <hr>
                     <section>
                         <div class="form-group">
                             <p style="font-weight:bold;">8.Is the matter complained of the subject of any court action of proceedings? If so, where? (Ang bagay bang may kinalaman sa pagsusumbong ay nasa hukuman na? Kung gaanoon, saan?)</p>
-                            <textarea name="isTheMatterComplained" id="isTheMatterComplained" style="width:100%;font-size:15px;resize:none;" rows="5" >{{ $complaintSheet->where_court_Proceedings }}</textarea>
+                            <textarea name="isTheMatterComplained" id="isTheMatterComplained" style="width:100%;font-size:15px;resize:none;" rows="5" disabled>{{ $complaintSheet->where_court_Proceedings }}</textarea>
                         </div>
                     </section>
                     <hr>
                     <section>
                         <div class="form-group">
                             <p style="font-weight:bold;">9.What Consideration/s impelled you to report to the NBI? (Ano ang nag-udyok sa iyo para magreklamo dito sa NBI?)</p>
-                            <textarea name="whatConsidirations" id="whatConsidirations" style="width:100%;font-size:15px;resize:none;" rows="5" >{{ $complaintSheet->report_Considerations }}</textarea>
+                            <textarea name="whatConsidirations" id="whatConsidirations" style="width:100%;font-size:15px;resize:none;" rows="5" disabled>{{ $complaintSheet->report_Considerations }}</textarea>
                         </div>
                     </section>
                     @endforeach
@@ -455,6 +412,10 @@
                 </div> <!--CLOSING CARD REGISTER -->
               </div> <!--CLOSING CONTAINER FLUID -->
             </form>
+            <a href="/caseReport" class="btn btn-secondary" style="margin-left:20px;margin-bottom:10px;">
+                <i class="fas fa-backward"></i>
+                <span>Back</span>
+            </a>
         </div>
         <!-- Sticky Footer -->
         <footer class="sticky-footer">
@@ -501,31 +462,6 @@
       </div>
     </div>
 
-    <script>
-            $(document).ready(function(){
-                $('.add_button2').click(function(){
-                    var kakoi=$(this).attr('fldnum');
-                    var insHTML = '<div class="input-group">'+
-                                '<select name="fld_val2[]" id="fld_val2"  class="form-control">'+
-                                    '<option value=""></option>'+
-                                '@foreach($agent2 as $agent2)'+
-                                    '<option value="{{ $agent2->userid }}">{{ $agent2->firstName }} {{ $agent2->lastName }}</option>'+
-                                '@endforeach'+
-                                '</select>'+
-                                    '<div class="input-group-prepend">'+
-                                    '<button class="btn btn-danger btn-add add_button2 remove_button" fldnum="2" type="button">'+
-                                        '<span class="fas">x</span>'+
-                                    '</button>'+
-                                '</div>';
-                    $("#fld2").append(insHTML);
-                });
-
-                $('.fld_wrap').on('click', '.remove_button', function(e){
-                    e.preventDefault();
-                    $(this).parents(':eq(1)').remove();
-                });
-            });
-    </script>
     <script>
         function validateDate(evt) {
             var theEvent = evt || window.event;

@@ -79,22 +79,22 @@
 <hr>
     <div class="form-group">
         <p style="font-weight:bold;">2. Persons Complained Against or Suspects (Isinusumbong)</p>
-        @foreach($showData as $showData)
+        @foreach($sample as $sample)
         <div class="form-row">
             <div class="col-md-3">
-                <input type="text" class="form-control" id="suspectNameA" name="suspectNameA" placeholder="Name" disabled value="{{ $showData->suspect_name }}">
-                <input type="text" class="form-control" id="suspectAge" name="suspectAge" placeholder="Age" disabled value="{{ $showData->suspect_Age }}">
+                <input type="text" class="form-control" id="suspectNameA" name="suspectNameA" placeholder="Name" disabled value="{{ $sample->suspect_name }}">
+                <input type="text" class="form-control" id="suspectAge" name="suspectAge" placeholder="Age" disabled value="{{ $sample->suspect_Age }}">
             </div>
             <div class="col-md-3">
-                <input type="text" class="form-control" id="suspectAddressA" name="suspectAddressA" placeholder="Address" disabled value="{{ $showData->suspect_Address }}">
-                <input type="text" class="form-control" id="suspectCivilStatusA" name="suspectCivilStatusA" placeholder="Civil Status" disabled value="{{ $showData->suspect_Civil_Status }}">
+                <input type="text" class="form-control" id="suspectAddressA" name="suspectAddressA" placeholder="Address" disabled value="{{ $sample->suspect_Address }}">
+                <input type="text" class="form-control" id="suspectCivilStatusA" name="suspectCivilStatusA" placeholder="Civil Status" disabled value="{{ $sample->suspect_Civil_Status }}">
             </div>
             <div class="col-md-3">
-                <input type="text" class="form-control" id="suspectTelNumberA" name= "suspectTelNumberA"  placeholder="Telephone Number" disabled value="{{ $showData->suspect_Contact_Number }}">
-                <input type="text" class="form-control" id="suspectOccupationA" name="suspectOccupationA" placeholder="Occupation" disabled value="{{ $showData->suspect_Occupation }}">
+                <input type="text" class="form-control" id="suspectTelNumberA" name= "suspectTelNumberA"  placeholder="Telephone Number" disabled value="{{ $sample->suspect_Contact_Number }}">
+                <input type="text" class="form-control" id="suspectOccupationA" name="suspectOccupationA" placeholder="Occupation" disabled value="{{ $sample->suspect_Occupation }}">
             </div>
             <div class="col-md-3">
-                <input type="text" class="form-control" id="suspectSexA" name="suspectSexA" placeholder="sex" disabled value="{{ $showData->suspect_Sex }}">
+                <input type="text" class="form-control" id="suspectSexA" name="suspectSexA" placeholder="sex" disabled value="{{ $sample->suspect_Sex }}">
             </div>
         </div>
         @endforeach

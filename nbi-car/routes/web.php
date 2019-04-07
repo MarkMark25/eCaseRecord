@@ -53,13 +53,15 @@ Route::group(['middleware' => ['web','admin']], function() {
     route::resource('/manageAccounts','admin\manageAccountController');
     route::resource('/profile','admin\ProfileController');
     route::resource('/adminChangePassword','admin\changePasswordController');
+    Route::resource('/updateCase','admin\caseReportController');
+    Route::resource('/caseReview','admin\caseReviewController');
+    Route::resource('/deleteCase','admin\caseDeleteController');
 });
 ##############################ADMIN UPDATE#############################################
 Route::post('/natureUpdate','admin\caseNatureController@update');
 Route::post('/createNature','admin\caseNatureController@store');
 Route::post('/deleteNature','admin\caseNatureController@delete');
-Route::post('/deleteCase','admin\caseReportController@delete');
-Route::resource('/updateCase','admin\caseReportController');
+Route::post('/deletECase','admin\caseDeleteController@delete');
 Route::post('/userUpdate','admin\manageAccountController@update');
 Route::post('/addNewUser','admin\manageAccountController@store');
 Route::post('/adminAddCase','admin\addCaseController@store');

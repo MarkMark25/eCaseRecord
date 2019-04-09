@@ -5,9 +5,8 @@ use DB;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class userLogsController extends Controller
+class homeController extends Controller
 {
-
     public function __construct()
     {
         $this->middleware('preventBackHistory'); $this->middleware('auth');
@@ -19,14 +18,49 @@ class userLogsController extends Controller
      */
     public function index()
     {
+        $pendingCase = DB::table('cases')
+        ->join('case_status','cases.statusid','=','case_status.statusid')
+        ->join('caseagent', 'cases.caseid','=','caseagent.caseid')
+        ->join('users','caseagent.userid','=','users.userid')
+        ->join('case_suspects', 'case_suspects.caseid','=','cases.caseid')
+        ->select('cases.complainantname', 'caseagent.dateassigned', 'case_status.status'
+        ,DB::raw("GROUP_CONCAT(DISTINCT CONCAT(case_suspects.suspect_name) SEPARATOR ' and ') as suspectName")
+        ,DB::raw("GROUP_CONCAT(DISTINCT CONCAT (users.firstName,' ',users.lastName) SEPARATOR ' and ') as full_name")
+        )
+        ->groupBy(DB::raw('caseagent.caseid'))
+        ->whereNull('cases.dateTerminated')
+        ->orWhere('case_status.status','=','Under Investigation')
+        ->get();
+
+        $activeUsers = DB::table('users')
+        ->where('userStatus','=','Active')
+        ->count();
+
+        $totalRecords = DB::table('cases')
+        ->where('caseStatus','=','Available')
+        ->count();
+
+        $caseRecords = DB::table('cases')
+        ->join('case_status','case_status.statusid','=','cases.statusid')
+        ->select(DB::raw("COUNT(cases.caseid) AS caseRecords"))
+        ->whereNotNull('cases.dateTerminated')
+        ->orWhere('case_status.status','!=','Under Investigation')
+        ->get();
+
+        $chart = DB::table('nature')
+        ->join('casenature','casenature.natureid','=','nature.natureid')
+        ->select('nature.nature',
+        DB::raw("count(casenature.caseid) AS totalNumber"))
+        ->groupBy(DB::raw('nature.natureid'))
+        ->get();
+
         $showData = DB::table('users')
         ->join('logs','users.userid','=','logs.userid')
         ->select('users.*','logs.*'
                 ,DB::raw("CONCAT(users.firstName,' ',users.lastName) AS name")
                 )
-        ->orderBy('logs.created_at')
         ->get();
-        return view ('admin.userLogs',compact('showData'));
+        return view('admin.home',compact('showData','pendingCase','activeUsers','totalRecords','caseRecords','chart'));
     }
 
     /**

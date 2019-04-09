@@ -146,7 +146,7 @@ class caseDeleteController extends Controller
             'action' => $request['action'],
             'description' =>$insertDescription,
         ]);
-        return redirect('caseReport')->with('alert-success', 'Case successfully " DELETED "');
+        return redirect('/caseReport')->with('alert-success', 'Case successfully " DELETED "');
     }
     /**
      * Show the form for editing the specified resource.

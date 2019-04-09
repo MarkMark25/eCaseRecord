@@ -44,6 +44,7 @@ Route::post('/encoderAddComplaintSheet','encoder\ComplaintSheetController@store'
 
 #############################ADMIN###################################################
 Route::group(['middleware' => ['web','admin']], function() {
+    route::resource('/adminHome','admin\homeController');
     route::resource('/ComplaintSheet','admin\ComplaintSheetController');
     route::resource('/userHistory','admin\userHistoryController');
     route::resource('/userLogs','admin\userLogsController');
@@ -80,6 +81,8 @@ Route::group(['middleware' => ['web', 'auth']], function(){
     */
     route::get('/', function(){
     if(Auth::user()->role == 'Encoder'){
+        return redirect('/encoderHome');
+        /*
         $showData = DB::table('nature')
             ->join('casenature','nature.natureid','=','casenature.natureid')
             ->join('caseagent','casenature.caseid','=','caseagent.caseid')
@@ -101,7 +104,7 @@ Route::group(['middleware' => ['web', 'auth']], function(){
             ->where('nature.natureAvailability','=','Available')
             ->get();
             return view ('encoder.home',compact('showData'));
-
+        */
     } else if(Auth::user()->role == 'Agent') {
 
         $showData = DB::table('nature')
@@ -126,17 +129,16 @@ Route::group(['middleware' => ['web', 'auth']], function(){
         return view ('agent.home',compact('showData'));
 
     }else {
+        /*
         $showData = DB::table('users')
-        ->join('history','users.userid','=','history.userid')
-        ->select('users.*','history.*'
+        ->join('logs','users.userid','=','logs.userid')
+        ->select('users.*','logs.*'
                 ,DB::raw("CONCAT(users.firstName,' ',users.lastName) AS name")
-                ,DB::raw("TIMEDIFF(history.logout,history.login) as durationS")
-                ,DB::raw("DATE(history.logout) as date")
-                ,DB::raw("TIME(history.login) as login")
-                ,DB::raw("TIME(history.logout) as logout")
                 )
         ->get();
-        return view ('admin.userHistory',compact('showData'));
+        */
+        return redirect('/adminHome');
+        //return view ('admin.home',compact('showData'));
     }
     });
 });

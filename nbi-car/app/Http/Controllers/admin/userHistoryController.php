@@ -27,6 +27,7 @@ class userHistoryController extends Controller
                 ,DB::raw("TIME(history.login) as login")
                 ,DB::raw("TIME(history.logout) as logout")
                 )
+        ->orderBy('history.login')
         ->get();
         return view ('admin.userHistory',compact('showData'));
     }

@@ -1,9 +1,10 @@
 // Call the dataTables jQuery plugin
 $(document).ready(function() {
   $('#dataTable').DataTable();
-  destroy: true;
+  responsive: true
 });
 
 $(document).ready(function() {
   $('#dataTableS').DataTable();
+  responsive: true
 });

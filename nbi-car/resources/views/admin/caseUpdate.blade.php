@@ -210,6 +210,7 @@
                                             </div>
                                         </div>
                                         <input type="text" id="datepicker" name="dateassigned" class="form-control"  value="{{ $dateAssigned->dateassigned}}">
+                                        <input type="text" class="form-control" name="" id="" value="{{ $dateAssigned->caseid }}" disabled>
                                     </div>
                                 </div>
                                 @endforeach
@@ -233,27 +234,33 @@
                                             @foreach($status as $status)
                                                 <option value="{{ $status->statusid }}">{{ $status->status }}</option>
                                             @endforeach
+                                            @foreach ($statusAll as $statusAll)
+                                                <option value="{{ $statusAll->statusid }}">{{ $statusAll->status }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <label for="agent">Agent</label>
                         <div class="form-group">
                             <div class="form-row">
                                 <div class="col-md-4">
-                                    <label for="agent">Agent</label>
-                                    <div class="fld_wrap" id="fld2">
-                                        <div class="input-group">
-                                            @foreach ($agent as $agent)
-                                            <input type="text" id="full_name" name= "full_name" class="form-control"  value="{{ $agent->agentName}}" disabled>
-                                            @endforeach
-                                            <div class="input-group-prepend">
-                                                <button class="btn btn-success btn-add add_button2" fldnum="2" type="button">
-                                                    <span class="fas">+</span>
-                                                </button>
+                                    <button class="btn btn-success btn-add add_button2" fldnum="2" type="button" style="float:right;">
+                                        <span class="fas">+</span>
+                                    </button>
+                                    @foreach ($agent as $agent)
+                                    <div class="form-group">
+                                        <div class="form-row">
+                                            <div class="fld_wrap" id="fld2">
+                                                <div class="input-group">
+                                                    <input type="text" id="full_name" name= "full_name" class="form-control"  value="{{ $agent->agentName}}" disabled>
+                                                    <input type="text" class="form-control" name="" id="" value="{{ $agent->caseid }}" disabled>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
+                                    @endforeach
                                 </div>
                             </div>
                         </div>
@@ -263,9 +270,10 @@
                             <div class="form-row">
                             @foreach ($casesComplaint as $casesComplaint)
                                 <div class="col-md-4">
-                                        <label for="suspectName">Name</label>
+                                    <label for="suspectName">Name</label>
                                     <div class="">
                                         <input type="text" id="complainant" name="complainant"  class="form-control" onkeypress='validateComplainant(event)'  value="{{ $casesComplaint->complainantname}}"/>  {{-- QUERY HERE --}}
+                                        <input type="text" name="" id="" class="form-control" value="{{ $casesComplaint->caseid}}" disabled>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -284,41 +292,71 @@
                             </div>
                         </div>
                     <hr>
-                        <div class="form-group">
-                            <p style="font-weight:bold;">2. Persons Complained Against or Suspects (Isinusumbong)</p>
-                            <div class="form-row">
+                        <button class="btn btn-success btn-add add_button3" fldnum="3" type="button" style="float:right;">
+                            <span class="fas">+</span>
+                        </button>
+                        <p style="font-weight:bold;">2. Persons Complained Against or Suspects (Isinusumbong)</p>
                             @foreach($suspect as $suspect)
-                                <div class="col-md-3">
-                                    <input type="text" class="form-control" id="suspectNameA" name="suspectNameA" placeholder="Name"  value="{{ $suspect->suspect_name }}" style="background-color:#dd8282;">
-                                    <input type="text" class="form-control" id="suspectAge" name="suspectAge" placeholder="Age"  value="{{ $suspect->suspect_Age }}">
-                                </div>
-                                <div class="col-md-3">
-                                    <input type="text" class="form-control" id="suspectAddressA" name="suspectAddressA" placeholder="Address"  value="{{ $suspect->suspect_Address }}">
-                                    <input type="text" class="form-control" id="suspectCivilStatusA" name="suspectCivilStatusA" placeholder="Civil Status"  value="{{ $suspect->suspect_Civil_Status }}">
-                                </div>
-                                <div class="col-md-3">
-                                    <input type="text" class="form-control" id="suspectTelNumberA" name= "suspectTelNumberA"  placeholder="Telephone Number"  value="{{ $suspect->suspect_Contact_Number }}">
-                                    <input type="text" class="form-control" id="suspectOccupationA" name="suspectOccupationA" placeholder="Occupation"  value="{{ $suspect->suspect_Occupation }}">
-                                </div>
-                                <div class="col-md-3">
-                                    <input type="text" class="form-control" id="suspectSexA" name="suspectSexA" placeholder="sex"  value="{{ $suspect->suspect_Sex }}">
-                                </div>
-                            @endforeach
-                            </div>
-                        </div>
-                    <hr>
-                        <p style="font-weight:bold;">3. Nature of act complained (Uri ng sumbong) </p>
-                        <section>
                             <div class="form-group">
                                 <div class="form-row">
-                                @foreach($nature as $nature)
-                                    <div class="col-md-6">
-                                        <input class="form-control" name="nameOfNature" id="nameOfNature"  value="{{ $nature->nature}}"></input>
+                                    <div class="fld_wrap" id="fld3">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <button class="btn btn-danger btn-add add_button3 remove_button3" fldnum="3" type="button" >
+                                                    <span class="fas">X</span>
+                                                </button>
+                                            </div>
+                                            <br>
+                                            <br>
+                                            <div class="col-md-3">
+                                                <input type="text" class="form-control" id="suspectNameA" name="suspectNameA" placeholder="Name"  value="{{ $suspect->suspect_name }}" style="background-color:#dd8282;" required>
+                                                <input type="text" class="form-control" id="suspectAge" name="suspectAge" placeholder="Age"  value="{{ $suspect->suspect_Age }}">
+                                            </div>
+                                            <div class="col-md-3">
+                                                <input type="text" class="form-control" id="suspectAddressA" name="suspectAddressA" placeholder="Address"  value="{{ $suspect->suspect_Address }}">
+                                                <input type="text" class="form-control" id="suspectCivilStatusA" name="suspectCivilStatusA" placeholder="Civil Status"  value="{{ $suspect->suspect_Civil_Status }}">
+                                            </div>
+                                            <div class="col-md-3">
+                                                <input type="text" class="form-control" id="suspectTelNumberA" name= "suspectTelNumberA"  placeholder="Telephone Number"  value="{{ $suspect->suspect_Contact_Number }}">
+                                                <input type="text" class="form-control" id="suspectOccupationA" name="suspectOccupationA" placeholder="Occupation"  value="{{ $suspect->suspect_Occupation }}">
+                                            </div>
+                                            <div class="col-md-2">
+                                                <input type="text" class="form-control" id="suspectSexA" name="suspectSexA" placeholder="sex"  value="{{ $suspect->suspect_Sex }}">
+                                                <input type="text" class="form-control" name="" id="" value="{{ $suspect->id }}" disabled>
+                                            </div>
+                                        </div>
                                     </div>
-                                @endforeach
                                 </div>
                             </div>
-                        </section>
+                            @endforeach
+                    <hr>
+                    <button class="btn btn-success btn-add add_button1" fldnum="1" type="button" style="float:right;">
+                        <span class="fas">+</span>
+                    </button>
+                    <p style="font-weight:bold;">3. Nature of act complained (Uri ng sumbong) </p>
+                    <section>
+                        @foreach($nature as $nature)
+                        <div class="form-group">
+                            <div class="form-row">
+                                <div class="col-md-6">
+                                    <div class="control-group">
+                                        <div class="fld_wrap" id="fld1">
+                                            <div class="input-group">
+                                                <input class="form-control" name="nameOfNature" id="nameOfNature"  value="{{ $nature->nature}}">
+                                                <input type="text" class="form-control" value="{{ $nature->caseid }}" disabled>
+                                                <div class="input-group-prepend">
+                                                    <button class="btn btn-success btn-danger btn-add add_button1 remove_button" fldnum="1" type="button">
+                                                        <span class="fas ">X</span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @endforeach
+                    </section>
                     <hr>
                         <section>
                             <div class="form-group">
@@ -345,6 +383,7 @@
                                         <div class="col-md-6">
                                             <label for="whereCommitted">Place Committed</label>
                                             <input type="text" name="whereCommitted" id="whereCommitted" class="form-control"  value="{{ $whenAndWhere->place_Committed }}">
+                                            <input type="text" class="form-control" name="" id="" value="{{ $whenAndWhere->id }}" disabled>
                                         </div>
                                         <div class="col-md-6">
                                             <label for="whenCommitted">When Committed</label>
@@ -363,28 +402,45 @@
                             </div>
                         </section>
                     <hr>
-                    <div class="form-group">
-                            <p style="font-weight:bold;">5. Victim/s If any</p>
-                            <div class="form-row">
-                            @foreach($victim as $victim)
-                                <div class="col-md-3">
-                                    <input type="text" class="form-control" id="victimNameA" name="victimNameA" placeholder="Name"  value="{{ $victim->victim_name }}" style="background-color:#dd8282;">
-                                    <input type="text" class="form-control" id="victimAge" name="victimAge" placeholder="Age"  value="{{ $victim->victim_Age }}">
+                        <button class="btn btn-success btn-add add_button4" fldnum="4" type="button" style="float:right;">
+                            <span class="fas">+</span>
+                        </button>
+                        <p style="font-weight:bold;">5. Victim/s If any</p>
+                        @foreach($victim as $victim)
+                            <div class="form-group">
+                                <div class="form-row">
+                                    <div class="control-group">
+                                        <div class="fld_wrap" id="fld4">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <button class="btn btn-danger btn-add add_button4 remove_button4" fldnum="4" type="button">
+                                                        <span class="fas">X</span>
+                                                    </button>
+                                                </div>
+                                                <br>
+                                                <br>
+                                                <div class="col-md-3">
+                                                    <input type="text" class="form-control" id="victimNameA" name="victimNameA" placeholder="Name"  value="{{ $victim->victim_name }}" style="background-color:#dd8282;" required>
+                                                    <input type="text" class="form-control" id="victimAge" name="victimAge" placeholder="Age"  value="{{ $victim->victim_Age }}">
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input type="text" class="form-control" id="victimAddressA" name="victimAddressA" placeholder="Address"  value="{{ $victim->victim_Address }}">
+                                                    <input type="text" class="form-control" id="victimCivilStatusA" name="victimCivilStatusA" placeholder="Civil Status"  value="{{ $victim->victim_Civil_Status }}">
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input type="text" class="form-control" id="victimTelNumberA" name= "victimTelNumberA"  placeholder="Telephone Number"  value="{{ $victim->victim_Contact_Number }}">
+                                                    <input type="text" class="form-control" id="victimOccupationA" name="victimOccupationA" placeholder="Occupation"  value="{{ $victim->victim_Occupation }}">
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <input type="text" class="form-control" id="victimSexA" name="victimSexA" placeholder="sex"  value="{{ $victim->victim_Sex }}">
+                                                    <input type="text" class="form-control" name="" id="" value="{{ $victim->id }}" disabled>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col-md-3">
-                                    <input type="text" class="form-control" id="victimAddressA" name="victimAddressA" placeholder="Address"  value="{{ $victim->victim_Address }}">
-                                    <input type="text" class="form-control" id="victimCivilStatusA" name="victimCivilStatusA" placeholder="Civil Status"  value="{{ $victim->victim_Civil_Status }}">
-                                </div>
-                                <div class="col-md-3">
-                                    <input type="text" class="form-control" id="victimTelNumberA" name= "victimTelNumberA"  placeholder="Telephone Number"  value="{{ $victim->victim_Contact_Number }}">
-                                    <input type="text" class="form-control" id="victimOccupationA" name="victimOccupationA" placeholder="Occupation"  value="{{ $victim->victim_Occupation }}">
-                                </div>
-                                <div class="col-md-3">
-                                    <input type="text" class="form-control" id="victimSexA" name="victimSexA" placeholder="sex"  value="{{ $victim->victim_Sex }}">
-                                </div>
-                            @endforeach
                             </div>
-                        </div>
+                            @endforeach
                     <hr>
                 @if (!$count)
                     <section>
@@ -420,6 +476,7 @@
                 @else
                     @foreach($complaintSheet as $complaintSheet)
                     <section>
+                        <input type="text" class="form-control" name="" id="" value="{{ $complaintSheet->id }}" disabled>
                         <div class="form-group">
                             <p style="font-weight:bold;">6. Narration of Facts (Salaysay ng mga Pangyayari) </p>
                             <textarea id="narrationOfFacts" name="narrationOfFacts"  style="width:100%;font-size:15px;resize:none;" rows="5" >{{ $complaintSheet->narration_Of_Facts }}</textarea>
@@ -525,6 +582,29 @@
                     $(this).parents(':eq(1)').remove();
                 });
             });
+            $(document).ready(function(){
+                $('.add_button1').click(function(){
+                    var kakoi=$(this).attr('fldnum');
+                    var insHTML = '<div class="input-group">'+
+                            '<select  name="fld_val1[]" id="fld_val1" class="form-control" required>'+
+                            '<option value=""></option>'+
+                            '@foreach($nature2 as $nature2)'+
+                            '<option value="{{ $nature2->natureid }}">{{ $nature2->nature }}</option>'+
+                            '@endforeach'+
+                            '</select>'+
+                            '<div class="input-group-prepend">'+
+                            '<button class="btn btn-danger btn-add add_button1 remove_button" fldnum="1" type="button">'+
+                            '<span class="fas">x</span>'+
+                            '</button>'+
+                            '</div>';
+                    $("#fld1").append(insHTML);
+                });
+
+                $('.fld_wrap').on('click', '.remove_button', function(e){
+                    e.preventDefault();
+                    $(this).parents(':eq(1)').remove();
+                });
+            });
     </script>
     <script>
         function validateDate(evt) {
@@ -612,6 +692,76 @@
                 if(theEvent.preventDefault) theEvent.preventDefault();
             }
         }
+    </script>
+    <script>
+            $(document).ready(function(){
+                $('.add_button3').click(function(){
+                    var kakoi=$(this).attr('fldnum');
+                    var insHTML =    '<div class="input-group">'+
+                                '<div class="input-group-prepend">'+
+                                    '<button class="btn btn-danger btn-add add_button3 remove_button3" fldnum="3" type="button">'+
+                                        '<span class="fas">X</span>'+
+                                    '</button>'+
+                                '</div>'+
+                                '<br>'+
+                                '<br>'+
+                                '<div class="col-md-3">'+
+                                    '<input type="text" class="form-control" name="suspectNameA[]" placeholder="Name" autocomplete="off">'+
+                                    '<input type="text" class="form-control" name="suspectAgeA[]" placeholder="Age" autocomplete="off">'+
+                                '</div>'+
+                                '<div class="col-md-3">'+
+                                    '<input type="text" class="form-control" name="suspectAddressA[]" placeholder="Address" autocomplete="off">'+
+                                    '<input type="text" class="form-control" name="suspectCivilStatusA[]" placeholder="Civil Status" autocomplete="off">'+
+                                '</div>'+
+                                '<div class="col-md-3">'+
+                                    '<input type="text" id="suspectTelNumberA" name= "suspectTelNumberA[]" autocomplete="off" placeholder="Telephone Number" class="ccNumber form-control" value="" >'+
+                                    '<input type="text" class="form-control" name="suspectOccupationA[]" placeholder="Occupation" autocomplete="off">'+
+                                '</div>'+
+                                '<div class="col-md-2">'+
+                                    '<input type="text" class="form-control" name="suspectSexA[]" placeholder="sex" autocomplete="off">'+
+                                '</div>'+
+                            '</div>';
+                    $("#fld3").append(insHTML);
+                });
+
+                $('.fld_wrap').on('click', '.remove_button3', function(e){
+                    e.preventDefault();
+                    $(this).parents(':eq(1)').remove();
+                });
+            });
+            $(document).ready(function(){
+                $('.add_button4').click(function(){
+                    var kakoi=$(this).attr('fldnum');
+                    var insHTML ='<div class="input-group">'+
+                                    '<div class="input-group-prepend">'+
+                                        '<button class="btn btn-danger btn-add add_button4 remove_button4" fldnum="4" type="button">'+
+                                            '<span class="fas">X</span>'+
+                                        '</button>'+
+                                    '</div>'+
+                                    '<br>'+
+                                    '<br>'+
+                                    '<div class="col-md-3">'+
+                                        '<input type="text" class="form-control" name="victimNameA[]" placeholder="Name" autocomplete="off">'+
+                                        '<input type="text" class="form-control" name="victimAgeA[]" placeholder="Age" autocomplete="off">'+
+                                    '</div>'+
+                                    '<div class="col-md-3">'+
+                                        '<input type="text" class="form-control" name="victimAddressA[]" placeholder="Address" autocomplete="off">'+
+                                        '<input type="text" class="form-control" name="victimCivilStatusA[]" placeholder="Civil Status" autocomplete="off">'+
+                                    '</div>'+
+                                    '<div class="col-md-3">'+
+                                            '<input type="text" id="suspectTelNumberA" name= "victimTelNumberA[]" autocomplete="off" placeholder="Telephone Number" class="ccNumber form-control" value="" autocomplete="off">'+
+                                        '<input type="text" class="form-control" name="victimOccupationA[]" placeholder="Occupation" autocomplete="off">'+
+                                    '</div>'+
+                                        '<input type="text" class="form-control" name="victimSexA[]" placeholder="sex" autocomplete="off">'+
+                                '</div>';
+                    $("#fld4").append(insHTML);
+                });
+
+                $('.fld_wrap').on('click', '.remove_button4', function(e){
+                    e.preventDefault();
+                    $(this).parents(':eq(1)').remove();
+                });
+            });
     </script>
 
     <!-- Custom scripts for all pages -->

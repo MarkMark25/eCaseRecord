@@ -53,6 +53,20 @@ class manageAccountController extends Controller
      */
     public function store(addNewUser $request)
     {
+        $validator = Validator::make($request->all(),[
+            'firstName' => 'bail|required|max:50',
+            'lastName' => 'required|max:50',
+            'username' => 'required|unique:users|max:50',
+            'middleInitial' => 'required|max:5',
+            'password' => 'required|max:255',
+        ]);
+
+        if ($validator->fails()){
+            return redirect()
+                ->back()
+                ->withErrors($validator)
+                ->withInput();
+        }else {
             $users = User::create([
                 'firstName' => $request['firstName'],
                 'middleInitial' => $request['middleInitial'],
@@ -71,15 +85,15 @@ class manageAccountController extends Controller
             ]);
             $request->session()->flash('alert-success', 'Successfully register new user!');
             return redirect()->back();
+        }
     }
-
     /**
      * Display the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request)
     {
 
     }
@@ -90,9 +104,25 @@ class manageAccountController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request)
     {
-        //
+        $userID = $request['useridOne'];
+        $password = Hash::make($request['password']);
+        DB::update('update users set password = ? where userid = ?',[$password,$userID]);
+    /*
+        $user = User::findOrFail($request->useridOne);
+        $user->update($request->all());
+        $userID = $request['useridOne'];
+    */
+        $formDescription = $request['description'];
+        $insertDescription = $formDescription. ' '.$userID;
+        Logs::create([
+            'userid' => $request['userid'],
+            'action' => $request['action'],
+            'description' => $insertDescription,
+        ]);
+        $request->session()->flash('alert-success', 'Password successfully reset!');
+        return redirect()->back();
     }
 
     /**
@@ -104,7 +134,18 @@ class manageAccountController extends Controller
      */
     public function update(Request $request)
     {
-        if($request==true){
+        $validator = Validator::make($request->all(),[
+            'firstName' => 'bail|required|max:50',
+            'lastName' => 'required|max:50',
+            'username' => 'required|max:50',
+        ]);
+
+        if ($validator->fails()){
+            return redirect()
+                ->back()
+                ->withErrors($validator)
+                ->withInput();
+        }else {
             $user = User::findOrFail($request->useridOne);
             $user->update($request->all());
             $userID = $request['useridOne'];
@@ -116,9 +157,6 @@ class manageAccountController extends Controller
                 'description' => $insertDescription,
             ]);
             $request->session()->flash('alert-success', 'User details successfully updated!');
-            return redirect()->back();
-        }else {
-            $request->session()->flash('alert-success', 'ERROR!');
             return redirect()->back();
         }
 
@@ -133,5 +171,14 @@ class manageAccountController extends Controller
     public function destroy($id)
     {
         //
+    }
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function delete(Request $request){
+
     }
 }

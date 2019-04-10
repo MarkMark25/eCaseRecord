@@ -24,9 +24,6 @@
             td {
                 font-size:12px;
             }
-                table th:nth-child(3), td:nth-child(3) {
-                    display: none;
-                  }
       </style>
       <script src="bower_components/js/canvasjs.min.js"></script>
    </head>
@@ -231,31 +228,31 @@
                            <i class="fas fa-fw fa-clock"></i>
                            <b style="font-size:17px;">Pending Cases</b>
                         </div>
-                        <table class="table table-striped" id="mytab1">
-                           <thead>
-                              <tr>
-                                 <th scope="col">Subject</th>
-                                 <th scope="col">Complainant</th>
-                                 <th scope="col">Agent</th>
-                                 <th scope="col">Date Assigned</th>
-                                 <th scope="col">Nature of Case</th>
-                              </tr>
-                           </thead>
-                           <tbody>
-                            @foreach ($pendingCase as $pendingCase)
-                                <tr>
-                                    <td>{{ $pendingCase->suspectName }}</td>
-                                    <td>{{ $pendingCase->complainantname }}</td>
-                                    <td>{{ $pendingCase->full_name }}</td>
-                                    <td>{{ $pendingCase->dateassigned }}</td>
-                                    <td>{{ $pendingCase->status }}</td>
-                                </tr>
-                            @endforeach
-                           </tbody>
-                        </table>
-                        <!-- userlog -->
-                        <div class="row">
-                           <canvas id="myBarChart" width="50%" height="1"></canvas>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped" id="dataTableS" >
+                                    <thead>
+                                       <tr>
+                                          <th>Subject</th>
+                                          <th>Complainant</th>
+                                          <th>Agent</th>
+                                          <th>Date Assigned</th>
+                                          <th>Nature of Case</th>
+                                       </tr>
+                                    </thead>
+                                    <tbody>
+                                     @foreach ($pendingCase as $pendingCase)
+                                         <tr>
+                                             <td>{{ $pendingCase->suspectName }}</td>
+                                             <td>{{ $pendingCase->complainantname }}</td>
+                                             <td>{{ $pendingCase->full_name }}</td>
+                                             <td>{{ $pendingCase->dateassigned }}</td>
+                                             <td>{{ $pendingCase->status }}</td>
+                                         </tr>
+                                     @endforeach
+                                    </tbody>
+                                 </table>
+                            </div>
                         </div>
                      </div>
                   </div>
@@ -265,26 +262,30 @@
                            <i class="fas fa-fw fa-users"></i>
                            <b style="font-size:17px;">User Logs</b>
                         </div>
-                        <table class="table table-striped" id="tableLogs">
-                           <thead>
-                              <tr>
-                                 <th scope="col">User</th>
-                                 <th scope="col">Action</th>
-                                 <th scope="col">Description</th>
-                              </tr>
-                           </thead>
-                           <tbody>
-                            @foreach ($showData as $showData)
-                                <tr>
-                                    <td>{{ $showData->name }}</td>
-                                    <td>{{ $showData->action }}</td>
-                                    <td>{{ $showData->description }}</td>
-                                </tr>
-                            @endforeach
-                           </tbody>
-                        </table>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable">
+                                    <thead>
+                                       <tr>
+                                          <th>User</th>
+                                          <th>Action</th>
+                                          <th>Description</th>
+                                       </tr>
+                                    </thead>
+                                    <tbody>
+                                     @foreach ($showData as $showData)
+                                         <tr>
+                                             <td>{{ $showData->name }}</td>
+                                             <td>{{ $showData->action }}</td>
+                                             <td>{{ $showData->description }}</td>
+                                         </tr>
+                                     @endforeach
+                                    </tbody>
+                                 </table>
+                            </div>
+                        </div>
                      </div>
-                  </div>
+                    </div>
                </div>
             </div>
             <!-- /.container-fluid -->

@@ -285,7 +285,7 @@
                                         <br>
                                         <br>
                                         <div class="col-md-3">
-                                            <input type="text" class="form-control" name="suspectNameA[]" placeholder="Name" autocomplete="off" minlength="5" maxlength="40">
+                                            <input type="text" class="form-control" name="suspectNameA[]" placeholder="Name" autocomplete="off" minlength="5" maxlength="40" required>
                                             <input type="text" class="form-control" name="suspectAgeA[]" placeholder="Age" onkeypress='validateDate(event)' autocomplete="off" minlength="1" maxlength="3">
                                         </div>
                                         <div class="col-md-3">
@@ -346,7 +346,7 @@
                                                 <i class="fas fa-fw fa-calendar"></i>
                                             </div>
                                         </div>
-                                        <input type="date" name="whenCommitted" id="whenCommitted" class="form-control" value="" placeholder="Choose" autocomplete="off" required> {{-- QUERY HERE --}}
+                                        <input type="date" name="whenCommitted" id="whenCommitted" class="form-control" value="" placeholder="Choose" autocomplete="off" > {{-- QUERY HERE --}}
                                     </div>
                                 </div>
                             </div>
@@ -367,7 +367,7 @@
                                         <br>
                                         <br>
                                         <div class="col-md-3">
-                                            <input type="text" class="form-control" name="victimNameA[]" placeholder="Name" autocomplete="off" minlength="5" maxlength="40">
+                                            <input type="text" class="form-control" name="victimNameA[]" placeholder="Name" autocomplete="off" minlength="5" maxlength="40" required>
                                             <input type="text" class="form-control" name="victimAgeA[]" placeholder="Age" onkeypress='validateDate(event)' autocomplete="off" minlength="1" maxlength="3">
                                         </div>
                                         <div class="col-md-3">

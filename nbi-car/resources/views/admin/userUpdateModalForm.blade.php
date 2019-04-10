@@ -3,13 +3,13 @@
     <div class="col-md-6">
         <label for="firstName">First name</label>
         <div class="">
-        <input type="text" id="firstName" name="firstName" class="form-control" value=""> {{-- QUERY HERE --}}
+        <input type="text" id="firstName" name="firstName" class="form-control" value="" maxlength="50"> {{-- QUERY HERE --}}
         </div>
     </div>
     <div class="col-md-6">
         <label for="lastName">Last name</label>
         <div class="">
-        <input type="text" id="lastName" name-"lastName" class="form-control" value=""> {{-- QUERY HERE --}}
+        <input type="text" id="lastName" name="lastName" class="form-control" value="" maxlength="50"> {{-- QUERY HERE --}}
         </div>
     </div>
     </div>
@@ -19,7 +19,7 @@
     <div class="col-md-6">
         <label for="userName">Username</label>
         <div class="">
-        <input type="text" id="username" name="username" class="form-control" value=""> {{-- QUERY HERE --}}
+        <input type="text" id="username" name="username" class="form-control" value="" maxlength="50"> {{-- QUERY HERE --}}
         </div>
     </div>
     <div class="col-md-6">

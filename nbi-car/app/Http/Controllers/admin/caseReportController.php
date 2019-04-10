@@ -183,7 +183,15 @@ class caseReportController extends Controller
         ->where('cases.caseid','=',$caseid)
         ->get();
 
-        return view('admin.caseUpdate',compact('cases','agent','complaintSheet','suspect','victim','nature','status','casesComplaint','dateAssigned','whenAndWhere','dateTerminated','agent2','count'));
+        $statusAll = DB::table('case_status')
+        ->where('caseStatusAvailability','=','Available')
+        ->get();
+
+        $nature2 = DB::table('nature')
+        ->where('natureAvailability','=','Available')
+        ->get();
+
+        return view('admin.caseUpdate',compact('cases','agent','complaintSheet','suspect','victim','nature','status','casesComplaint','dateAssigned','whenAndWhere','dateTerminated','agent2','count','statusAll','nature2'));
     }
     /**
      * Show the form for editing the specified resource.

@@ -65,6 +65,7 @@ Route::post('/deleteNature','admin\caseNatureController@delete');
 Route::post('/deletECase','admin\caseDeleteController@delete');
 Route::post('/userUpdate','admin\manageAccountController@update');
 Route::post('/addNewUser','admin\manageAccountController@store');
+Route::post('/passwordReset','admin\manageAccountController@edit');
 Route::post('/adminAddCase','admin\addCaseController@store');
 ######################################################################################
 

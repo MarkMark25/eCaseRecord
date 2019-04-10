@@ -210,7 +210,14 @@
                             <td>
                                 <div>
                                 <center>
-                                    <button type="button" class="btn btn-default btn-xs btn-filter" data-target="#resetPassword" data-toggle="modal" style="width: 100px; height: 40px;">
+                                    <button type="button" class="btn btn-default btn-xs btn-filter"  style="width: 100px; height: 40px;"
+                                        data-target="#resetPassword"
+                                        data-toggle="modal"
+                                        data-userid= "{{ $showData->userid }}"
+                                        data-username="{{ $showData->username }}"
+                                        data-firstname="{{ $showData->firstName }}"
+                                        data-lastname="{{ $showData->lastName }}"
+                                        >
                                         <span style="color:#008000;" class="fas fa-redo"> Reset </span>
                                     </button>
                                 </center>
@@ -344,26 +351,31 @@
       </div>
     </div>
 
-    <!-- Change Password Modal -->
-    <div class="modal fade" id="resetPassword" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="container-fluid" style="padding-bottom:3%; padding-top:4%;">
-    <div class="card card-register mx-auto" style="width:100%;">
-       <div class="card-header"><h4 align="center">Personal Information
-       <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">x</span></div>
-            </button>
-            </h4>
-        <div class="card-body">
-                <div class="form-group">
-                    <center>
-                        <button class="btn btn-primary btn-block col-md-3" type="submit" value="submit">Save</button>
-                    </center>
+    <!-- Change Password-->
+    <div class="modal fade" id="resetPassword" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document" >
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="exampleModalLabel">Password Reset</h4>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close" onclick="javascript:window.location.reload()">
+                      <span aria-hidden="true">×</span>
+                    </button>
                 </div>
-            </form>
+                <div class="modal-body">
+                  <form action="/passwordReset" method="POST">
+                      {{csrf_field()}}
+                      <input type="hidden" id="useridOne" name="useridOne" class="form-control" value="">
+                      @include('admin.passwordReset')
+                    <div class="form-group">
+                        <center>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </center>
+                    </div>
+                  </form>
+                </div>
+          </div>
         </div>
     </div>
-
-</div>
 
 <!-- Exit Modal for change password-->
 <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -412,6 +424,68 @@
                 modal.find('.modal-body #role').val(role)
                 modal.find('.modal-body #userStatus').val(userstatus)
               })
+    </script>
+    <script>
+        $('#resetPassword').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget)
+            var userid = button.data('userid')
+            var username = button.data('username')
+            var firstname = button.data('firstname')
+            var lastname = button.data('lastname')
+
+            var modal = $(this)
+            modal.find('.modal-body #useridOne').val(userid)
+            modal.find('.modal-body #username').val(username)
+            modal.find('.modal-body #firstName').val(firstname)
+            modal.find('.modal-body #lastName').val(lastname)
+          })
+    </script>
+    <script>
+            var Password = {
+
+                _pattern : /[a-zA-Z0-9_\-\+\.]/,
+
+
+                _getRandomByte : function()
+                {
+                  // http://caniuse.com/#feat=getrandomvalues
+                  if(window.crypto && window.crypto.getRandomValues)
+                  {
+                    var result = new Uint8Array(1);
+                    window.crypto.getRandomValues(result);
+                    return result[0];
+                  }
+                  else if(window.msCrypto && window.msCrypto.getRandomValues)
+                  {
+                    var result = new Uint8Array(1);
+                    window.msCrypto.getRandomValues(result);
+                    return result[0];
+                  }
+                  else
+                  {
+                    return Math.floor(Math.random() * 256);
+                  }
+                },
+
+                generate : function(length)
+                {
+                  return Array.apply(null, {'length': length})
+                    .map(function()
+                    {
+                      var result;
+                      while(true)
+                      {
+                        result = String.fromCharCode(this._getRandomByte());
+                        if(this._pattern.test(result))
+                        {
+                          return result;
+                        }
+                      }
+                    }, this)
+                    .join('');
+                }
+
+              };
     </script>
 
   </body>

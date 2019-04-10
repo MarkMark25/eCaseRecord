@@ -10,6 +10,10 @@ use App\Cases;
 
 class caseReviewController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('preventBackHistory'); $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *

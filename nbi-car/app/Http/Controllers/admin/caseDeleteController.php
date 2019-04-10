@@ -11,6 +11,10 @@ use App\Cases;
 
 class caseDeleteController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('preventBackHistory'); $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *

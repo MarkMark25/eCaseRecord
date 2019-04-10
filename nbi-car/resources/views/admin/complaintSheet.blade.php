@@ -312,7 +312,7 @@
                                         <br>
                                         <br>
                                         <div class="col-md-3">
-                                            <input type="text" class="form-control" name="suspectNameA[]" placeholder="Name" autocomplete="off">
+                                            <input type="text" class="form-control" name="suspectNameA[]" placeholder="Name" autocomplete="off" required>
                                             <input type="text" class="form-control" name="suspectAgeA[]" placeholder="Age" onkeypress='validateDate(event)' autocomplete="off">
                                         </div>
                                         <div class="col-md-3">
@@ -394,7 +394,7 @@
                                         <br>
                                         <br>
                                         <div class="col-md-3">
-                                            <input type="text" class="form-control" name="victimNameA[]" placeholder="Name" autocomplete="off">
+                                            <input type="text" class="form-control" name="victimNameA[]" placeholder="Name" autocomplete="off" required>
                                             <input type="text" class="form-control" name="victimAgeA[]" placeholder="Age" onkeypress='validateDate(event)' autocomplete="off">
                                         </div>
                                         <div class="col-md-3">
@@ -671,8 +671,10 @@
                                         '<input type="text" class="form-control" name="victimCivilStatusA[]" placeholder="Civil Status" autocomplete="off">'+
                                     '</div>'+
                                     '<div class="col-md-3">'+
+                                        '<input type="text" id="suspectTelNumberA" name= "victimTelNumberA[]" autocomplete="off" placeholder="Telephone Number" class="ccNumber form-control" value="" autocomplete="off">'+
                                         '<input type="text" class="form-control" name="victimOccupationA[]" placeholder="Occupation" autocomplete="off">'+
                                     '</div>'+
+
                                         '<input type="text" class="form-control" name="victimSexA[]" placeholder="sex" autocomplete="off">'+
                                 '</div>';
                     $("#fld4").append(insHTML);

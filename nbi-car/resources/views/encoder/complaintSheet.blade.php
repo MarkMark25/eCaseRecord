@@ -182,7 +182,7 @@
                               <div class="col-md-4">
                                     <label for="ccn">ACMO No.</label>
                                     <div class="input-group mb-2">
-                                        <input type="text" id="acmo" placeholder="00-0-00000" title="Follow the following format. e.g. 10-C-00001" maxlength="10" pattern="^\d{2}-\w{1}-\d{5}$" name= "acmo" class="form-control" value="" onkeypress='validateACMO(event)' autocomplete="off"> {{-- QUERY HERE --}}
+                                        <input type="text" id="acmo" placeholder="00-C-00000" title="Follow the following format. e.g. 10-C-00001" maxlength="10" pattern="^\d{2}-\w{1}-\d{5}$" name= "acmo" class="form-control" value="" onkeypress='validateACMO(event)' autocomplete="off"> {{-- QUERY HERE --}}
                                     </div>
                                 </div>
                           </div>

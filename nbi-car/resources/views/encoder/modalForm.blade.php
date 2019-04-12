@@ -4,13 +4,13 @@
             <label for="ccn">CCN</label>
             <div class="input-group mb-2">
                 <input type="text" class="form-control col-md-4" value="NBI-CCN-" readonly>
-                <input type="text" id="ccn" name= "ccn" autofocus autocomplete="off" class="ccNumber form-control col-md-8" value="" placeholder="0-00-00000" maxlength="10" pattern="^\w{1}-\d{2}-\d{5}$" title="Follow the following format. e.g. I-10-00001" onkeypress='validate(event)' required> {{-- QUERY HERE --}}
+                <input type="text" id="ccn" name= "ccn" autofocus autocomplete="off" class="ccNumber form-control col-md-8" value="" placeholder="I-00-00000" maxlength="10" pattern="^\w{1}-\d{2}-\d{5}$" title="Follow the following format. e.g. I-10-00001" onkeypress='validate(event)' required style="font-style:italic;"> {{-- QUERY HERE --}}
             </div>
         </div>
         <div class="col-md-6">
             <label for="acmo">ACMO No.</label>
             <div class="">
-                    <input type="text" id="acmo" autocomplete="off" placeholder="00-0-00000" title="Follow the following format. e.g. 10-C-00001" maxlength="10" pattern="^\d{2}-\w{1}-\d{5}$" name= "acmo" class="form-control" value="" onkeypress='validateACMO(event)' required> {{-- QUERY HERE --}}
+                    <input type="text" id="acmo" autocomplete="off" placeholder="00-C-00000" title="Follow the following format. e.g. 10-C-00001" maxlength="10" pattern="^\d{2}-\w{1}-\d{5}$" name= "acmo" class="form-control" value="" onkeypress='validateACMO(event)' required style="font-style:italic;"> {{-- QUERY HERE --}}
             </div>
         </div>
     </div>

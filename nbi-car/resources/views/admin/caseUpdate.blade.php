@@ -142,14 +142,13 @@
                         <span>Generate Report</span>
                       </a>
                       <div class="dropdown-menu" aria-labelledby="pagesDropdown">
-                        <a class="dropdown-item" href="/">CCN & ACMO No. Request</a> <!-- add page for case records-->
-                        <a class="dropdown-item" href="/">Transmittal</a>  <!-- add page -->
-                        <a class="dropdown-item" href="/">Statistics</a>  <!-- add page -->
-                        <a class="dropdown-item" href="/">Terminated Crimes</a>  <!-- add page -->
-                        <a class="dropdown-item" href="/">Terminated Miscellaneous</a>  <!-- add page -->
-                        <a class="dropdown-item" href="/">Pending Crimes</a>  <!-- add page -->
-                        <a class="dropdown-item" href="/">Pending Miscellaneous</a>  <!-- add page -->
-
+                        <a class="dropdown-item" href="/">CCN & ACMO No. Request</a>
+                        <!-- add page for case records-->
+                        <a class="dropdown-item" href="/">Transmittal</a>
+                        <!-- add page -->
+                        <a class="dropdown-item" href="/">Terminated Crimes</a>
+                        <!-- add page -->
+                        <a class="dropdown-item" href="/">Pending Crimes</a>
                       </div>
                     </li>
 
@@ -187,7 +186,7 @@
                                 </div>
                                 <div class="col-md-4">
                                     <label for="acmo">ACMO No.</label>
-                                    <input type="text" id="acmo" value="{{ $cases->acmo}}" placeholder="00-0-00000" title="Follow the following format. e.g. 00-C-00000" maxlength="10" pattern="^\d{2}-\w{1}-\d{5}$" name= "acmo" class="form-control" onkeypress='validateACMO(event)' autocomplete="off">
+                                    <input type="text" id="acmo" name= "acmo" value="{{ $cases->acmo}}" placeholder="00-0-00000" title="Follow the following format. e.g. 00-C-00000" maxlength="10" pattern="^\d{2}-\w{1}-\d{5}$"  class="form-control" onkeypress='validateACMO(event)' autocomplete="off">
                                 </div>
                                 <div class="col-md-4">
                                     <label for="caseNumber">Car Case Number</label>
@@ -209,7 +208,7 @@
                                                 <i class="fas fa-fw fa-calendar"></i>
                                             </div>
                                         </div>
-                                        <input type="text" id="datepicker" name="dateassigned" class="form-control"  value="{{ $dateAssigned->dateassigned}}">
+                                        <input type="text" id="datepicker" name="dateAssigned" class="form-control"  value="{{ $dateAssigned->dateassigned}}">
                                         <input type="text" class="form-control" name="" id="" value="{{ $dateAssigned->caseid }}" disabled>
                                     </div>
                                 </div>
@@ -309,19 +308,19 @@
                                             <br>
                                             <br>
                                             <div class="col-md-3">
-                                                <input type="text" class="form-control" id="suspectNameA" name="suspectNameA" placeholder="Name"  value="{{ $suspect->suspect_name }}" style="background-color:#dd8282;" required>
-                                                <input type="text" class="form-control" id="suspectAge" name="suspectAge" placeholder="Age"  value="{{ $suspect->suspect_Age }}">
+                                                <input type="text" class="form-control" id="suspectNameA" name="suspectNameA[]" placeholder="Name"  value="{{ $suspect->suspect_name }}" style="background-color:#dd8282;" required>
+                                                <input type="text" class="form-control" id="suspectAge" name="suspectAgeA[]" placeholder="Age"  value="{{ $suspect->suspect_Age }}">
                                             </div>
                                             <div class="col-md-3">
-                                                <input type="text" class="form-control" id="suspectAddressA" name="suspectAddressA" placeholder="Address"  value="{{ $suspect->suspect_Address }}">
-                                                <input type="text" class="form-control" id="suspectCivilStatusA" name="suspectCivilStatusA" placeholder="Civil Status"  value="{{ $suspect->suspect_Civil_Status }}">
+                                                <input type="text" class="form-control" id="suspectAddressA[]" name="suspectAddressA" placeholder="Address"  value="{{ $suspect->suspect_Address }}">
+                                                <input type="text" class="form-control" id="suspectCivilStatusA[]" name="suspectCivilStatusA" placeholder="Civil Status"  value="{{ $suspect->suspect_Civil_Status }}">
                                             </div>
                                             <div class="col-md-3">
-                                                <input type="text" class="form-control" id="suspectTelNumberA" name= "suspectTelNumberA"  placeholder="Telephone Number"  value="{{ $suspect->suspect_Contact_Number }}">
-                                                <input type="text" class="form-control" id="suspectOccupationA" name="suspectOccupationA" placeholder="Occupation"  value="{{ $suspect->suspect_Occupation }}">
+                                                <input type="text" class="form-control" id="suspectTelNumberA[]" name= "suspectTelNumberA"  placeholder="Telephone Number"  value="{{ $suspect->suspect_Contact_Number }}">
+                                                <input type="text" class="form-control" id="suspectOccupationA[]" name="suspectOccupationA" placeholder="Occupation"  value="{{ $suspect->suspect_Occupation }}">
                                             </div>
                                             <div class="col-md-2">
-                                                <input type="text" class="form-control" id="suspectSexA" name="suspectSexA" placeholder="sex"  value="{{ $suspect->suspect_Sex }}">
+                                                <input type="text" class="form-control" id="suspectSexA[]" name="suspectSexA" placeholder="sex"  value="{{ $suspect->suspect_Sex }}">
                                                 <input type="text" class="form-control" name="" id="" value="{{ $suspect->id }}" disabled>
                                             </div>
                                         </div>
@@ -342,7 +341,7 @@
                                     <div class="control-group">
                                         <div class="fld_wrap" id="fld1">
                                             <div class="input-group">
-                                                <input class="form-control" name="nameOfNature" id="nameOfNature"  value="{{ $nature->nature}}">
+                                                <input class="form-control" name="fld_val1[]" id="fld_val1"  value="{{ $nature->nature}}">
                                                 <input type="text" class="form-control" value="{{ $nature->caseid }}" disabled>
                                                 <div class="input-group-prepend">
                                                     <button class="btn btn-success btn-danger btn-add add_button1 remove_button" fldnum="1" type="button">
@@ -420,19 +419,19 @@
                                                 <br>
                                                 <br>
                                                 <div class="col-md-3">
-                                                    <input type="text" class="form-control" id="victimNameA" name="victimNameA" placeholder="Name"  value="{{ $victim->victim_name }}" style="background-color:#dd8282;" required>
-                                                    <input type="text" class="form-control" id="victimAge" name="victimAge" placeholder="Age"  value="{{ $victim->victim_Age }}">
+                                                    <input type="text" class="form-control" id="victimNameA" name="victimNameA[]" placeholder="Name"  value="{{ $victim->victim_name }}" style="background-color:#dd8282;" required>
+                                                    <input type="text" class="form-control" id="victimAgeA" name="victimAgeA[]" placeholder="Age"  value="{{ $victim->victim_Age }}">
                                                 </div>
                                                 <div class="col-md-3">
-                                                    <input type="text" class="form-control" id="victimAddressA" name="victimAddressA" placeholder="Address"  value="{{ $victim->victim_Address }}">
-                                                    <input type="text" class="form-control" id="victimCivilStatusA" name="victimCivilStatusA" placeholder="Civil Status"  value="{{ $victim->victim_Civil_Status }}">
+                                                    <input type="text" class="form-control" id="victimAddressA" name="victimAddressA[]" placeholder="Address"  value="{{ $victim->victim_Address }}">
+                                                    <input type="text" class="form-control" id="victimCivilStatusA" name="victimCivilStatusA[]" placeholder="Civil Status"  value="{{ $victim->victim_Civil_Status }}">
                                                 </div>
                                                 <div class="col-md-3">
-                                                    <input type="text" class="form-control" id="victimTelNumberA" name= "victimTelNumberA"  placeholder="Telephone Number"  value="{{ $victim->victim_Contact_Number }}">
-                                                    <input type="text" class="form-control" id="victimOccupationA" name="victimOccupationA" placeholder="Occupation"  value="{{ $victim->victim_Occupation }}">
+                                                    <input type="text" class="form-control" id="victimTelNumberA" name= "victimTelNumberA[]"  placeholder="Telephone Number"  value="{{ $victim->victim_Contact_Number }}">
+                                                    <input type="text" class="form-control" id="victimOccupationA" name="victimOccupationA[]" placeholder="Occupation"  value="{{ $victim->victim_Occupation }}">
                                                 </div>
                                                 <div class="col-md-2">
-                                                    <input type="text" class="form-control" id="victimSexA" name="victimSexA" placeholder="sex"  value="{{ $victim->victim_Sex }}">
+                                                    <input type="text" class="form-control" id="victimSexA" name="victimSexA[]" placeholder="sex"  value="{{ $victim->victim_Sex }}">
                                                     <input type="text" class="form-control" name="" id="" value="{{ $victim->id }}" disabled>
                                                 </div>
                                             </div>
@@ -508,6 +507,15 @@
                     </section>
                     @endforeach
                 @endif
+                <br>
+                    <div class="form-group" style="border-style: outset;border-color:blue;">
+                        <br>
+                        <center>
+                            <button type="submit" class="btn btn-primary" style="font-size:20px;font-weight: bold;">Submit</button>
+                        </center>
+                        <br>
+                    </div>
+
                     </div> <!--CLOSING CARD HEADER -->
                 </div> <!--CLOSING CARD REGISTER -->
               </div> <!--CLOSING CONTAINER FLUID -->

@@ -56,19 +56,20 @@ Route::group(['middleware' => ['web','admin']], function() {
     route::resource('/adminChangePassword','admin\changePasswordController');
     Route::resource('/updateCase','admin\caseReportController');
     Route::resource('/caseReview','admin\caseReviewController');
-    Route::resource('/deleteCase','admin\caseDeleteController');
-});
-##############################ADMIN UPDATE#############################################
-Route::post('/natureUpdate','admin\caseNatureController@update');
-Route::post('/createNature','admin\caseNatureController@store');
-Route::post('/deleteNature','admin\caseNatureController@delete');
-Route::post('/deletECase','admin\caseDeleteController@delete');
-Route::post('/userUpdate','admin\manageAccountController@update');
-Route::post('/addNewUser','admin\manageAccountController@store');
-Route::post('/passwordReset','admin\manageAccountController@edit');
-Route::post('/adminAddCase','admin\addCaseController@store');
+    //Route::resource('/deleteCase','admin\caseDeleteController');
+    Route::get('deleteCase/{caseid}','admin\caseReportController@showcase');
+##############################ADMIN UPDATE, DELETE####################################
+    Route::post('/natureUpdate','admin\caseNatureController@update');
+    Route::post('/createNature','admin\caseNatureController@store');
+    Route::post('/deleteNature','admin\caseNatureController@delete');
+    Route::post('/caseDeleted','admin\caseReportController@delete');
+    Route::post('/userUpdate','admin\manageAccountController@update');
+    Route::post('/addNewUser','admin\manageAccountController@store');
+    Route::post('/passwordReset','admin\manageAccountController@edit');
+    Route::post('/adminAddCase','admin\addCaseController@store');
 ######################################################################################
-
+});
+//Route::post('/caseDeleted','admin\caseDeleteController@delete');
 ############################USER CHANGEPASSWORD ( Home Controller )####################
 Route::get('/changePassword','HomeController@showChangePasswordForm');
 Route::post('/changePassword','HomeController@changePassword')->name('changePassword');

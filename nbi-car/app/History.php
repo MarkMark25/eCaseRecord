@@ -8,9 +8,9 @@ class History extends Model
 {
     protected $table = 'history';
     protected $primaryKey = 'historyid';
-    /*
+
     protected $fillable = [
         'userid','login','logout'
     ];
-    */
+
 }

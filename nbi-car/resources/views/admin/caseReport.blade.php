@@ -135,14 +135,13 @@
             <span>Generate Report</span>
           </a>
           <div class="dropdown-menu" aria-labelledby="pagesDropdown">
-            <a class="dropdown-item" href="/">CCN & ACMO No. Request</a> <!-- add page for case records-->
-            <a class="dropdown-item" href="/">Transmittal</a>  <!-- add page -->
-            <a class="dropdown-item" href="/">Statistics</a>  <!-- add page -->
-            <a class="dropdown-item" href="/">Terminated Crimes</a>  <!-- add page -->
-            <a class="dropdown-item" href="/">Terminated Miscellaneous</a>  <!-- add page -->
-            <a class="dropdown-item" href="/">Pending Crimes</a>  <!-- add page -->
-            <a class="dropdown-item" href="/">Pending Miscellaneous</a>  <!-- add page -->
-
+            <a class="dropdown-item" href="/">CCN & ACMO No. Request</a>
+            <!-- add page for case records-->
+            <a class="dropdown-item" href="/">Transmittal</a>
+            <!-- add page -->
+            <a class="dropdown-item" href="/">Terminated Crimes</a>
+            <!-- add page -->
+            <a class="dropdown-item" href="/">Pending Crimes</a>
           </div>
         </li>
 
@@ -300,7 +299,7 @@
       </div>
     </div>
 
-    <!-- More Details -->
+    <!-- More Details
     <div class="modal fade" id="moreButton-{{ $showData->caseID }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document" >
             <div class="modal-content">
@@ -322,7 +321,7 @@
         </div>
         </div>
     </div>
-
+    -->
     <!-- Delete Modal
     <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document" >

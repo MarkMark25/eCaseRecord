@@ -23,7 +23,7 @@ class userHistoryController extends Controller
         ->select('users.*','history.*'
                 ,DB::raw("CONCAT(users.firstName,' ',users.lastName) AS name")
                 ,DB::raw("TIMEDIFF(history.logout,history.login) as durationS")
-                ,DB::raw("DATE(history.logout) as date")
+                ,DB::raw("DATE(history.login) as date")
                 ,DB::raw("TIME(history.login) as login")
                 ,DB::raw("TIME(history.logout) as logout")
                 )

@@ -22,7 +22,7 @@ class caseDeleteController extends Controller
      */
     public function index()
     {
-        //
+        return view ('admin.caseReport');
     }
 
     /**
@@ -137,8 +137,11 @@ class caseDeleteController extends Controller
      */
     public function delete(Request $request)
     {
-        $cases = Cases::findOrFail($request->caseID);
-        $cases->update($request->all());
+        $deleteCase = Cases::findOrFail($request->caseID);
+        $caseStatus = $request['caseStatus'];
+        $deleteCase->update([
+            'caseStatus'=>$caseStatus,
+        ]);
         /**
         *  Concatenate description for logs.
         */
@@ -150,7 +153,9 @@ class caseDeleteController extends Controller
             'action' => $request['action'],
             'description' =>$insertDescription,
         ]);
-        return redirect('/caseReport')->with('alert-success', 'Case successfully " DELETED "');
+        //return redirect('/caseReport')->with('alert-success', 'Successfully delete case!');
+        $request->session()->flash('alert-success', 'Successfully delete case!');
+        return redirect()->route('/caseReport');
     }
     /**
      * Show the form for editing the specified resource.

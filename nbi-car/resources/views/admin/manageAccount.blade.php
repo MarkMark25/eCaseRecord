@@ -110,14 +110,13 @@
             <span>Generate Report</span>
           </a>
           <div class="dropdown-menu" aria-labelledby="pagesDropdown">
-            <a class="dropdown-item" href="/">CCN & ACMO No. Request</a> <!-- add page for case records-->
-            <a class="dropdown-item" href="/">Transmittal</a>  <!-- add page -->
-            <a class="dropdown-item" href="/">Statistics</a>  <!-- add page -->
-            <a class="dropdown-item" href="/">Terminated Crimes</a>  <!-- add page -->
-            <a class="dropdown-item" href="/">Terminated Miscellaneous</a>  <!-- add page -->
-            <a class="dropdown-item" href="/">Pending Crimes</a>  <!-- add page -->
-            <a class="dropdown-item" href="/">Pending Miscellaneous</a>  <!-- add page -->
-
+            <a class="dropdown-item" href="/">CCN & ACMO No. Request</a>
+            <!-- add page for case records-->
+            <a class="dropdown-item" href="/">Transmittal</a>
+            <!-- add page -->
+            <a class="dropdown-item" href="/">Terminated Crimes</a>
+            <!-- add page -->
+            <a class="dropdown-item" href="/">Pending Crimes</a>
           </div>
         </li>
 
@@ -318,13 +317,13 @@
     <div class="modal fade" id="editInformation" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document" >
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header" style="background-color:#dd8282;">
                     <h4 class="modal-title" id="exampleModalLabel">User details update</h4>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close" onclick="javascript:window.location.reload()">
                       <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body" style="background-color:#edcbcb;">
                   <form action="/userUpdate" method="POST">
                       {{csrf_field()}}
                       <input type="hidden" id="useridOne" name="useridOne" class="form-control" value=""> {{-- QUERY HERE --}}
@@ -355,13 +354,13 @@
     <div class="modal fade" id="resetPassword" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document" >
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header" style="background-color:#dd8282;">
                     <h4 class="modal-title" id="exampleModalLabel">Password Reset</h4>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close" onclick="javascript:window.location.reload()">
                       <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body" style="background-color:#edcbcb;">
                   <form action="/passwordReset" method="POST">
                       {{csrf_field()}}
                       <input type="hidden" id="useridOne" name="useridOne" class="form-control" value="">

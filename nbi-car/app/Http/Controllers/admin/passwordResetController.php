@@ -101,7 +101,7 @@ class passwordResetController extends Controller
             ]);
             return redirect('/manageAccounts')->with('alert-success', 'User details successfully updated!');
         }else {
-            return redirect('/manageAccounts')->with('alert-success', 'ERROR!');
+            return redirect('/manageAccounts')->with('alert-danger', 'ERROR!');
         }
     }
 

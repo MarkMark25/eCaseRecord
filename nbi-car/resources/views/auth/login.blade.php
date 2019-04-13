@@ -38,7 +38,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card" style="padding:7px 8px 5px 8px;background-color:rgba(255, 0, 0, 0.6);">
+                    <div class="card" style="padding:7px 8px 5px 8px;background-color:#b8c2cb;">
                         <p>
                             <b>VISION</b>
                             <br>
@@ -56,7 +56,7 @@
                 </div>
                 <!--EDIT HERE -->
                 <div class="col-md-4" style="height:30vw;">
-                    <div class="card card-login mx-auto mt-5 col-md-auto" style="background-color:rgba(255, 0, 0, 0.6);opacity:1;">
+                    <div class="card card-login mx-auto mt-5 col-md-auto" style="background-color:#E9ECEF;opacity:1;">
                         <div class="card-body">
                             <form method="POST" action="{{ route('login') }}">
                                 @csrf
@@ -88,7 +88,7 @@
                             <div class="form-group">
                                 <div class="checkbox">
                                 <label>
-                                    <input type="checkbox" value="remember-me" checked="checked" required>
+                                    <input type="checkbox" value="remember-me" checked="false" oninvalid="this.setCustomValidity('Please read the term and conditions, then click the checkbox if you want to proceed.')" onchange="this.setCustomValidity('')" required >
                                     Accept the <a href="#" data-toggle="modal" data-target="#termsConditionModal">Terms and Conditions.</a>
                                 </label>
                                 </div>
@@ -115,15 +115,32 @@
 
     <!-- Terms and Condition Modal-->
     <div class="modal fade" id="termsConditionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
+      <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">NBI-CAR Terms and Condition</h5>
+            <h5 class="modal-title" id="exampleModalLabel"><b>NBI-CAR Terms and Condition</b></h5>
             <button class="close" type="button" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
           </div>
-          <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+          <div class="modal-body">
+            <p>
+                If you continue to browse and use this website, you are agreeing to comply with and be bound by the following <b>terms and conditions</b> of use, which together with our privacy policy govern <b>NBI-CAR</b> relationship with you in relation to this website. If you disagree with any part of these terms and conditions, please do not use this website.
+            </p>
+            <p>
+                <b>The use of this website is subject to the following terms of use:</b>
+                <ul>
+                    <li>The content of the pages of this website is for your general information and use only. It is subject to change without notice.</li>
+                    <li>Neither we nor any third parties provide any warranty or guarantee as to the accuracy, timeliness, performance, completeness or suitability of the information and materials found or offered on this website for any particular purpose. You acknowledge that such information and materials may contain inaccuracies or errors and we expressly exclude liability for any such inaccuracies or errors to the fullest extent permitted by law.</li>
+                    <li>Your use of any information or materials on this website is entirely at your own risk, for which we shall not be liable. It shall be your own responsibility to ensure that any information available through this website meet your specific requirements.</li>
+                    <li>This website contains material which is owned by or licensed to us. This material includes, but is not limited to, the design, layout, look, appearance and graphics. Reproduction is prohibited other than in accordance with the copyright notice, which forms part of these terms and conditions.</li>
+                    <li>All trademarks reproduced in this website, which are not the property of, or licensed to the operator, are acknowledged on the website.</li>
+                    <li><b>Unauthorised</b> use of this website may give rise to a claim for damages and/or be a criminal offence.</li>
+                    <li>From time to time, this website may also include links to other websites. These links are provided for your convenience to provide further information. They do not signify that we endorse the website(s). We have no responsibility for the content of the linked website(s).</li>
+                    <li>Your use of this website and any dispute arising out of such use of the website is subject to the laws of the Philippines.</li>
+                </ul>
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -133,7 +150,7 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">NBI-CAR Terms of Password</h5>
+            <h5 class="modal-title" id="exampleModalLabel"><b>NBI-CAR Terms of Password</b></h5>
             <button class="close" type="button" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>

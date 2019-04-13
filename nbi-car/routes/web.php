@@ -63,13 +63,14 @@ Route::group(['middleware' => ['web','admin']], function() {
     Route::post('/createNature','admin\caseNatureController@store');
     Route::post('/deleteNature','admin\caseNatureController@delete');
     Route::post('/caseDeleted','admin\caseReportController@delete');
+    //HINDI PA TAPOS
+    Route::post('/updatedCase','admin\caseReportController@update');
     Route::post('/userUpdate','admin\manageAccountController@update');
     Route::post('/addNewUser','admin\manageAccountController@store');
     Route::post('/passwordReset','admin\manageAccountController@edit');
     Route::post('/adminAddCase','admin\addCaseController@store');
 ######################################################################################
 });
-//Route::post('/caseDeleted','admin\caseDeleteController@delete');
 ############################USER CHANGEPASSWORD ( Home Controller )####################
 Route::get('/changePassword','HomeController@showChangePasswordForm');
 Route::post('/changePassword','HomeController@changePassword')->name('changePassword');

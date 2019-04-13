@@ -48,7 +48,7 @@ class ccnController extends Controller
             DB::raw('case_victims.caseid'),
             DB::raw('case_suspects.caseid'))
             ->orderby('cases.docketnumber','ASC')
-            ->where('cases.caseStatus','=','Available')
+            ->where('cases.caseAvailability','=','Available')
             ->whereNull('ccn')
             ->orwhereNull('acmo')
             ->get();

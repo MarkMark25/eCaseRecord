@@ -174,11 +174,12 @@
                                 @endforeach
                             </div>
                        </div>
-                       <a class="card-footer text-white clearfix small z-1" href="#">
-                       <span class="float-left"></span>
-                       <span class="float-right">
-                       </span>
-                       </a>
+                       <a class="card-footer text-white clearfix small z-1" href="/caseReport">
+                        <span class="float-left">View Details</span>
+                        <span class="float-right">
+                        <i class="fas fa-angle-right"></i>
+                        </span>
+                        </a>
                     </div>
                  </div>
             </div>

@@ -169,7 +169,7 @@
                 <i class="fas fa-backward"></i>
                 <span>Back</span>
             </a>
-            <form method="POST" action="">
+            <form method="POST" action="/updatedCase">
                 @method('PUT')
                 {{ csrf_field() }}
               <div class="container-fluid" style="padding-bottom:3%; padding-top:2%;">
@@ -177,7 +177,7 @@
                   <center><div class="card-header" style="background-color:#dd8282;"><h4>Edit case details and complaint sheet.</div></center>
                     <div class="card-body" style="background-color:#edcbcb;">
                         @foreach ($cases as $cases)
-                        <input type="hidden" id="caseID" name= "caseID" class="form-control"  value="{{ $cases->caseID }}">
+                        <input type="text" id="caseID" name= "caseID" class="form-control"  value="{{ $cases->caseID }}" readonly>
                         <div class="form-group">
                             <div class="form-row">
                                 <div class="col-md-4">
@@ -209,7 +209,7 @@
                                             </div>
                                         </div>
                                         <input type="text" id="datepicker" name="dateAssigned" class="form-control"  value="{{ $dateAssigned->dateassigned}}">
-                                        <input type="text" class="form-control" name="" id="" value="{{ $dateAssigned->caseid }}" disabled>
+                                        <input type="text" class="form-control" name="datecaseID" id="datecaseID" value="{{ $dateAssigned->caseid }}" readonly>
                                     </div>
                                 </div>
                                 @endforeach
@@ -253,8 +253,8 @@
                                         <div class="form-row">
                                             <div class="fld_wrap" id="fld2">
                                                 <div class="input-group">
-                                                    <input type="text" id="full_name" name= "full_name" class="form-control"  value="{{ $agent->agentName}}" disabled>
-                                                    <input type="text" class="form-control" name="" id="" value="{{ $agent->caseid }}" disabled>
+                                                    <input type="text" id="fld_val2" name= "fld_val2[]" class="form-control"  value="{{ $agent->agentName}}" readonly>
+                                                    <input type="text" class="form-control" name="" id="" value="{{ $agent->caseid }}" readonly>
                                                 </div>
                                             </div>
                                         </div>
@@ -272,7 +272,7 @@
                                     <label for="suspectName">Name</label>
                                     <div class="">
                                         <input type="text" id="complainant" name="complainant"  class="form-control" onkeypress='validateComplainant(event)'  value="{{ $casesComplaint->complainantname}}"/>  {{-- QUERY HERE --}}
-                                        <input type="text" name="" id="" class="form-control" value="{{ $casesComplaint->caseid}}" disabled>
+                                        <input type="text" name="" id="" class="form-control" value="{{ $casesComplaint->caseid}}" readonly>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -321,7 +321,7 @@
                                             </div>
                                             <div class="col-md-2">
                                                 <input type="text" class="form-control" id="suspectSexA[]" name="suspectSexA" placeholder="sex"  value="{{ $suspect->suspect_Sex }}">
-                                                <input type="text" class="form-control" name="" id="" value="{{ $suspect->id }}" disabled>
+                                                <input type="text" class="form-control" name="suspectID[]" id="suspectID[]" value="{{ $suspect->id }}" readonly>
                                             </div>
                                         </div>
                                     </div>
@@ -342,7 +342,7 @@
                                         <div class="fld_wrap" id="fld1">
                                             <div class="input-group">
                                                 <input class="form-control" name="fld_val1[]" id="fld_val1"  value="{{ $nature->nature}}">
-                                                <input type="text" class="form-control" value="{{ $nature->caseid }}" disabled>
+                                                <input type="text" class="form-control" name="caseNatureID" id="caseNatureID" value="{{ $nature->cnatureid }}" readonly>
                                                 <div class="input-group-prepend">
                                                     <button class="btn btn-success btn-danger btn-add add_button1 remove_button" fldnum="1" type="button">
                                                         <span class="fas ">X</span>
@@ -382,7 +382,7 @@
                                         <div class="col-md-6">
                                             <label for="whereCommitted">Place Committed</label>
                                             <input type="text" name="whereCommitted" id="whereCommitted" class="form-control"  value="{{ $whenAndWhere->place_Committed }}">
-                                            <input type="text" class="form-control" name="" id="" value="{{ $whenAndWhere->id }}" disabled>
+                                            <input type="text" class="form-control" name="complaintSheetID" id="complaintSheetID" value="{{ $whenAndWhere->id }}" readonly>
                                         </div>
                                         <div class="col-md-6">
                                             <label for="whenCommitted">When Committed</label>
@@ -432,7 +432,7 @@
                                                 </div>
                                                 <div class="col-md-2">
                                                     <input type="text" class="form-control" id="victimSexA" name="victimSexA[]" placeholder="sex"  value="{{ $victim->victim_Sex }}">
-                                                    <input type="text" class="form-control" name="" id="" value="{{ $victim->id }}" disabled>
+                                                    <input type="text" class="form-control" name="victimID[]" id="victimID[]" value="{{ $victim->id }}" readonly>
                                                 </div>
                                             </div>
                                         </div>
@@ -475,7 +475,7 @@
                 @else
                     @foreach($complaintSheet as $complaintSheet)
                     <section>
-                        <input type="text" class="form-control" name="" id="" value="{{ $complaintSheet->id }}" disabled>
+                        <input type="text" class="form-control" name="complainSheetID" id="complainSheetID" value="{{ $complaintSheet->id }}" readonly>
                         <div class="form-group">
                             <p style="font-weight:bold;">6. Narration of Facts (Salaysay ng mga Pangyayari) </p>
                             <textarea id="narrationOfFacts" name="narrationOfFacts"  style="width:100%;font-size:15px;resize:none;" rows="5" >{{ $complaintSheet->narration_Of_Facts }}</textarea>
@@ -508,6 +508,17 @@
                     @endforeach
                 @endif
                 <br>
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                <div class="">
+                                    <input type="hidden" id="description" name="description" class="form-control" value="Administrator update case with case id = ">
+                                    <input type="hidden" id="action" name="action" class="form-control" value="Update"> {{-- QUERY HERE --}}
+                                    <input type="hidden" name="userid" id="userid" value="{{ Auth::user()->userid }}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="form-group" style="border-style: outset;border-color:blue;">
                         <br>
                         <center>

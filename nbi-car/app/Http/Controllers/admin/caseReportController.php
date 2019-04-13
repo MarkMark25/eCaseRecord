@@ -5,7 +5,18 @@ use DB;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\addNewCase;
 use App\Cases;
+use App\Logs;
+use App\Nature;
+use App\Users;
+use App\CaseAgent;
+use App\CaseNature;
+use App\CaseSuspect;
+use App\CaseVictims;
+use App\ComplaintSheet;
+use Carbon\Carbon;
 use function GuzzleHttp\Psr7\readline;
 
 class caseReportController extends Controller
@@ -38,7 +49,6 @@ class caseReportController extends Controller
         ->get();
 
         $status = DB::table('case_status')
-        ->where('caseStatusAvailability','=','Available')
         ->get();
 
         $sample = DB::table('case_suspects')
@@ -65,7 +75,7 @@ class caseReportController extends Controller
         DB::raw('case_victims.caseid'),
         DB::raw('case_suspects.caseid'))
         ->orderby('cases.docketnumber','ASC')
-        ->where('cases.caseStatus','=','Available')
+        ->where('cases.caseAvailability','=','Available')
         ->get();
 
         return view ('admin.caseReport',compact('showData','agent','nature','status','agent2','nature2', 'sample'));
@@ -280,7 +290,6 @@ class caseReportController extends Controller
         ->get();
 
         $statusAll = DB::table('case_status')
-        ->where('caseStatusAvailability','=','Available')
         ->get();
 
         $nature2 = DB::table('nature')
@@ -308,26 +317,48 @@ class caseReportController extends Controller
      */
     public function delete(Request $request)
     {
-        $deleteCase = Cases::findOrFail($request->caseID);
-        $caseStatus = $request['caseStatus'];
-        $deleteCase->update([
-            'caseStatus'=>$caseStatus,
-        ]);
-        /**
-        *  Concatenate description for logs.
+        if($request==true){
+            $caseStatus = $request['caseAvailability'];
+            $caseID = $request['caseID'];
+            DB::update('update cases set caseAvailability = ? where caseid = ?',[$caseStatus,$caseID]);
+            /**
+            *  Concatenate description for logs.
+            */
+            $formDescription = $request['descriptionOne'];
+            $insertDescription = $formDescription. ' '.$caseID;
+            Logs::create([
+                'userid' => $request['userid'],
+                'action' => $request['action'],
+                'description' =>$insertDescription,
+            ]);
+            return redirect('/caseReport')->with('alert-success', 'Successfully delete case!');
+        }else{
+            return redirect('/caseReport')->with('alert-danger', 'ERROR!');
+        }
+        /*
+        if($request==true){
+            $deleteCase = Cases::find($request->caseID);
+            $caseStatus = $request['caseAvailability'];
+            $deleteCase->update([
+                'caseAvailability'=>$caseStatus,
+            ]);
+
+            $caseID = $request['caseID'];
+            $formDescription = $request['description'];
+            $insertDescription = $formDescription. ' '.$caseID;
+            Logs::create([
+                'userid' => $request['userid'],
+                'action' => $request['action'],
+                'description' =>$insertDescription,
+            ]);
+            return redirect('/caseReport')->with('alert-success', 'Successfully delete case!');
+            //$request->session()->flash('alert-success', 'Successfully delete case!');
+            //return redirect()->route('/caseReport');
+            //return redirect()->back();
+        }else{
+            return redirect('/caseReport')->with('alert-danger', 'ERROR!');
+        }
         */
-        $caseID = $request['caseID'];
-        $formDescription = $request['description'];
-        $insertDescription = $formDescription. ' '.$caseID;
-        Logs::create([
-            'userid' => $request['userid'],
-            'action' => $request['action'],
-            'description' =>$insertDescription,
-        ]);
-        //return redirect('/caseReport')->with('alert-success', 'Successfully delete case!');
-        $request->session()->flash('alert-success', 'Successfully delete case!');
-        return redirect()->route('/caseReport');
-        //return redirect()->back();
     }
 
     /**
@@ -339,7 +370,119 @@ class caseReportController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'ccn' => 'nullable|unique:cases,ccn|max:255',
+            'docketnumber' => 'required|unique:cases|max:255',
+            'acmo' => 'nullable|unique:cases|max:255',
+        ]);
+
+        if ($validator->fails()){
+            return redirect()
+                ->back()
+                ->withErrors($validator)
+                ->withInput();
+        }else {
+            //Cases Update
+            $casesID = $request['caseID'];
+            $cases = User::findOrFail($request->caseID);
+            $cases->update([
+                'docketnumber' => $request['docketnumber'],
+                'ccn' => $request['ccn'],
+                'acmo' => $request['acmo'],
+                'complainantname' => $request['complainant'],
+                'dateTerminated' =>  $request['dateTerminated'],
+                'statusid' => $request['status'],
+                'complainant_Address' => $request['complainantAddress'],
+                'complainant_Contact_Number' => $request['complainantTelNumber'],
+            ]);
+            //Agent update date assigned
+            $dateAssigned = Caseagent::findOrFail($request->datecaseID);
+            $dateAssigned->update([
+                'dateassigned' => $request['dateAssigned'],
+            ]);
+            //Case Agent store agent and dates
+            $dateAgentAssigned = $request['dateAssigned'];
+            if(count($request->fld_val2)>0) {
+                foreach($request->fld_val2 as $item => $v){
+                    $data2 = array(
+                        'caseid' => $casesID    ,
+                        'userid' => $request->fld_val2[$item],
+                        'dateassigned'=> $dateAgentAssigned,
+                    );
+                    CaseAgent::create($data2);
+                }
+            }
+            //Complaint Sheet Update
+            $complainSheet = ComplaintSheet::findOrFail($request->complainSheetID);
+            $complainSheet->update([
+                    'caseid' => $casesID,
+                    'place_Committed' => $request['whereCommitted'],
+                    'date_Committed' => $request['whenCommitted'],
+                    'narration_Of_Facts' => $request['narrationOfFacts'],
+                    'reported_Any_Agency' => $request['hasTheMatter'],
+                    'status_of_Investigation' => $request['statusOfInvestigation'],
+                    'where_court_Proceedings' => $request['isTheMatterComplained'],
+                    'report_Considerations' => $request['whatConsidirations '],
+                ]);
+            //Case nature store
+            if(count($request->fld_val1)>0) {
+                foreach($request->fld_val1 as $item => $v){
+                    $data3 = array(
+                        'caseid' => $casesID,
+                        'natureid' => $request->fld_val1[$item],
+                    );
+                    CaseNature::create($data3);
+                }
+            }
+            //Suspect name store
+            if(count($request->suspectNameA)>0) {
+                foreach($request->suspectNameA as $item => $v){
+                    $data4 = array(
+                        'caseid' => $casesID,
+                        'suspect_name' => $request->suspectNameA[$item],
+                        'suspect_Address'=> $request->suspectAddressA[$item],
+                        'suspect_Contact_Number'=> $request->suspectTelNumberA[$item],
+                        'suspect_Sex'=> $request->suspectSexA[$item],
+                        'suspect_Age'=> $request->suspectAgeA[$item],
+                        'suspect_Civil_Status'=> $request->suspectCivilStatusA[$item],
+                        'suspect_Occupation'=> $request->suspectOccupationA[$item],
+                    );
+                    CaseSuspect::create($data4);
+                }
+            }
+            //Victim name store
+            if(count($request->victimNameA)>0) {
+                foreach($request->victimNameA as $item => $v){
+                    $data5 = array(
+                        'caseid' => $casesID,
+                        'victim_name' => $request->victimNameA[$item],
+                        'victim_Address' => $request->victimAddressA[$item],
+                        'victim_Contact_Number' => $request->victimTelNumberA[$item],
+                        'victim_Sex' => $request->victimSexA[$item],
+                        'victim_Age' => $request->victimAgeA[$item],
+                        'victim_Civil_Status' => $request->victimCivilStatusA[$item],
+                        'victim_Occupation' => $request->victimOccupationA[$item],
+                    );
+                    CaseVictims::create($data5);
+                }
+            }
+            //Activity Logs create
+            $formDescription = $request['description'];
+            $insertDescription = $formDescription. ' '.$casesID;
+            Logs::create([
+                'userid' => $request['userid'],
+                'action' => $request['action'],
+                'description' => $insertDescription,
+            ]);
+            //Delete Case Nature
+            CaseNature::whereIn('cnatureid', $request->caseNatureID)->destroy();
+            //Delete Suspect
+            CaseSuspect::whereIn('id',$request->suspectID)->destory();
+            //Delete Victims
+            CaseVictims::whereIn('id',$request->victimID)->destroy();
+
+        }
+
     }
 
     /**
@@ -348,8 +491,8 @@ class caseReportController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Response $request)
     {
-        //
+
     }
 }

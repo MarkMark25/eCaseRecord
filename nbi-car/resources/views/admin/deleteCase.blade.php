@@ -180,7 +180,7 @@
                         </center>
                         <div class="card-body" style="background-color:#edcbcb;">
                             @foreach ($cases as $cases)
-                            <input type="text" id="caseID" name="caseID" class="form-control" value="{{ $cases->caseid }}" disabled>
+                            <input type="hidden" id="caseID" name="caseID" class="form-control" value="{{ $cases->caseid }}" readonly>
                             <div class="form-group">
                                 <div class="form-row">
                                     <div class="col-md-4">
@@ -405,7 +405,7 @@
                                 <div class="form-row">
                                     <div class="col-md-12">
                                         <div class="">
-                                            <input type="hidden" id="caseStatus" name="caseStatus" class="form-control" value="Deleted">
+                                            <input type="hidden" id="caseAvailability" name="caseAvailability" class="form-control" value="Deleted">
                                             <input type="hidden" id="descriptionOne" name="descriptionOne" class="form-control" value="Administrator delete case with case id = ">
                                             <input type="hidden" id="action" name="action" class="form-control" value="Delete"> {{-- QUERY HERE --}}
                                             <input type="hidden" name="userid" id="userid" value="{{ Auth::user()->userid }}">

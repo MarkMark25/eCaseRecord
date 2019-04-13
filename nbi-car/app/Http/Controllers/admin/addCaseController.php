@@ -14,6 +14,7 @@ use App\CaseAgent;
 use App\CaseNature;
 use App\CaseSuspect;
 use App\CaseVictims;
+use App\ComplaintSheet;
 use Carbon\Carbon;
 
 class addCaseController extends Controller
@@ -46,7 +47,6 @@ class addCaseController extends Controller
         ->get();
 
         $status = DB::table('case_status')
-        ->where('caseStatusAvailability','=','Available')
         ->get();
 
         return view('admin.addCase', compact('agent','nature','status','agent2','nature2'));
@@ -129,6 +129,9 @@ class addCaseController extends Controller
                     CaseVictims::create($data5);
                 }
             }
+            ComplaintSheet::create([
+                'caseid' => $lastid,
+            ]);
             $formDescription = $request['description'];
             $insertDescription = $formDescription. ' '.$lastid;
             Logs::create([
@@ -136,7 +139,7 @@ class addCaseController extends Controller
                 'action' => $request['action'],
                 'description' => $insertDescription,
             ]);
-            $request->session()->flash('alert-success', 'Case record successfully inserted!');
+            $request->session()->flash('alert-success', 'Case record successfully added!');
             return redirect()->back();
         }
     }

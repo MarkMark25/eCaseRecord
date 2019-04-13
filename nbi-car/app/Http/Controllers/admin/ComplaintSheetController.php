@@ -47,7 +47,6 @@ class ComplaintSheetController extends Controller
         ->get();
 
         $status = DB::table('case_status')
-        ->where('caseStatusAvailability','=','Available')
         ->get();
 
         return view('admin.complaintSheet', compact('agent','nature','status','agent2','nature2'));
@@ -161,7 +160,7 @@ class ComplaintSheetController extends Controller
                 'action' => $request['action'],
                 'description' => $insertDescription,
             ]);
-            $request->session()->flash('alert-success', 'Case record successfully inserted!');
+            $request->session()->flash('alert-success', 'Case record successfully added!');
             return redirect()->back();
         }
     }

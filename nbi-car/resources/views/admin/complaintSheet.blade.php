@@ -195,20 +195,20 @@
                                   <label for="caseNumber">NBI-CAR Case Number</label>
                                   <div class="input-group mb-2">
                                       <input type="text" id="" name="" class="form-control col-md-5" value="NBI-CAR-" readonly>
-                                      <input type="text" id="docketnumber" name="docketnumber" class="form-control" value="" placeholder="C-00-000" maxlength="8" pattern="^\w{1}-\d{2}-\d{3}$" onkeypress='validate(event)' title="Follow the following format. e.g. C-10-001" autocomplete="off" required>
+                                      <input type="text" id="docketnumber" name="docketnumber" class="form-control" value="" placeholder="I-00-000" maxlength="8" pattern="^\w{1}-\d{2}-\d{3}$" onkeypress='validate(event)' title="Follow the following format. e.g. C-10-001" autocomplete="off" required>
                                   </div>
                               </div>
                               <div class="col-md-4">
                                   <label for="ccn">CCN</label>
                                   <div class="input-group mb-2">
                                       <input type="text" id="" name="" class="form-control col-md-5" value="NBI-CCN-" readonly>
-                                      <input type="text" id="ccn" name= "ccn" class="ccNumber form-control" value="" placeholder="I-00-00000" maxlength="10" pattern="^\w{1}-\d{2}-\d{5}$" title="Follow the following format. e.g. I-10-00001" onkeypress='validateCCN(event)' autocomplete="off">
+                                      <input type="text" id="ccn" name= "ccn" class="ccNumber form-control" value="" placeholder="C-00-00000" maxlength="10" pattern="^\w{1}-\d{2}-\d{5}$" title="Follow the following format. e.g. I-10-00001" onkeypress='validateCCN(event)' autocomplete="off">
                                   </div>
                               </div>
                               <div class="col-md-4">
                                     <label for="ccn">ACMO No.</label>
                                     <div class="input-group mb-2">
-                                        <input type="text" id="acmo" placeholder="00-0-00000" title="Follow the following format. e.g. 00-C-00000" maxlength="10" pattern="^\d{2}-\w{1}-\d{5}$" name= "acmo" class="form-control" value="" onkeypress='validateACMO(event)' autocomplete="off">
+                                        <input type="text" id="acmo" name= "acmo" placeholder="00-C-00000" title="Follow the following format. e.g. 00-C-00000" maxlength="10" pattern="^\d{2}-\w{1}-\d{5}$"  class="form-control" value="" onkeypress='validateACMO(event)' autocomplete="off">
                                     </div>
                                 </div>
                           </div>
@@ -558,7 +558,7 @@
                 var key = theEvent.keyCode || theEvent.which;
                 key = String.fromCharCode(key);
             }
-            var regex = /[0-9,C,-]/;
+            var regex = /[0-9,I,-]/;
             if( !regex.test(key) ) {
                 theEvent.returnValue = false;
                 if(theEvent.preventDefault) theEvent.preventDefault();
@@ -575,7 +575,7 @@
                 var key = theEvent.keyCode || theEvent.which;
                 key = String.fromCharCode(key);
             }
-            var regex = /[0-9,I,-]/;
+            var regex = /[0-9,C,-]/;
             if( !regex.test(key) ) {
                 theEvent.returnValue = false;
                 if(theEvent.preventDefault) theEvent.preventDefault();

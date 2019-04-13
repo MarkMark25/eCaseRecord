@@ -37,7 +37,7 @@ class homeController extends Controller
         ->count();
 
         $totalRecords = DB::table('cases')
-        ->where('caseStatus','=','Available')
+        ->where('caseAvailability','=','Available')
         ->count();
 
         $caseRecords = DB::table('cases')

@@ -140,7 +140,7 @@ class caseDeleteController extends Controller
         $deleteCase = Cases::findOrFail($request->caseID);
         $caseStatus = $request['caseStatus'];
         $deleteCase->update([
-            'caseStatus'=>$caseStatus,
+            'caseAvailability'=>$caseStatus,
         ]);
         /**
         *  Concatenate description for logs.

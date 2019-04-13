@@ -4,7 +4,7 @@
             <label for="ccn">CCN</label>
             <div class="input-group mb-2">
                 <input type="text" class="form-control col-md-4" value="NBI-CCN-" readonly>
-                <input type="text" id="ccn" name= "ccn" autofocus autocomplete="off" class="ccNumber form-control col-md-8" value="" placeholder="I-00-00000" maxlength="10" pattern="^\w{1}-\d{2}-\d{5}$" title="Follow the following format. e.g. I-10-00001" onkeypress='validate(event)' required style="font-style:italic;"> {{-- QUERY HERE --}}
+                <input type="text" id="ccn" name= "ccn" autofocus autocomplete="off" class="ccNumber form-control col-md-8" value="" placeholder="C-00-00000" maxlength="10" pattern="^\w{1}-\d{2}-\d{5}$" title="Follow the following format. e.g. I-10-00001" onkeypress='validate(event)' required style="font-style:italic;"> {{-- QUERY HERE --}}
             </div>
         </div>
         <div class="col-md-6">

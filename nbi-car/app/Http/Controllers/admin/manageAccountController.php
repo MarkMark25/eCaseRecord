@@ -28,7 +28,6 @@ class manageAccountController extends Controller
         $showData = DB::table('users')
             ->select('users.*')
             ->where('userStatus','=','Active')
-            ->where('userid','!=',Auth::user()->userid)
             ->orWhere('userStatus','=','Inactive')
             ->orWhere('userStatus','=','Reassigned')
             ->get();

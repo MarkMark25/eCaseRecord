@@ -368,23 +368,21 @@ class caseReportController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'ccn' => 'nullable|unique:cases,ccn|max:255',
-            'docketnumber' => 'required|unique:cases|max:255',
-            'acmo' => 'nullable|unique:cases|max:255',
+            'ccn' => 'nullable|max:255',
+            'docketnumber' => 'required|max:255',
+            'acmo' => 'nullable|max:255',
         ]);
 
         if ($validator->fails()){
-            return redirect()
-                ->back()
-                ->withErrors($validator)
-                ->withInput();
+            return redirect('/caseReport')->withErrors($validator)->withInput();
         }else {
+
             //Cases Update
             $casesID = $request['caseID'];
-            $cases = User::findOrFail($request->caseID);
+            $cases = Cases::findOrFail($request->caseID);
             $cases->update([
                 'docketnumber' => $request['docketnumber'],
                 'ccn' => $request['ccn'],
@@ -405,7 +403,7 @@ class caseReportController extends Controller
             if(count($request->fld_val2)>0) {
                 foreach($request->fld_val2 as $item => $v){
                     $data2 = array(
-                        'caseid' => $casesID    ,
+                        'caseid' => $casesID,
                         'userid' => $request->fld_val2[$item],
                         'dateassigned'=> $dateAgentAssigned,
                     );
@@ -422,7 +420,7 @@ class caseReportController extends Controller
                     'reported_Any_Agency' => $request['hasTheMatter'],
                     'status_of_Investigation' => $request['statusOfInvestigation'],
                     'where_court_Proceedings' => $request['isTheMatterComplained'],
-                    'report_Considerations' => $request['whatConsidirations '],
+                    'report_Considerations' => $request['whatConsidirations'],
                 ]);
             //Case nature store
             if(count($request->fld_val1)>0) {
@@ -474,12 +472,37 @@ class caseReportController extends Controller
                 'action' => $request['action'],
                 'description' => $insertDescription,
             ]);
+
+            $countNature = count($request->caseNatureID);
+            $countSuspect = count($request->suspectID);
+            $countVictims = count($request->victimID);
+            $countAgent = count($request->agentCaseID);
             //Delete Case Nature
-            CaseNature::whereIn('cnatureid', $request->caseNatureID)->destroy();
+            if($countNature==1){
+                CaseNature::where('cnatureid', $request->caseNatureID)->delete();
+            }else{
+                CaseNature::whereIn('cnatureid', $request->caseNatureID)->delete();
+            }
             //Delete Suspect
-            CaseSuspect::whereIn('id',$request->suspectID)->destory();
+            if ($countSuspect==1) {
+                CaseSuspect::where('id',$request->suspectID)->delete();
+            } else {
+                CaseSuspect::whereIn('id',$request->suspectID)->delete();
+            }
             //Delete Victims
-            CaseVictims::whereIn('id',$request->victimID)->destroy();
+            if ($countVictims==1) {
+                CaseVictims::where('id',$request->victimID)->delete();
+            } else {
+                CaseVictims::whereIn('id',$request->victimID)->delete();
+            }
+            //Delete Agent
+            if ($countAgent==1) {
+                CaseAgent::where('caseagentid',$request->agentCaseID)->delete();
+            } else {
+                CaseAgent::whereIn('caseagentid',$request->agentCaseID)->delete();
+            }
+
+            return redirect('/caseReport')->with('alert-success', 'Successfully update the case!');
 
         }
 

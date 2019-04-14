@@ -52,6 +52,9 @@
 
     <style>
             .input-group:not(:first-of-type) { margin-top: 10px; }
+            input::placeholder {
+                font-style: italic;
+            }
     </style>
 
 
@@ -189,7 +192,7 @@
                           <div class="col-md-6">
                               <label for=complainant>Complainant</label>
                                   <div class="">
-                                      <input type="text" id="complainant" name="complainant"  class="form-control" onkeypress='validateComplainant(event)' minlength="5" maxlength="40" required/>  {{-- QUERY HERE --}}
+                                      <input type="text" id="complainant" name="complainant"  class="form-control" onkeypress='validateComplainant(event)' minlength="5" maxlength="30" required/>  {{-- QUERY HERE --}}
                                   </div>
                           </div>
                         </div>
@@ -200,7 +203,7 @@
                               <div class="control-group fld_wrap" id="fld3">
                                   <label class="control-label" for="subject1">Subject</label>
                                   <div class="input-group">
-                                      <input class="form-control" name="subject[]" type="text" onkeypress='validateComplainant(event)' minlength="5" maxlength="40" required/>
+                                      <input class="form-control" name="subject[]" type="text" onkeypress='validateComplainant(event)' minlength="5" maxlength="30" required/>
                                       <div class="input-group-prepend">
                                           <button class="btn btn-success btn-add add_button3" fldnum="3" type="button">
                                               <span class="fas">+</span>
@@ -214,7 +217,7 @@
                               <div class="control-group fld_wrap" id="fld4">
                                   <label class="control-label" for="victim1">Victim/s</label>
                                   <div class="input-group">
-                                      <input class="form-control" name="victim[]" type="text" onkeypress='validateComplainant(event)' minlength="5" maxlength="40" required/>
+                                      <input class="form-control" name="victim[]" type="text" onkeypress='validateComplainant(event)' minlength="5" maxlength="30" required/>
                                       <div class="input-group-prepend">
                                           <button class="btn btn-success btn-add add_button4" fldnum="4" type="button">
                                               <span class="fas">+</span>
@@ -391,7 +394,7 @@
         $(document).ready(function(){
             $('.add_button3').click(function(){
                 var kakoi=$(this).attr('fldnum');
-                var insHTML = '<div class="input-group"><input class="form-control" name="subject[]" type="text" onkeypress="validateComplainant(event)" required/><div class="input-group-prepend"><button class="btn btn-danger btn-add add_button3 remove_button" fldnum="3" type="button"><span class="fas">x</span></button></div></div>';
+                var insHTML = '<div class="input-group"><input class="form-control" name="subject[]" type="text" onkeypress="validateComplainant(event)" required minlength="5" maxlength="30"/><div class="input-group-prepend"><button class="btn btn-danger btn-add add_button3 remove_button" fldnum="3" type="button"><span class="fas">x</span></button></div></div>';
                 $("#fld3").append(insHTML);
             });
 
@@ -404,7 +407,7 @@
         $(document).ready(function(){
             $('.add_button4').click(function(){
                 var kakoi=$(this).attr('fldnum');
-                var insHTML = '<div class="input-group"><input class="form-control" name="victim[]" type="text" onkeypress="validateComplainant(event)" required/><div class="input-group-prepend"><button class="btn btn-danger btn-add add_button4 remove_button" fldnum="4" type="button"><span class="fas">x</span></button></div></div>';
+                var insHTML = '<div class="input-group"><input class="form-control" name="victim[]" type="text" onkeypress="validateComplainant(event)" required minlength="5" maxlength="30"/><div class="input-group-prepend"><button class="btn btn-danger btn-add add_button4 remove_button" fldnum="4" type="button"><span class="fas">x</span></button></div></div>';
                 $("#fld4").append(insHTML);
             });
 

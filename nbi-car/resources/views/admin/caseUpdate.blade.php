@@ -170,7 +170,6 @@
                 <span>Back</span>
             </a>
             <form method="POST" action="/updatedCase">
-                @method('PUT')
                 {{ csrf_field() }}
               <div class="container-fluid" style="padding-bottom:3%; padding-top:2%;">
                 <div class="card mb-3" style="width:100%%;">
@@ -253,8 +252,9 @@
                                         <div class="form-row">
                                             <div class="fld_wrap" id="fld2">
                                                 <div class="input-group">
-                                                    <input type="text" id="fld_val2" name= "fld_val2[]" class="form-control"  value="{{ $agent->agentName}}" readonly>
-                                                    <input type="text" class="form-control" name="" id="" value="{{ $agent->caseid }}" readonly>
+                                                    <input type="text" id="fld_val2" name= "agentName" class="form-control"  value="{{ $agent->agentName}}" readonly>
+                                                    <input type="text" class="form-control" name="fld_val2[]" id="fld_val2[]" value="{{ $agent->userid }}" readonly>
+                                                    <input type="text" class="form-control" name="agentCaseID[]" id="agentCaseID[]" value="{{ $agent->caseagentid }}" readonly>
                                                 </div>
                                             </div>
                                         </div>
@@ -308,19 +308,19 @@
                                             <br>
                                             <br>
                                             <div class="col-md-3">
-                                                <input type="text" class="form-control" id="suspectNameA" name="suspectNameA[]" placeholder="Name"  value="{{ $suspect->suspect_name }}" style="background-color:#dd8282;" required>
-                                                <input type="text" class="form-control" id="suspectAge" name="suspectAgeA[]" placeholder="Age"  value="{{ $suspect->suspect_Age }}">
+                                                <input type="text" class="form-control" id="suspectNameA" name="suspectNameA[]" placeholder="Name"  value="{{ $suspect->suspect_name }}" style="background-color:#dd8282;" required minlength="5" maxlength="40">
+                                                <input type="text" class="form-control" id="suspectAge" name="suspectAgeA[]" placeholder="Age"  value="{{ $suspect->suspect_Age }}" minlength="1" maxlength="3">
                                             </div>
                                             <div class="col-md-3">
-                                                <input type="text" class="form-control" id="suspectAddressA[]" name="suspectAddressA" placeholder="Address"  value="{{ $suspect->suspect_Address }}">
-                                                <input type="text" class="form-control" id="suspectCivilStatusA[]" name="suspectCivilStatusA" placeholder="Civil Status"  value="{{ $suspect->suspect_Civil_Status }}">
+                                                <input type="text" class="form-control" id="suspectAddressA" name="suspectAddressA[]" placeholder="Address"  value="{{ $suspect->suspect_Address }}" minlength="5" maxlength="40">
+                                                <input type="text" class="form-control" id="suspectCivilStatusA" name="suspectCivilStatusA[]" placeholder="Civil Status"  value="{{ $suspect->suspect_Civil_Status }}" minlength="5" maxlength="20">
                                             </div>
                                             <div class="col-md-3">
-                                                <input type="text" class="form-control" id="suspectTelNumberA[]" name= "suspectTelNumberA"  placeholder="Telephone Number"  value="{{ $suspect->suspect_Contact_Number }}">
-                                                <input type="text" class="form-control" id="suspectOccupationA[]" name="suspectOccupationA" placeholder="Occupation"  value="{{ $suspect->suspect_Occupation }}">
+                                                <input type="text" class="form-control" id="suspectTelNumberA" name= "suspectTelNumberA[]"  placeholder="Telephone Number"  value="{{ $suspect->suspect_Contact_Number }}" minlength="5" maxlength="15">
+                                                <input type="text" class="form-control" id="suspectOccupationA" name="suspectOccupationA[]" placeholder="Occupation"  value="{{ $suspect->suspect_Occupation }}" minlength="4" maxlength="20">
                                             </div>
                                             <div class="col-md-2">
-                                                <input type="text" class="form-control" id="suspectSexA[]" name="suspectSexA" placeholder="sex"  value="{{ $suspect->suspect_Sex }}">
+                                                <input type="text" class="form-control" id="suspectSexA" name="suspectSexA[]" placeholder="sex"  value="{{ $suspect->suspect_Sex }}" minlength="4" maxlength="6">
                                                 <input type="text" class="form-control" name="suspectID[]" id="suspectID[]" value="{{ $suspect->id }}" readonly>
                                             </div>
                                         </div>
@@ -341,8 +341,9 @@
                                     <div class="control-group">
                                         <div class="fld_wrap" id="fld1">
                                             <div class="input-group">
-                                                <input class="form-control" name="fld_val1[]" id="fld_val1"  value="{{ $nature->nature}}">
-                                                <input type="text" class="form-control" name="caseNatureID" id="caseNatureID" value="{{ $nature->cnatureid }}" readonly>
+                                                <input class="form-control" name="natureName" id="natureName"  value="{{ $nature->nature}}">
+                                                <input type="text" class="form-control" name="fld_val1[]" id="fld_val1[]" value="{{ $nature->natureid }}" readonly>
+                                                <input type="text" class="form-control" name="caseNatureID[]" id="caseNatureID[]" value="{{ $nature->cnatureid }}" readonly>
                                                 <div class="input-group-prepend">
                                                     <button class="btn btn-success btn-danger btn-add add_button1 remove_button" fldnum="1" type="button">
                                                         <span class="fas ">X</span>
@@ -364,7 +365,7 @@
                                 @if(!$count)
                                     <div class="col-md-6">
                                         <label for="whereCommitted">Place Committed</label>
-                                        <input type="text" name="whereCommitted" id="whereCommitted" class="form-control"  value="">
+                                        <input type="text" name="whereCommitted" id="whereCommitted" class="form-control"  value=""  minlength="3" maxlength="30">
                                     </div>
                                     <div class="col-md-6">
                                         <label for="whenCommitted">When Committed</label>
@@ -381,7 +382,7 @@
                                     @foreach($whenAndWhere as $whenAndWhere)
                                         <div class="col-md-6">
                                             <label for="whereCommitted">Place Committed</label>
-                                            <input type="text" name="whereCommitted" id="whereCommitted" class="form-control"  value="{{ $whenAndWhere->place_Committed }}">
+                                            <input type="text" name="whereCommitted" id="whereCommitted" class="form-control"  value="{{ $whenAndWhere->place_Committed }}"  minlength="3" maxlength="30">
                                             <input type="text" class="form-control" name="complaintSheetID" id="complaintSheetID" value="{{ $whenAndWhere->id }}" readonly>
                                         </div>
                                         <div class="col-md-6">
@@ -419,19 +420,19 @@
                                                 <br>
                                                 <br>
                                                 <div class="col-md-3">
-                                                    <input type="text" class="form-control" id="victimNameA" name="victimNameA[]" placeholder="Name"  value="{{ $victim->victim_name }}" style="background-color:#dd8282;" required>
-                                                    <input type="text" class="form-control" id="victimAgeA" name="victimAgeA[]" placeholder="Age"  value="{{ $victim->victim_Age }}">
+                                                    <input type="text" class="form-control" id="victimNameA" name="victimNameA[]" placeholder="Name"  value="{{ $victim->victim_name }}" style="background-color:#dd8282;" required minlength="5" maxlength="40">
+                                                    <input type="text" class="form-control" id="victimAgeA" name="victimAgeA[]" placeholder="Age"  value="{{ $victim->victim_Age }}" minlength="1" maxlength="3">
                                                 </div>
                                                 <div class="col-md-3">
-                                                    <input type="text" class="form-control" id="victimAddressA" name="victimAddressA[]" placeholder="Address"  value="{{ $victim->victim_Address }}">
-                                                    <input type="text" class="form-control" id="victimCivilStatusA" name="victimCivilStatusA[]" placeholder="Civil Status"  value="{{ $victim->victim_Civil_Status }}">
+                                                    <input type="text" class="form-control" id="victimAddressA" name="victimAddressA[]" placeholder="Address"  value="{{ $victim->victim_Address }}" minlength="5" maxlength="40">
+                                                    <input type="text" class="form-control" id="victimCivilStatusA" name="victimCivilStatusA[]" placeholder="Civil Status"  value="{{ $victim->victim_Civil_Status }}" minlength="5" maxlength="20">
                                                 </div>
                                                 <div class="col-md-3">
-                                                    <input type="text" class="form-control" id="victimTelNumberA" name= "victimTelNumberA[]"  placeholder="Telephone Number"  value="{{ $victim->victim_Contact_Number }}">
-                                                    <input type="text" class="form-control" id="victimOccupationA" name="victimOccupationA[]" placeholder="Occupation"  value="{{ $victim->victim_Occupation }}">
+                                                    <input type="text" class="form-control" id="victimTelNumberA" name= "victimTelNumberA[]"  placeholder="Telephone Number"  value="{{ $victim->victim_Contact_Number }}" minlength="5" maxlength="15">
+                                                    <input type="text" class="form-control" id="victimOccupationA" name="victimOccupationA[]" placeholder="Occupation"  value="{{ $victim->victim_Occupation }}" minlength="4" maxlength="20">
                                                 </div>
                                                 <div class="col-md-2">
-                                                    <input type="text" class="form-control" id="victimSexA" name="victimSexA[]" placeholder="sex"  value="{{ $victim->victim_Sex }}">
+                                                    <input type="text" class="form-control" id="victimSexA" name="victimSexA[]" placeholder="sex"  value="{{ $victim->victim_Sex }}" minlength="4" maxlength="6">
                                                     <input type="text" class="form-control" name="victimID[]" id="victimID[]" value="{{ $victim->id }}" readonly>
                                                 </div>
                                             </div>
@@ -455,21 +456,21 @@
                             <textarea name="hasTheMatter" id="hasTheMatter" style="width:100%;font-size:15px;resize:none;" rows="5" ></textarea>
                             <br>
                             <p style="font-weight:bold;">Status of investigation, If any (Kalagayan ng pagsisiyasat kung mayroon?)</p>
-                            <textarea name="statusOfInvestigation" id="statusOfInvestigation" style="width:100%;font-size:15px;resize:none;" rows="5" ></textarea>
+                            <textarea name="statusOfInvestigation" id="statusOfInvestigation" style="width:100%;font-size:15px;resize:none;" rows="5" minlength="4" maxlength="65,535"></textarea>
                         </div>
                     </section>
                     <hr>
                     <section>
                         <div class="form-group">
                             <p style="font-weight:bold;">8.Is the matter complained of the subject of any court action of proceedings? If so, where? (Ang bagay bang may kinalaman sa pagsusumbong ay nasa hukuman na? Kung gaanoon, saan?)</p>
-                            <textarea name="isTheMatterComplained" id="isTheMatterComplained" style="width:100%;font-size:15px;resize:none;" rows="5" ></textarea>
+                            <textarea name="isTheMatterComplained" id="isTheMatterComplained" style="width:100%;font-size:15px;resize:none;" rows="5" minlength="4" maxlength="65,535"></textarea>
                         </div>
                     </section>
                     <hr>
                     <section>
                         <div class="form-group">
                             <p style="font-weight:bold;">9.What Consideration/s impelled you to report to the NBI? (Ano ang nag-udyok sa iyo para magreklamo dito sa NBI?)</p>
-                            <textarea name="whatConsidirations" id="whatConsidirations" style="width:100%;font-size:15px;resize:none;" rows="5" ></textarea>
+                            <textarea name="whatConsidirations" id="whatConsidirations" style="width:100%;font-size:15px;resize:none;" rows="5" minlength="4" maxlength="65,535"></textarea>
                         </div>
                     </section>
                 @else
@@ -478,31 +479,31 @@
                         <input type="text" class="form-control" name="complainSheetID" id="complainSheetID" value="{{ $complaintSheet->id }}" readonly>
                         <div class="form-group">
                             <p style="font-weight:bold;">6. Narration of Facts (Salaysay ng mga Pangyayari) </p>
-                            <textarea id="narrationOfFacts" name="narrationOfFacts"  style="width:100%;font-size:15px;resize:none;" rows="5" >{{ $complaintSheet->narration_Of_Facts }}</textarea>
+                            <textarea id="narrationOfFacts" name="narrationOfFacts"  style="width:100%;font-size:15px;resize:none;" rows="5" minlength="4" maxlength="65,535">{{ $complaintSheet->narration_Of_Facts }}</textarea>
                         </div>
                     </section>
                     <hr>
                     <section>
                         <div class="form-group">
                             <p style="font-weight:bold;">7. Has the matter been reported to any agency, If so, to what people agency? (Ang bagay bang ito ay naulat na sa ibang sangay ng pagsisiyasat? Kung naulat na, saang sangay?) </p>
-                            <textarea name="hasTheMatter" id="hasTheMatter" style="width:100%;font-size:15px;resize:none;" rows="5" >{{ $complaintSheet->reported_Any_Agency }}</textarea>
+                            <textarea name="hasTheMatter" id="hasTheMatter" style="width:100%;font-size:15px;resize:none;" rows="5" minlength="4" maxlength="65,535">{{ $complaintSheet->reported_Any_Agency }}</textarea>
                             <br>
                             <p style="font-weight:bold;">Status of investigation, If any (Kalagayan ng pagsisiyasat kung mayroon?)</p>
-                            <textarea name="statusOfInvestigation" id="statusOfInvestigation" style="width:100%;font-size:15px;resize:none;" rows="5" >{{ $complaintSheet->status_of_Investigation }}</textarea>
+                            <textarea name="statusOfInvestigation" id="statusOfInvestigation" style="width:100%;font-size:15px;resize:none;" rows="5" minlength="4" maxlength="65,535">{{ $complaintSheet->status_of_Investigation }}</textarea>
                         </div>
                     </section>
                     <hr>
                     <section>
                         <div class="form-group">
                             <p style="font-weight:bold;">8.Is the matter complained of the subject of any court action of proceedings? If so, where? (Ang bagay bang may kinalaman sa pagsusumbong ay nasa hukuman na? Kung gaanoon, saan?)</p>
-                            <textarea name="isTheMatterComplained" id="isTheMatterComplained" style="width:100%;font-size:15px;resize:none;" rows="5" >{{ $complaintSheet->where_court_Proceedings }}</textarea>
+                            <textarea name="isTheMatterComplained" id="isTheMatterComplained" style="width:100%;font-size:15px;resize:none;" rows="5" minlength="4" maxlength="65,535">{{ $complaintSheet->where_court_Proceedings }}</textarea>
                         </div>
                     </section>
                     <hr>
                     <section>
                         <div class="form-group">
                             <p style="font-weight:bold;">9.What Consideration/s impelled you to report to the NBI? (Ano ang nag-udyok sa iyo para magreklamo dito sa NBI?)</p>
-                            <textarea name="whatConsidirations" id="whatConsidirations" style="width:100%;font-size:15px;resize:none;" rows="5" >{{ $complaintSheet->report_Considerations }}</textarea>
+                            <textarea name="whatConsidirations" id="whatConsidirations" style="width:100%;font-size:15px;resize:none;" rows="5" minlength="4" maxlength="65,535">{{ $complaintSheet->report_Considerations }}</textarea>
                         </div>
                     </section>
                     @endforeach
@@ -725,19 +726,19 @@
                                 '<br>'+
                                 '<br>'+
                                 '<div class="col-md-3">'+
-                                    '<input type="text" class="form-control" name="suspectNameA[]" placeholder="Name" autocomplete="off">'+
-                                    '<input type="text" class="form-control" name="suspectAgeA[]" placeholder="Age" autocomplete="off">'+
+                                    '<input type="text" class="form-control" name="suspectNameA[]" placeholder="Name" autocomplete="off" minlength="5" maxlength="40" required>'+
+                                    '<input type="text" class="form-control" name="suspectAgeA[]" placeholder="Age" autocomplete="off" minlength="1" maxlength="3">'+
                                 '</div>'+
                                 '<div class="col-md-3">'+
-                                    '<input type="text" class="form-control" name="suspectAddressA[]" placeholder="Address" autocomplete="off">'+
-                                    '<input type="text" class="form-control" name="suspectCivilStatusA[]" placeholder="Civil Status" autocomplete="off">'+
+                                    '<input type="text" class="form-control" name="suspectAddressA[]" placeholder="Address" autocomplete="off" minlength="5" maxlength="40">'+
+                                    '<input type="text" class="form-control" name="suspectCivilStatusA[]" placeholder="Civil Status" autocomplete="off" minlength="5" maxlength="20">'+
                                 '</div>'+
                                 '<div class="col-md-3">'+
-                                    '<input type="text" id="suspectTelNumberA" name= "suspectTelNumberA[]" autocomplete="off" placeholder="Telephone Number" class="ccNumber form-control" value="" >'+
-                                    '<input type="text" class="form-control" name="suspectOccupationA[]" placeholder="Occupation" autocomplete="off">'+
+                                    '<input type="text" id="suspectTelNumberA" name= "suspectTelNumberA[]" autocomplete="off" placeholder="Telephone Number" class="ccNumber form-control" value="" minlength="5" maxlength="15">'+
+                                    '<input type="text" class="form-control" name="suspectOccupationA[]" placeholder="Occupation" autocomplete="off" minlength="4" maxlength="20">'+
                                 '</div>'+
                                 '<div class="col-md-2">'+
-                                    '<input type="text" class="form-control" name="suspectSexA[]" placeholder="sex" autocomplete="off">'+
+                                    '<input type="text" class="form-control" name="suspectSexA[]" placeholder="sex" autocomplete="off" minlength="4" maxlength="6">'+
                                 '</div>'+
                             '</div>';
                     $("#fld3").append(insHTML);
@@ -760,18 +761,18 @@
                                     '<br>'+
                                     '<br>'+
                                     '<div class="col-md-3">'+
-                                        '<input type="text" class="form-control" name="victimNameA[]" placeholder="Name" autocomplete="off">'+
-                                        '<input type="text" class="form-control" name="victimAgeA[]" placeholder="Age" autocomplete="off">'+
+                                        '<input type="text" class="form-control" name="victimNameA[]" placeholder="Name" autocomplete="off" required minlength="5" maxlength="40">'+
+                                        '<input type="text" class="form-control" name="victimAgeA[]" placeholder="Age" autocomplete="off" minlength="1" maxlength="3">'+
                                     '</div>'+
                                     '<div class="col-md-3">'+
-                                        '<input type="text" class="form-control" name="victimAddressA[]" placeholder="Address" autocomplete="off">'+
-                                        '<input type="text" class="form-control" name="victimCivilStatusA[]" placeholder="Civil Status" autocomplete="off">'+
+                                        '<input type="text" class="form-control" name="victimAddressA[]" placeholder="Address" autocomplete="off" minlength="5" maxlength="40">'+
+                                        '<input type="text" class="form-control" name="victimCivilStatusA[]" placeholder="Civil Status" autocomplete="off" minlength="5" maxlength="20">'+
                                     '</div>'+
                                     '<div class="col-md-3">'+
-                                            '<input type="text" id="suspectTelNumberA" name= "victimTelNumberA[]" autocomplete="off" placeholder="Telephone Number" class="ccNumber form-control" value="" autocomplete="off">'+
-                                        '<input type="text" class="form-control" name="victimOccupationA[]" placeholder="Occupation" autocomplete="off">'+
+                                            '<input type="text" id="suspectTelNumberA" name= "victimTelNumberA[]" autocomplete="off" placeholder="Telephone Number" class="ccNumber form-control" value="" autocomplete="off" minlength="5" maxlength="15">'+
+                                        '<input type="text" class="form-control" name="victimOccupationA[]" placeholder="Occupation" autocomplete="off"  minlength="4" maxlength="20">'+
                                     '</div>'+
-                                        '<input type="text" class="form-control" name="victimSexA[]" placeholder="sex" autocomplete="off">'+
+                                        '<input type="text" class="form-control" name="victimSexA[]" placeholder="sex" autocomplete="off"  minlength="4" maxlength="6">'+
                                 '</div>';
                     $("#fld4").append(insHTML);
                 });

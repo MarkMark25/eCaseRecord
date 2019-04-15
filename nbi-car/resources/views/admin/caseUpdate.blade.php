@@ -176,7 +176,7 @@
                   <center><div class="card-header" style="background-color:#dd8282;"><h4>Edit case details and complaint sheet.</div></center>
                     <div class="card-body" style="background-color:#edcbcb;">
                         @foreach ($cases as $cases)
-                        <input type="text" id="caseID" name= "caseID" class="form-control"  value="{{ $cases->caseID }}" readonly>
+                        <input type="hidden" id="caseID" name= "caseID" class="form-control"  value="{{ $cases->caseID }}" readonly>
                         <div class="form-group">
                             <div class="form-row">
                                 <div class="col-md-4">
@@ -208,7 +208,7 @@
                                             </div>
                                         </div>
                                         <input type="text" id="datepicker" name="dateAssigned" class="form-control"  value="{{ $dateAssigned->dateassigned}}">
-                                        <input type="text" class="form-control" name="datecaseID" id="datecaseID" value="{{ $dateAssigned->caseid }}" readonly>
+                                        <input type="hidden" class="form-control" name="datecaseID" id="datecaseID" value="{{ $dateAssigned->caseid }}" readonly>
                                     </div>
                                 </div>
                                 @endforeach
@@ -253,8 +253,8 @@
                                             <div class="fld_wrap" id="fld2">
                                                 <div class="input-group">
                                                     <input type="text" id="fld_val2" name= "agentName" class="form-control"  value="{{ $agent->agentName}}" readonly>
-                                                    <input type="text" class="form-control" name="fld_val2[]" id="fld_val2[]" value="{{ $agent->userid }}" readonly>
-                                                    <input type="text" class="form-control" name="agentCaseID[]" id="agentCaseID[]" value="{{ $agent->caseagentid }}" readonly>
+                                                    <input type="hidden" class="form-control" name="fld_val2[]" id="fld_val2[]" value="{{ $agent->userid }}" readonly>
+                                                    <input type="hidden" class="form-control" name="agentCaseID[]" id="agentCaseID[]" value="{{ $agent->caseagentid }}" readonly>
                                                 </div>
                                             </div>
                                         </div>
@@ -272,7 +272,7 @@
                                     <label for="suspectName">Name</label>
                                     <div class="">
                                         <input type="text" id="complainant" name="complainant"  class="form-control" onkeypress='validateComplainant(event)'  value="{{ $casesComplaint->complainantname}}"/>  {{-- QUERY HERE --}}
-                                        <input type="text" name="" id="" class="form-control" value="{{ $casesComplaint->caseid}}" readonly>
+                                        <input type="hidden" name="complainantID" id="complainantID" class="form-control" value="{{ $casesComplaint->caseid}}" readonly>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -321,7 +321,7 @@
                                             </div>
                                             <div class="col-md-2">
                                                 <input type="text" class="form-control" id="suspectSexA" name="suspectSexA[]" placeholder="sex"  value="{{ $suspect->suspect_Sex }}" minlength="4" maxlength="6">
-                                                <input type="text" class="form-control" name="suspectID[]" id="suspectID[]" value="{{ $suspect->id }}" readonly>
+                                                <input type="hidden" class="form-control" name="suspectID[]" id="suspectID[]" value="{{ $suspect->id }}" readonly>
                                             </div>
                                         </div>
                                     </div>
@@ -342,8 +342,8 @@
                                         <div class="fld_wrap" id="fld1">
                                             <div class="input-group">
                                                 <input class="form-control" name="natureName" id="natureName"  value="{{ $nature->nature}}">
-                                                <input type="text" class="form-control" name="fld_val1[]" id="fld_val1[]" value="{{ $nature->natureid }}" readonly>
-                                                <input type="text" class="form-control" name="caseNatureID[]" id="caseNatureID[]" value="{{ $nature->cnatureid }}" readonly>
+                                                <input type="hidden" class="form-control" name="fld_val1[]" id="fld_val1[]" value="{{ $nature->natureid }}" readonly>
+                                                <input type="hidden" class="form-control" name="caseNatureID[]" id="caseNatureID[]" value="{{ $nature->cnatureid }}" readonly>
                                                 <div class="input-group-prepend">
                                                     <button class="btn btn-success btn-danger btn-add add_button1 remove_button" fldnum="1" type="button">
                                                         <span class="fas ">X</span>
@@ -383,7 +383,7 @@
                                         <div class="col-md-6">
                                             <label for="whereCommitted">Place Committed</label>
                                             <input type="text" name="whereCommitted" id="whereCommitted" class="form-control"  value="{{ $whenAndWhere->place_Committed }}"  minlength="3" maxlength="30">
-                                            <input type="text" class="form-control" name="complaintSheetID" id="complaintSheetID" value="{{ $whenAndWhere->id }}" readonly>
+                                            <input type="hidden" class="form-control" name="complaintSheetID" id="complaintSheetID" value="{{ $whenAndWhere->id }}" readonly>
                                         </div>
                                         <div class="col-md-6">
                                             <label for="whenCommitted">When Committed</label>
@@ -433,7 +433,7 @@
                                                 </div>
                                                 <div class="col-md-2">
                                                     <input type="text" class="form-control" id="victimSexA" name="victimSexA[]" placeholder="sex"  value="{{ $victim->victim_Sex }}" minlength="4" maxlength="6">
-                                                    <input type="text" class="form-control" name="victimID[]" id="victimID[]" value="{{ $victim->id }}" readonly>
+                                                    <input type="hidden" class="form-control" name="victimID[]" id="victimID[]" value="{{ $victim->id }}" readonly>
                                                 </div>
                                             </div>
                                         </div>
@@ -476,7 +476,7 @@
                 @else
                     @foreach($complaintSheet as $complaintSheet)
                     <section>
-                        <input type="text" class="form-control" name="complainSheetID" id="complainSheetID" value="{{ $complaintSheet->id }}" readonly>
+                        <input type="hidden" class="form-control" name="complainSheetID" id="complainSheetID" value="{{ $complaintSheet->id }}" readonly>
                         <div class="form-group">
                             <p style="font-weight:bold;">6. Narration of Facts (Salaysay ng mga Pangyayari) </p>
                             <textarea id="narrationOfFacts" name="narrationOfFacts"  style="width:100%;font-size:15px;resize:none;" rows="5" minlength="4" maxlength="65,535">{{ $complaintSheet->narration_Of_Facts }}</textarea>

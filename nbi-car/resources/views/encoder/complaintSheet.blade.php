@@ -169,14 +169,14 @@
                                   <label for="caseNumber">NBI-CAR Case Number</label>
                                   <div class="input-group mb-2">
                                       <input type="text" id="" name="" class="form-control col-md-5" value="NBI-CAR-" readonly>
-                                      <input type="text" id="docketnumber" name="docketnumber" class="form-control" value="" placeholder="C-00-000" maxlength="8" pattern="^\w{1}-\d{2}-\d{3}$" onkeypress='validate(event)' title="Follow the following format. e.g. C-10-001" autocomplete="off" required> {{-- QUERY HERE --}}
+                                      <input type="text" id="docketnumber" name="docketnumber" class="form-control" value="" placeholder="I-00-000" maxlength="8" pattern="^\w{1}-\d{2}-\d{3}$" onkeypress='validate(event)' title="Follow the following format. e.g. C-10-001" autocomplete="off" required> {{-- QUERY HERE --}}
                                   </div>
                               </div>
                               <div class="col-md-4">
                                   <label for="ccn">CCN</label>
                                   <div class="input-group mb-2">
                                       <input type="text" id="" name="" class="form-control col-md-5" value="NBI-CCN-" readonly>
-                                      <input type="text" id="ccn" name= "ccn" class="ccNumber form-control" value="" placeholder="I-00-00000" maxlength="10" pattern="^\w{1}-\d{2}-\d{5}$" title="Follow the following format. e.g. I-10-00001" onkeypress='validateCCN(event)' autocomplete="off"> {{-- QUERY HERE --}}
+                                      <input type="text" id="ccn" name= "ccn" class="ccNumber form-control" value="" placeholder="C-00-00000" maxlength="10" pattern="^\w{1}-\d{2}-\d{5}$" title="Follow the following format. e.g. I-10-00001" onkeypress='validateCCN(event)' autocomplete="off"> {{-- QUERY HERE --}}
                                   </div>
                               </div>
                               <div class="col-md-4">
@@ -253,13 +253,13 @@
                             <div class="col-md-4">
                                     <label for="suspectName">Name (Lastname, Firstname)</label>
                                 <div class="">
-                                    <input type="text" id="complainant" name="complainant"  class="form-control" onkeypress='validateComplainant(event)' autocomplete="off" minlength="5" maxlength="30" required/>  {{-- QUERY HERE --}}
+                                    <input type="text" id="complainant" name="complainant"  class="form-control" onkeypress='validateComplainant(event)' autocomplete="off" minlength="5" maxlength="40" required/>  {{-- QUERY HERE --}}
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <label for="">Address</label>
                                 <div class="">
-                                    <input type="text" id="complainantAddress" name="complainantAddress"  class="form-control" autocomplete="off" minlength="5" maxlength="30" />  {{-- QUERY HERE --}}
+                                    <input type="text" id="complainantAddress" name="complainantAddress"  class="form-control" autocomplete="off" minlength="5" maxlength="40" />  {{-- QUERY HERE --}}
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -336,7 +336,7 @@
                             <div class="form-row">
                                 <div class="col-md-6">
                                     <label for="whereCommitted">Place Committed</label>
-                                    <input type="text" name="whereCommitted" id="whereCommitted" class="form-control" minlength="3" maxlength="30">
+                                    <input type="text" name="whereCommitted" id="whereCommitted" class="form-control" minlength="5" maxlength="40">
                                 </div>
                                 <div class="col-md-6">
                                     <label for="whenCommitted">When Committed</label>
@@ -532,7 +532,7 @@
                 var key = theEvent.keyCode || theEvent.which;
                 key = String.fromCharCode(key);
             }
-            var regex = /[0-9,C,-]/;
+            var regex = /[0-9,I,-]/;
             if( !regex.test(key) ) {
                 theEvent.returnValue = false;
                 if(theEvent.preventDefault) theEvent.preventDefault();
@@ -549,7 +549,7 @@
                 var key = theEvent.keyCode || theEvent.which;
                 key = String.fromCharCode(key);
             }
-            var regex = /[0-9,I,-]/;
+            var regex = /[0-9,C,-]/;
             if( !regex.test(key) ) {
                 theEvent.returnValue = false;
                 if(theEvent.preventDefault) theEvent.preventDefault();
@@ -603,18 +603,18 @@
                                 '<br>'+
                                 '<br>'+
                                 '<div class="col-md-3">'+
-                                    '<input type="text" class="form-control" name="suspectNameA[]" placeholder="Name" autocomplete="off" required minlength="5" maxlength="40">'+
-                                    '<input type="text" class="form-control" name="suspectAgeA[]" placeholder="Age" autocomplete="off" minlength="1" maxlength="3">'+
+                                    '<input type="text" class="form-control" name="suspectNameA[]" placeholder="Name" autocomplete="off">'+
+                                    '<input type="text" class="form-control" name="suspectAgeA[]" placeholder="Age" autocomplete="off">'+
                                 '</div>'+
                                 '<div class="col-md-3">'+
-                                    '<input type="text" class="form-control" name="suspectAddressA[]" placeholder="Address" autocomplete="off" minlength="5" maxlength="40">'+
-                                    '<input type="text" class="form-control" name="suspectCivilStatusA[]" placeholder="Civil Status" autocomplete="off" minlength="5" maxlength="20">'+
+                                    '<input type="text" class="form-control" name="suspectAddressA[]" placeholder="Address" autocomplete="off">'+
+                                    '<input type="text" class="form-control" name="suspectCivilStatusA[]" placeholder="Civil Status" autocomplete="off">'+
                                 '</div>'+
                                 '<div class="col-md-3">'+
-                                    '<input type="text" id="suspectTelNumberA" name= "suspectTelNumberA[]" autocomplete="off" placeholder="Telephone Number" class="ccNumber form-control" value="" minlength="5" maxlength="15">'+
-                                    '<input type="text" class="form-control" name="suspectOccupationA[]" placeholder="Occupation" autocomplete="off" minlength="4" maxlength="20">'+
+                                    '<input type="text" id="suspectTelNumberA" name= "suspectTelNumberA[]" autocomplete="off" placeholder="Telephone Number" class="ccNumber form-control" value="" >'+
+                                    '<input type="text" class="form-control" name="suspectOccupationA[]" placeholder="Occupation" autocomplete="off">'+
                                 '</div>'+
-                                    '<input type="text" class="form-control" name="suspectSexA[]" placeholder="sex" autocomplete="off" minlength="4" maxlength="6">'+
+                                    '<input type="text" class="form-control" name="suspectSexA[]" placeholder="sex" autocomplete="off">'+
                             '</div>';
                     $("#fld3").append(insHTML);
                 });
@@ -636,17 +636,17 @@
                                     '<br>'+
                                     '<br>'+
                                     '<div class="col-md-3">'+
-                                        '<input type="text" class="form-control" name="victimNameA[]" placeholder="Name" autocomplete="off" required minlength="5" maxlength="40">'+
-                                        '<input type="text" class="form-control" name="victimAgeA[]" placeholder="Age" autocomplete="off" minlength="1" maxlength="3">'+
+                                        '<input type="text" class="form-control" name="victimNameA[]" placeholder="Name" autocomplete="off">'+
+                                        '<input type="text" class="form-control" name="victimAgeA[]" placeholder="Age" autocomplete="off">'+
                                     '</div>'+
                                     '<div class="col-md-3">'+
-                                        '<input type="text" class="form-control" name="victimAddressA[]" placeholder="Address" autocomplete="off" minlength="5" maxlength="40">'+
-                                        '<input type="text" class="form-control" name="victimCivilStatusA[]" placeholder="Civil Status" autocomplete="off" minlength="5" maxlength="20">'+
+                                        '<input type="text" class="form-control" name="victimAddressA[]" placeholder="Address" autocomplete="off">'+
+                                        '<input type="text" class="form-control" name="victimCivilStatusA[]" placeholder="Civil Status" autocomplete="off">'+
                                     '</div>'+
                                     '<div class="col-md-3">'+
-                                        '<input type="text" class="form-control" name="victimOccupationA[]" placeholder="Occupation" autocomplete="off" minlength="5" maxlength="15">'+
+                                        '<input type="text" class="form-control" name="victimOccupationA[]" placeholder="Occupation" autocomplete="off">'+
                                     '</div>'+
-                                        '<input type="text" class="form-control" name="victimSexA[]" placeholder="sex" autocomplete="off" minlength="4" maxlength="6">'+
+                                        '<input type="text" class="form-control" name="victimSexA[]" placeholder="sex" autocomplete="off">'+
                                 '</div>';
                     $("#fld4").append(insHTML);
                 });

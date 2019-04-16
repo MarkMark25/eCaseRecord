@@ -25,6 +25,11 @@
 
     <!--TAB IMAGE -->
     <link rel="icon"  href="bower_components/image/nbi-logo.png">
+    <style>
+        input::placeholder {
+            font-style: italic;
+        }
+    </style>
 
   </head>
 
@@ -32,7 +37,7 @@
 
     <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
 
-      <a class="navbar-brand mr-1" href="/encoderHome">NBI-CAR</a>
+      <a class="navbar-brand mr-1 " href="/">NBI-CAR</a>
 
       <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
         <i class="fas fa-bars"></i>
@@ -70,7 +75,6 @@
             <i class="fas fa-user-circle fa-fw"></i>
             {{ Auth::user()->firstName}} {{ Auth::user()->lastName}} <span class="caret"></span>
           </a>
-
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
             <a class="dropdown-item" href="/profile">Profile</a>
             <div class="dropdown-divider"></div>
@@ -83,6 +87,7 @@
 
     <div id="wrapper">
 
+ <!-- Sidebar -->
  <ul class="sidebar navbar-nav">
         <li class="nav-item">
           <a class="nav-link" href="/adminHome">
@@ -91,7 +96,7 @@
           </a>
         </li>
 
-        <li class="nav-item dropdown">
+        <li class="nav-item dropdown active">
           <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-fw fa-briefcase"></i>
             <span>Manage Case</span>
@@ -102,7 +107,7 @@
             <a class="dropdown-item" href="/ComplaintSheet">Complaint Sheet</a>
             <a class="dropdown-item" href="/caseNature">Case Nature</a>
             <a class="dropdown-item" href="/caseStatus">Case Status</a>
-          </div>
+            </div>
         </li>
 
         <li class="nav-item dropdown">
@@ -133,79 +138,74 @@
             </div>
         </li>
     </ul>
+<!-- /.container-fluid -->
 
-      <div id="content-wrapper">
+    <div id="content-wrapper">
+        <div class="container-fluid" style="padding-top:3%;padding-bottom:2%;">
+        <button class="btn" href="/" data-toggle="modal" data-target="#newStatusModal"><i class="fa fa-plus-circle"></i> Add Case Status</button>
+        <br><br>
+          <!-- DataTables Example -->
+          <div class="card mb-3">
+            <div class="card-body">
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+                <div class="flash-message">
+                    @foreach (['danger', 'warning', 'success', 'info'] as $msg)
+                        @if(Session::has('alert-' . $msg))
 
-        <div class="container-fluid" style="padding-bottom:3%; padding-top:2%;">
-            <div class="card card-register mx-auto" style="width:50%;">
-                <div class="card-header">Personal Information</div>
-                <div class="card-body">
-                    <div class="form-group">
-                        <div class="form-row">
-                        <div class="col-md-6">
-                            <label for="firstName">First name</label>
-                            <div class="">
-                            <input type="text" id="firstName" class="form-control" value="{{ Auth::user()->firstName }}" disabled> {{-- QUERY HERE --}}
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <label for="lastName">Last name</label>
-                            <div class="">
-                            <input type="text" id="lastName" class="form-control" value="{{ Auth::user()->lastName }}" disabled> {{-- QUERY HERE --}}
-                            </div>
-                        </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="form-row">
-                        <div class="col-md-6">
-                            <label for="userName">Username</label>
-                            <div class="">
-                            <input type="text" id="userName" class="form-control" value="{{ Auth::user()->username }}" disabled> {{-- QUERY HERE --}}
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <label for="role">Role</label>
-                            <div class="">
-                            <input type="text" id="role" class="form-control" value="{{ Auth::user()->role }}" disabled> {{-- QUERY HERE --}}
-                            </div>
-                        </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="form-row">
-                        <div class="col-md-6">
-                            <label for="status">Status</label>
-                            <div class="">
-                            <input type="text" id="status" class="form-control" value="{{ Auth::user()->userStatus }}" disabled> {{-- QUERY HERE --}}
-                            </div>
-                        </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="form-row">
-                        <div class="col-md-6">
+                        <p class="alert alert-{{ $msg }}">{{ Session::get('alert-' . $msg) }} <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
+                        @endif
+                    @endforeach
+                </div> <!-- end .flash-message -->
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                  <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Status</th>
+                        <th style="width:10%">Actions</th>
+                    </tr>
+                    </thead>
+                    <thead>
+                    <tbody>
+                        @foreach($showData as $showData)
+                        <tr>
+                            <td >{{ $showData->statusid }}</td>
+                            <td>{{ $showData->status }}</td>
+                            <td>
+                              <div>
+                                <button type="button" class="btn btn-default btn-xs btn-filter"
+                                    data-target="#updateStatusModal" data-toggle="modal"
+                                    data-statusid = "{{ $showData->statusid }}"
+                                    data-status= "{{ $showData->status }}"
+                                >
+                                     <span style="color:#0460f4;" class="fas fa-edit"></span>
+                                </button>
 
-                        </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="form-row">
-                        <div class="col-md-6">
-                           <a class="btn btn-primary btn-block" href="/adminChangePassword" >Change Password</a>
-                        </div>
-                    </div>
-                </div>
+                              </div>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+              </div>
             </div>
+          </div>
 
         </div>
         <!-- /.container-fluid -->
 
-        <!-- Sticky Footer -->
+      <!-- Sticky Footer -->
         <footer class="sticky-footer">
           <div class="container my-auto">
             <div class="copyright text-center my-auto">
-                    <span>Copyright © eCaseRecord-NBI 2018-2019</span>
+                <span>Copyright © eCaseRecord-NBI 2018-2019</span>
             </div>
           </div>
         </footer>
@@ -234,19 +234,71 @@
           <div class="modal-body" style="background-color:#edcbcb;">Select "Logout" below if you are ready to end your current session.</div>
           <div class="modal-footer" style="background-color:#dd8282;">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                <a class="btn btn-primary" href="{{ route('logout') }}"
-                    onclick="event.preventDefault();
-                                document.getElementById('logout-form').submit();">
-                    {{ __('Logout') }}
-                </a>
+            <a class="btn btn-primary" href="{{ route('logout') }}"
+                onclick="event.preventDefault();
+                            document.getElementById('logout-form').submit();">
+                {{ __('Logout') }}
+            </a>
 
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                    @csrf
-                </form>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                @csrf
+            </form>
           </div>
         </div>
       </div>
     </div>
+
+    <!-- Store New Nature Modal-->
+    <div class="modal fade" id="newStatusModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document" >
+            <div class="modal-content">
+                <div class="modal-header" style="background-color:#dd8282;">
+                    <h4 class="modal-title" id="exampleModalLabel">Add new case status</h4>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close" onclick="javascript:window.location.reload()">
+                      <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body" style="background-color:#edcbcb;">
+                  <form action="/addCaseStatus" method="POST">
+                      {{csrf_field()}}
+                    @include('admin.caseStatus.addCaseStatus')
+                    <div class="form-group">
+                        <center>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </center>
+                    </div>
+                  </form>
+                </div>
+          </div>
+        </div>
+    </div>
+
+    <!-- Update Nature Modal-->
+    <div class="modal fade" id="updateStatusModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document" >
+            <div class="modal-content">
+                <div class="modal-header" style="background-color:#dd8282;">
+                    <h4 class="modal-title" id="exampleModalLabel">Update case status</h4>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close" onclick="javascript:window.location.reload()">
+                      <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body" style="background-color:#edcbcb;">
+                  <form action="/updateCaseStatus" method="POST">
+                      {{csrf_field()}}
+                    <input type="hidden" id="statusid" name="statusid" class="form-control" value=""> {{-- QUERY HERE --}}
+                    @include('admin.caseStatus.updateCaseStatus')
+                    <div class="form-group">
+                        <center>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </center>
+                    </div>
+                  </form>
+                </div>
+          </div>
+        </div>
+    </div>
+
 
     <!-- Bootstrap core JavaScript-->
     <script src="bower_components/vendor/jquery/jquery.min.js"></script>
@@ -257,13 +309,26 @@
 
     <!-- Page level plugin JavaScript-->
     <script src="bower_components/vendor/datatables/jquery.dataTables.js"></script>
+    <script src="bower_components/vendor/datatables/jquery.dataTables.min.js"></script>
     <script src="bower_components/vendor/datatables/dataTables.bootstrap4.js"></script>
+    <script src="bower_components/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
     <!-- Custom scripts for all pages-->
     <script src="bower_components/js/sb-admin.min.js"></script>
 
     <!-- Demo scripts for this page-->
     <script src="bower_components/js/demo/datatables-demo.js"></script>
+    <script>
+            $('#updateStatusModal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget)
+                var statusid = button.data('statusid')
+                var status = button.data('status')
+
+                var modal = $(this)
+                modal.find('.modal-body #statusid').val(statusid)
+                modal.find('.modal-body #status').val(status)
+              })
+    </script>
 
   </body>
   @endguest

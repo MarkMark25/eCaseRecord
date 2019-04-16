@@ -1,14 +1,15 @@
 <?php
 
 namespace App\Http\Controllers\admin;
+
 use DB;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
-use App\Nature;
+use App\CaseStatus;
 use App\Logs;
 
-class caseNatureController extends Controller
+class CaseStatusController extends Controller
 {
     public function __construct()
     {
@@ -21,10 +22,9 @@ class caseNatureController extends Controller
      */
     public function index()
     {
-        $showData = DB::table('nature')
-        ->where('natureAvailability','=','Available')
+        $showData = DB::table('case_status')
         ->get();
-        return view ('admin.caseNature', compact('showData'));
+        return view ('admin.caseStatus', compact('showData'));
     }
 
     /**
@@ -32,7 +32,7 @@ class caseNatureController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create()
     {
         //
     }
@@ -46,7 +46,7 @@ class caseNatureController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'nature' => 'required|unique:nature|max:255',
+            'status' => 'required|unique:case_status,status|max:255',
         ]);
 
         if ($validator->fails()){
@@ -55,12 +55,10 @@ class caseNatureController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         }else {
-            $nature = Nature::create([
-                'nature'=>$request['nature'],
-                'description'=>$request['description'],
-                'natureAvailability'=>$request['natureAvailability']
-            ])->natureid;
-            $lastid = $nature;
+            $status = CaseStatus::create([
+                'status'=>$request['status'],
+            ])->statusid;
+            $lastid = $status;
             $formDescription = $request['descriptionOne'];
             $insertDescription = $formDescription. ' '.$lastid;
             Logs::create([
@@ -68,7 +66,7 @@ class caseNatureController extends Controller
                 'action' => $request['action'],
                 'description' => $insertDescription,
             ]);
-            $request->session()->flash('alert-success', 'Successfully add new case nature!');
+            $request->session()->flash('alert-success', 'Successfully add new case status!');
             return redirect()->back();
         }
     }
@@ -105,7 +103,7 @@ class caseNatureController extends Controller
     public function update(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'nature' => 'nullable|unique:nature|max:255',
+            'status' => 'nullable|unique:case_status,status|max:255',
         ]);
 
         if ($validator->fails()){
@@ -114,40 +112,19 @@ class caseNatureController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         }else {
-            $nature = Nature::findOrFail($request->natureid);
-            $nature->update($request->all());
-            $natureID = $request['natureid'];
+            $status = CaseStatus::findOrFail($request->statusid);
+            $status->update($request->all());
+            $statusID = $request['statusid'];
             $formDescription = $request['descriptionOne'];
-            $insertDescription = $formDescription. ' '.$natureID;
+            $insertDescription = $formDescription. ' '.$statusID;
             Logs::create([
                 'userid' => $request['userid'],
                 'action' => $request['action'],
                 'description' => $insertDescription,
             ]);
-            $request->session()->flash('alert-success', 'Nature details successfully updated!');
+            $request->session()->flash('alert-success', 'Case status successfully updated!');
             return redirect()->back();
         }
-    }
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function delete(Request $request)
-    {
-        $nature = Nature::findOrFail($request->natureid);
-        $nature->update($request->all());
-        $natureID = $request['natureid'];
-        $formDescription = $request['descriptionOne'];
-        $insertDescription = $formDescription. ' '.$natureID;
-        Logs::create([
-            'userid' => $request['userid'],
-            'action' => $request['action'],
-            'description' => $insertDescription,
-        ]);
-        $request->session()->flash('alert-success', 'Case nature successfully deleted!');
-        return redirect()->back();
     }
 
     /**

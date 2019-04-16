@@ -168,7 +168,9 @@
                               <label for="caseNumber">NBI-CAR Case Number</label>
                               <div class="input-group mb-2">
                                   <input type="text" id="" name="" class="form-control col-md-5" value="NBI-CAR-" readonly>
-                                  <input type="text" id="docketnumber" autofocus name="docketnumber" class="form-control" value="" placeholder="I-00-000" maxlength="8" pattern="^\w{1}-\d{2}-\d{3}$" onkeypress='validate(event)' title="Follow the following format. e.g. I-10-001" required> {{-- QUERY HERE --}}
+                                  <input type="text" id="docketnumber" autofocus name="docketnumber" class="form-control" value="{{ old('docketnumber') }}" placeholder="I-00-000" maxlength="8" pattern="^\w{1}-\d{2}-\d{3}$" onkeypress='validate(event)' title="Follow the following format. e.g. I-10-001" required> {{-- QUERY HERE --}}
+                                  <br>
+                                  <span id="docket_Number"></span>
                               </div>
                           </div>
 
@@ -176,7 +178,9 @@
                               <label for="ccn">CCN</label>
                               <div class="input-group mb-2">
                                   <input type="text" id="" name="" class="form-control col-md-5" value="NBI-CCN-" readonly>
-                                  <input type="text" id="ccn" autocomplete="off" name= "ccn" class="ccNumber form-control" value="" placeholder="C-00-00000" maxlength="10" pattern="^\w{1}-\d{2}-\d{5}$" title="Follow the following format. e.g. C-10-00001" onkeypress='validateCCN(event)'> {{-- QUERY HERE --}}
+                                  <input type="text" id="ccn" autocomplete="off" name= "ccn" class="ccNumber form-control" value="{{ old('ccn') }}" placeholder="C-00-00000" maxlength="10" pattern="^\w{1}-\d{2}-\d{5}$" title="Follow the following format. e.g. C-10-00001" onkeypress='validateCCN(event)'> {{-- QUERY HERE --}}
+                                  <br>
+                                  <span id="ccn_Number"></span>
                               </div>
                           </div>
                       </div>
@@ -186,13 +190,14 @@
                           <div class="col-md-6">
                               <label for="ccn">ACMO No.</label>
                               <div class="input-group mb-2">
-                                  <input type="text" id="acmo" autocomplete="off" placeholder="00-C-00000" title="Follow the following format. e.g. 10-C-00001" maxlength="10" pattern="^\d{2}-\w{1}-\d{5}$" name= "acmo" class="form-control" value="" onkeypress='validateACMO(event)'> {{-- QUERY HERE --}}
+                                  <input type="text" id="acmo" autocomplete="off" placeholder="00-C-00000" title="Follow the following format. e.g. 10-C-00001" maxlength="10" pattern="^\d{2}-\w{1}-\d{5}$" name= "acmo" class="form-control" value="{{ old('acmo') }}" onkeypress='validateACMO(event)'> {{-- QUERY HERE --}}
+                                  <span id="acmo_Number"></span>
                               </div>
                           </div>
                           <div class="col-md-6">
                               <label for=complainant>Complainant</label>
                                   <div class="">
-                                      <input type="text" id="complainant" name="complainant"  class="form-control" onkeypress='validateComplainant(event)' minlength="5" maxlength="30" required/>  {{-- QUERY HERE --}}
+                                      <input type="text" id="complainant" name="complainant" value="{{ old('complainant') }}"class="form-control" onkeypress='validateComplainant(event)' minlength="5" maxlength="30" required/>  {{-- QUERY HERE --}}
                                   </div>
                           </div>
                         </div>
@@ -203,7 +208,7 @@
                               <div class="control-group fld_wrap" id="fld3">
                                   <label class="control-label" for="subject1">Subject</label>
                                   <div class="input-group">
-                                      <input class="form-control" name="subject[]" type="text" onkeypress='validateComplainant(event)' minlength="5" maxlength="30" required/>
+                                      <input class="form-control" name="subject[]" id="subject" type="text" onkeypress='validateComplainant(event)' minlength="5" maxlength="30" required/>
                                       <div class="input-group-prepend">
                                           <button class="btn btn-success btn-add add_button3" fldnum="3" type="button">
                                               <span class="fas">+</span>
@@ -217,7 +222,7 @@
                               <div class="control-group fld_wrap" id="fld4">
                                   <label class="control-label" for="victim1">Victim/s</label>
                                   <div class="input-group">
-                                      <input class="form-control" name="victim[]" type="text" onkeypress='validateComplainant(event)' minlength="5" maxlength="30" required/>
+                                      <input class="form-control" name="victim[]" id="victim" type="text" onkeypress='validateComplainant(event)' minlength="5" maxlength="30" required/>
                                       <div class="input-group-prepend">
                                           <button class="btn btn-success btn-add add_button4" fldnum="4" type="button">
                                               <span class="fas">+</span>
@@ -232,7 +237,7 @@
                   <div class="form-group">
                     <div class="form-row">
                         <div class="col-md-6">
-                            <label for="agent">Agent</label>
+                            <label for="agent">Investigator</label>
                             <div class="fld_wrap" id="fld2">
                                 <div class="input-group">
                                     <select name="fld_val2[]" id="fld_val2"  class="form-control" required>
@@ -281,7 +286,7 @@
                                         <i class="fas fa-fw fa-calendar"></i>
                                     </div>
                                 </div>
-                                <input type="text" id="datepicker" name= "dateAssigned"  class="form-control" value="" placeholder="Choose" autocomplete="off" required> {{-- QUERY HERE --}}
+                                <input type="text" id="datepicker" name= "dateAssigned" value="{{ old('dateAssigned') }}" class="form-control" value="" placeholder="Choose" autocomplete="off" required> {{-- QUERY HERE --}}
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -307,7 +312,7 @@
                                     <i class="fas fa-fw fa-calendar"></i>
                                 </div>
                             </div>
-                            <input type="text" id="datepickers" name="dateTerminated" class="form-control" value="" placeholder="Choose"  autocomplete="off"> {{-- QUERY HERE --}}
+                            <input type="text" id="datepickers" name="dateTerminated" class="form-control" value="{{ old('dateTerminated') }}" placeholder="Choose"  autocomplete="off"> {{-- QUERY HERE --}}
                         </div>
                     </div>
                 </div>

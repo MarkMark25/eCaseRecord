@@ -57,7 +57,7 @@
             </div>
         </div>
         <div class="col-md-6">
-            <label for="agent">Agent</label>
+            <label for="agent">Investigator</label>
             <div class="">
                 <textarea class="form-control" name="full_name" id="full_name" style="width:100%;font-size:15px;resize:none;" rows="2" disabled></textarea>{{-- QUERY HERE --}}
             </div>

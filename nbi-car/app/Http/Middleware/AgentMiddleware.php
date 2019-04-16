@@ -34,7 +34,7 @@ class AgentMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if ($request->user() && $request->user()->role != 'Agent')
+        if ($request->user() && $request->user()->role != 'Investigator')
         {
             // return new Response(view('unauthorized')->with('web', 'AGENT'));
             abort(404);

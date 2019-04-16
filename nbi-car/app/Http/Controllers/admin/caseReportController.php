@@ -34,11 +34,11 @@ class caseReportController extends Controller
     public function index(Request $caseid)
     {
         $agent = DB::table('users')
-        ->where('role','=','Agent')
+        ->where('role','=','Investigator')
         ->get();
 
         $agent2 = DB::table('users')
-        ->where('role','=','Agent')
+        ->where('role','=','Investigator')
         ->get();
 
         $nature = DB::table('nature')
@@ -236,7 +236,7 @@ class caseReportController extends Controller
         ->get();
 
         $agent2 = DB::table('users')
-        ->where('role','=','Agent')
+        ->where('role','=','Investigator')
         ->where('userStatus','=','Active')
         ->get();
 
@@ -379,7 +379,6 @@ class caseReportController extends Controller
         if ($validator->fails()){
             return redirect('/caseReport')->withErrors($validator)->withInput();
         }else {
-
             //Cases Update
             $casesID = $request['caseID'];
             $cases = Cases::findOrFail($request->caseID);
@@ -411,8 +410,8 @@ class caseReportController extends Controller
                 }
             }
             //Complaint Sheet Update
-            $complainSheet = ComplaintSheet::findOrFail($request->complainSheetID);
-            $complainSheet->update([
+            //$complainSheet = ComplaintSheet::findOrFail($request->complainSheetID);
+            ComplaintSheet::create([
                     'caseid' => $casesID,
                     'place_Committed' => $request['whereCommitted'],
                     'date_Committed' => $request['whenCommitted'],
@@ -501,7 +500,8 @@ class caseReportController extends Controller
             } else {
                 CaseAgent::whereIn('caseagentid',$request->agentCaseID)->delete();
             }
-
+            //Delete ComplaintSheet
+            ComplaintSheet::where('id',$request->complainSheetID)->delete();
             return redirect('/caseReport')->with('alert-success', 'Successfully update the case!');
 
         }

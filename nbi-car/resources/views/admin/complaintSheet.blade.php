@@ -129,10 +129,11 @@
                         <span>Manage Case</span>
                       </a>
                       <div class="dropdown-menu" aria-labelledby="pagesDropdown">
-                        <a class="dropdown-item" href="/caseReport">Case Records</a> <!-- add page for case records-->
-                        <a class="dropdown-item" href="/caseNature">Case Nature</a>  <!-- add page for case nature -->
+                        <a class="dropdown-item" href="/caseReport">Case Records</a>
                         <a class="dropdown-item" href="/addNewCase">Add New Case</a>
                         <a class="dropdown-item" href="/ComplaintSheet">Complaint Sheet</a>
+                        <a class="dropdown-item" href="/caseNature">Case Nature</a>
+                        <a class="dropdown-item" href="/caseStatus">Case Status</a>
                       </div>
                     </li>
 
@@ -195,20 +196,20 @@
                                   <label for="caseNumber">NBI-CAR Case Number</label>
                                   <div class="input-group mb-2">
                                       <input type="text" id="" name="" class="form-control col-md-5" value="NBI-CAR-" readonly>
-                                      <input type="text" id="docketnumber" name="docketnumber" class="form-control" value="" placeholder="I-00-000" maxlength="8" pattern="^\w{1}-\d{2}-\d{3}$" onkeypress='validate(event)' title="Follow the following format. e.g. C-10-001" autocomplete="off" required>
+                                      <input type="text" id="docketnumber" name="docketnumber" class="form-control" value="{{ old('docketnumber') }}" placeholder="I-00-000" maxlength="8" pattern="^\w{1}-\d{2}-\d{3}$" onkeypress='validate(event)' title="Follow the following format. e.g. C-10-001" autocomplete="off" required>
                                   </div>
                               </div>
                               <div class="col-md-4">
                                   <label for="ccn">CCN</label>
                                   <div class="input-group mb-2">
                                       <input type="text" id="" name="" class="form-control col-md-5" value="NBI-CCN-" readonly>
-                                      <input type="text" id="ccn" name= "ccn" class="ccNumber form-control" value="" placeholder="C-00-00000" maxlength="10" pattern="^\w{1}-\d{2}-\d{5}$" title="Follow the following format. e.g. I-10-00001" onkeypress='validateCCN(event)' autocomplete="off">
+                                      <input type="text" id="ccn" name= "ccn" class="ccNumber form-control" value="{{ old('ccn') }}" placeholder="C-00-00000" maxlength="10" pattern="^\w{1}-\d{2}-\d{5}$" title="Follow the following format. e.g. I-10-00001" onkeypress='validateCCN(event)' autocomplete="off">
                                   </div>
                               </div>
                               <div class="col-md-4">
                                     <label for="ccn">ACMO No.</label>
                                     <div class="input-group mb-2">
-                                        <input type="text" id="acmo" name= "acmo" placeholder="00-C-00000" title="Follow the following format. e.g. 00-C-00000" maxlength="10" pattern="^\d{2}-\w{1}-\d{5}$"  class="form-control" value="" onkeypress='validateACMO(event)' autocomplete="off">
+                                        <input type="text" id="acmo" name= "acmo" value="{{ old('acmo') }}" placeholder="00-C-00000" title="Follow the following format. e.g. 00-C-00000" maxlength="10" pattern="^\d{2}-\w{1}-\d{5}$"  class="form-control" value="" onkeypress='validateACMO(event)' autocomplete="off">
                                     </div>
                                 </div>
                           </div>
@@ -216,7 +217,7 @@
                       <div class="form-group">
                         <div class="form-row">
                             <div class="col-md-4">
-                                <label for="agent">Agent</label>
+                                <label for="agent">Investigator</label>
                                 <div class="fld_wrap" id="fld2">
                                     <div class="input-group">
                                         <select name="fld_val2[]" id="fld_val2"  class="form-control" required>
@@ -256,7 +257,7 @@
                                             <i class="fas fa-fw fa-calendar"></i>
                                         </div>
                                     </div>
-                                    <input type="text" id="datepicker" name= "dateAssigned"  class="form-control" value="" placeholder="Choose" autocomplete="off" required> {{-- QUERY HERE --}}
+                                    <input type="text" id="datepicker" name= "dateAssigned"  class="form-control" value="{{ old('dateAssigned') }}" placeholder="Choose" autocomplete="off" required> {{-- QUERY HERE --}}
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -267,7 +268,7 @@
                                             <i class="fas fa-fw fa-calendar"></i>
                                         </div>
                                     </div>
-                                    <input type="text" id="datepickers" name="dateTerminated" class="form-control" value="" placeholder="Choose" autocomplete="off"> {{-- QUERY HERE --}}
+                                    <input type="text" id="datepickers" name="dateTerminated" class="form-control" value="{{ old('dateTerminated') }}" placeholder="Choose" autocomplete="off"> {{-- QUERY HERE --}}
                                 </div>
                             </div>
                         </div>
@@ -279,19 +280,19 @@
                             <div class="col-md-4">
                                     <label for="suspectName">Name (Lastname, Firstname)</label>
                                 <div class="">
-                                    <input type="text" id="complainant" name="complainant"  class="form-control" onkeypress='validateComplainant(event)' autocomplete="off" required minlength="5" maxlength="30"/>  {{-- QUERY HERE --}}
+                                    <input type="text" id="complainant" name="complainant"  class="form-control" value="{{ old('complainant') }}" onkeypress='validateComplainant(event)' autocomplete="off" required minlength="5" maxlength="30"/>  {{-- QUERY HERE --}}
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <label for="">Address</label>
                                 <div class="">
-                                    <input type="text" id="complainantAddress" name="complainantAddress"  class="form-control" autocomplete="off" minlength="5" maxlength="30"/>  {{-- QUERY HERE --}}
+                                    <input type="text" id="complainantAddress" name="complainantAddress" value="{{ old('complainantAddress') }}" class="form-control" autocomplete="off" minlength="5" maxlength="30"/>  {{-- QUERY HERE --}}
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <label for="">Telephone Number</label>
                                 <div class="">
-                                    <input type="text" id="complainantTelNumber" name="complainantTelNumber"  class="form-control" autocomplete="off" minlength="5" maxlength="15"/>  {{-- QUERY HERE --}}
+                                    <input type="text" id="complainantTelNumber" name="complainantTelNumber" value="{{ old('complainantTelNumber') }}"  class="form-control" autocomplete="off" minlength="5" maxlength="15"/>  {{-- QUERY HERE --}}
                                 </div>
                             </div>
                         </div>
@@ -362,7 +363,7 @@
                             <div class="form-row">
                                 <div class="col-md-6">
                                     <label for="whereCommitted">Place Committed</label>
-                                    <input type="text" name="whereCommitted" id="whereCommitted" class="form-control" minlength="3" maxlength="30">
+                                    <input type="text" name="whereCommitted" value="{{ old('whreCommitted') }}" id="whereCommitted" class="form-control" minlength="3" maxlength="30">
                                 </div>
                                 <div class="col-md-6">
                                     <label for="whenCommitted">When Committed</label>
@@ -372,7 +373,7 @@
                                                 <i class="fas fa-fw fa-calendar"></i>
                                             </div>
                                         </div>
-                                        <input type="date" name="whenCommitted" id="whenCommitted" class="form-control" value="" placeholder="Choose" autocomplete="off" required> {{-- QUERY HERE --}}
+                                        <input type="date" name="whenCommitted" id="whenCommitted" value="{{ old('whenCommitted') }}" class="form-control" value="" placeholder="Choose" autocomplete="off" required> {{-- QUERY HERE --}}
                                     </div>
                                 </div>
                             </div>
@@ -414,31 +415,31 @@
                     <section>
                         <div class="form-group">
                             <p style="font-weight:bold;">6. Narration of Facts (Salaysay ng mga Pangyayari) </p>
-                            <textarea name="narrationOfFacts" placeholder="Don't leave this portion blank" id="narrationOfFacts" style="width:100%;font-size:15px;resize:none;" rows="3" autocomplete="off" required minlength="4" maxlength="65,535"></textarea>
+                            <textarea name="narrationOfFacts" placeholder="Don't leave this portion blank" id="narrationOfFacts" style="width:100%;font-size:15px;resize:none;" rows="3" autocomplete="off" required minlength="4" >{{ Request::old('narrationOfFacts') }}</textarea>
                         </div>
                     </section>
                     <hr>
                     <section>
                         <div class="form-group">
                             <p style="font-weight:bold;">7. Has the matter been reported to any agency, If so, to what people agency? (Ang bagay bang ito ay naulat na sa ibang sangay ng pagsisiyasat? Kung naulat na, saang sangay?) </p>
-                            <textarea name="hasTheMatter" placeholder="Don't leave this portion blank" id="hasTheMatter" style="width:100%;font-size:15px;resize:none;" rows="3" autocomplete="off" minlength="4" maxlength="65,535"></textarea>
+                            <textarea name="hasTheMatter" placeholder="Don't leave this portion blank" id="hasTheMatter" style="width:100%;font-size:15px;resize:none;" rows="3" autocomplete="off" minlength="4" >{{ Request::old('hasTheMatter') }}</textarea>
                             <br>
                             <p style="font-weight:bold;">Status of investigation, If any (Kalagayan ng pagsisiyasat kung mayroon?)</p>
-                            <textarea name="statusOfInvestigation" placeholder="Don't leave this portion blank" id="statusOfInvestigation" style="width:100%;font-size:15px;resize:none;" rows="3" autocomplete="off" required minlength="4" maxlength="65,535"></textarea>
+                            <textarea name="statusOfInvestigation" placeholder="Don't leave this portion blank" id="statusOfInvestigation" style="width:100%;font-size:15px;resize:none;" rows="3" autocomplete="off" required minlength="4" >{{ Request::old('statusOfInvestigation') }}</textarea>
                         </div>
                     </section>
                     <hr>
                     <section>
                         <div class="form-group">
                             <p style="font-weight:bold;">8.Is the matter complained of the subject of any court action of proceedings? If so, where? (Ang bagay bang may kinalaman sa pagsusumbong ay nasa hukuman na? Kung gaanoon, saan?)</p>
-                            <textarea name="isTheMatterComplained" placeholder="Don't leave this portion blank" id="isTheMatterComplained" style="width:100%;font-size:15px;resize:none;" rows="3" autocomplete="off" required minlength="4" maxlength="65,535"></textarea>
+                            <textarea name="isTheMatterComplained" placeholder="Don't leave this portion blank" id="isTheMatterComplained" style="width:100%;font-size:15px;resize:none;" rows="3" autocomplete="off" required minlength="4" >{{ Request::old('isTheMatterComplained') }}</textarea>
                         </div>
                     </section>
                     <br>
                     <section>
                         <div class="form-group">
                             <p style="font-weight:bold;">9.What Consideration/s impelled you to report to the NBI? (Ano ang nag-udyok sa iyo para magreklamo dito sa NBI?)</p>
-                            <textarea name="whatConsidirations" placeholder="Don't leave this portion blank" id="whatConsidirations" style="width:100%;font-size:15px;resize:none;" rows="3" autocomplete="off" required minlength="4" maxlength="65,535"></textarea>
+                            <textarea name="whatConsidirations" placeholder="Don't leave this portion blank" id="whatConsidirations" style="width:100%;font-size:15px;resize:none;" rows="3" autocomplete="off" required minlength="4" >{{ Request::old('whatConsidirations') }}</textarea>
                         </div>
                     </section>
                     <div class="form-group">

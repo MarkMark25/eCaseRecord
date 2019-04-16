@@ -129,10 +129,11 @@
                        <span>Manage Case</span>
                      </a>
                      <div class="dropdown-menu" aria-labelledby="pagesDropdown">
-                       <a class="dropdown-item" href="/caseReport">Case Report</a> <!-- add page for case records-->
-                       <a class="dropdown-item" href="/caseNature">Case Nature</a>  <!-- add page for case nature -->
-                       <a class="dropdown-item" href="/addNewCase">Add New Case</a>
-                       <a class="dropdown-item" href="/ComplaintSheet">Complaint Sheet</a>
+                        <a class="dropdown-item" href="/caseReport">Case Records</a>
+                        <a class="dropdown-item" href="/addNewCase">Add New Case</a>
+                        <a class="dropdown-item" href="/ComplaintSheet">Complaint Sheet</a>
+                        <a class="dropdown-item" href="/caseNature">Case Nature</a>
+                        <a class="dropdown-item" href="/caseStatus">Case Status</a>
                      </div>
                    </li>
 
@@ -195,7 +196,7 @@
                               <label for="caseNumber">NBI-CAR Case Number</label>
                               <div class="input-group mb-2">
                                   <input type="text" id="" name="" class="form-control col-md-5" value="NBI-CAR-" readonly>
-                                  <input type="text" id="docketnumber" name="docketnumber" class="form-control" value="" placeholder="I-00-000" maxlength="8" pattern="^\w{1}-\d{2}-\d{3}$" onkeypress='validate(event)' title="Follow the following format. e.g. I-10-001" required> {{-- QUERY HERE --}}
+                                  <input type="text" id="docketnumber" name="docketnumber" class="form-control" value="{{ old('docketnumber') }}" placeholder="I-00-000" maxlength="8" pattern="^\w{1}-\d{2}-\d{3}$" onkeypress='validate(event)' title="Follow the following format. e.g. I-10-001" required> {{-- QUERY HERE --}}
                               </div>
                           </div>
 
@@ -203,7 +204,7 @@
                               <label for="ccn">CCN</label>
                               <div class="input-group mb-2">
                                   <input type="text" id="" name="" class="form-control col-md-5" value="NBI-CCN-" readonly>
-                                  <input type="text" id="ccn" name= "ccn" class="form-control" value="" placeholder="C-00-00000" maxlength="10" pattern="^\w{1}-\d{2}-\d{5}$" title="Follow the following format. e.g. C-10-00001" onkeypress='validateCCN(event)'> {{-- QUERY HERE --}}
+                                  <input type="text" id="ccn" name= "ccn" class="form-control" value="{{ old('ccn') }}" placeholder="C-00-00000" maxlength="10" pattern="^\w{1}-\d{2}-\d{5}$" title="Follow the following format. e.g. C-10-00001" onkeypress='validateCCN(event)'> {{-- QUERY HERE --}}
                               </div>
                           </div>
                       </div>
@@ -213,13 +214,13 @@
                           <div class="col-md-6">
                               <label for="ccn">ACMO No.</label>
                               <div class="input-group mb-2">
-                                  <input type="text" id="acmo" placeholder="00-C-00000" title="Follow the following format. e.g. 10-C-00001" maxlength="10" pattern="^\d{2}-\w{1}-\d{5}$" name= "acmo" class="form-control" value="" onkeypress='validateACMO(event)'> {{-- QUERY HERE --}}
+                                  <input type="text" id="acmo" placeholder="00-C-00000" value="{{ old('acmo') }}" title="Follow the following format. e.g. 10-C-00001" maxlength="10" pattern="^\d{2}-\w{1}-\d{5}$" name= "acmo" class="form-control" value="" onkeypress='validateACMO(event)'> {{-- QUERY HERE --}}
                               </div>
                           </div>
                           <div class="col-md-6">
                               <label for=complainant>Complainant</label>
                                   <div class="">
-                                      <input type="text" id="complainant" name="complainant"  class="form-control" onkeypress='validateComplainant(event)' required minlength="5" maxlength="30"/>  {{-- QUERY HERE --}}
+                                      <input type="text" id="complainant" name="complainant" value="{{ old('complainant') }}"  class="form-control" onkeypress='validateComplainant(event)' required minlength="5" maxlength="30"/>  {{-- QUERY HERE --}}
                                   </div>
                           </div>
                         </div>
@@ -259,7 +260,7 @@
                   <div class="form-group">
                     <div class="form-row">
                         <div class="col-md-6">
-                            <label for="agent">Agent</label>
+                            <label for="agent">Investigator</label>
                             <div class="fld_wrap" id="fld2">
                                 <div class="input-group">
                                     <select name="fld_val2[]" id="fld_val2"  class="form-control" required>
@@ -308,7 +309,7 @@
                                         <i class="fas fa-fw fa-calendar"></i>
                                     </div>
                                 </div>
-                                <input type="text" id="datepicker" name= "dateAssigned"  class="form-control" value="" placeholder="Choose" autocomplete="off" required> {{-- QUERY HERE --}}
+                                <input type="text" id="datepicker" name= "dateAssigned" value="{{ old('dateAssigned') }}" class="form-control" placeholder="Choose" autocomplete="off" required> {{-- QUERY HERE --}}
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -334,7 +335,7 @@
                                     <i class="fas fa-fw fa-calendar"></i>
                                 </div>
                             </div>
-                            <input type="text" id="datepickers" name="dateTerminated" class="form-control" value="" placeholder="Choose"  autocomplete="off"> {{-- QUERY HERE --}}
+                            <input type="text" id="datepickers" name="dateTerminated"  class="form-control" value="{{ old('dateTerminated') }}" placeholder="Choose"  autocomplete="off"> {{-- QUERY HERE --}}
                         </div>
                     </div>
                 </div>

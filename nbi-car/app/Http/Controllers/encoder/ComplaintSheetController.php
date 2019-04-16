@@ -32,11 +32,11 @@ class ComplaintSheetController extends Controller
     public function index()
     {
         $agent = DB::table('users')
-        ->where('role','=','Agent')
+        ->where('role','=','Investigator')
         ->where('userStatus','=','Active')
         ->get();
         $agent2 = DB::table('users')
-        ->where('role','=','Agent')
+        ->where('role','=','Investigator')
         ->where('userStatus','=','Active')
         ->get();
 

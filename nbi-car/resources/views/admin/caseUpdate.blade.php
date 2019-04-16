@@ -129,10 +129,11 @@
                         <span>Manage Case</span>
                       </a>
                       <div class="dropdown-menu" aria-labelledby="pagesDropdown">
-                        <a class="dropdown-item" href="/caseReport">Case Records</a> <!-- add page for case records-->
-                        <a class="dropdown-item" href="/caseNature">Case Nature</a>  <!-- add page for case nature -->
+                        <a class="dropdown-item" href="/caseReport">Case Records</a>
                         <a class="dropdown-item" href="/addNewCase">Add New Case</a>
                         <a class="dropdown-item" href="/ComplaintSheet">Complaint Sheet</a>
+                        <a class="dropdown-item" href="/caseNature">Case Nature</a>
+                        <a class="dropdown-item" href="/caseStatus">Case Status</a>
                       </div>
                     </li>
 
@@ -341,7 +342,7 @@
                                     <div class="control-group">
                                         <div class="fld_wrap" id="fld1">
                                             <div class="input-group">
-                                                <input class="form-control" name="natureName" id="natureName"  value="{{ $nature->nature}}">
+                                                <input class="form-control" name="natureName" id="natureName"  value="{{ $nature->nature}}" readonly>
                                                 <input type="hidden" class="form-control" name="fld_val1[]" id="fld_val1[]" value="{{ $nature->natureid }}" readonly>
                                                 <input type="hidden" class="form-control" name="caseNatureID[]" id="caseNatureID[]" value="{{ $nature->cnatureid }}" readonly>
                                                 <div class="input-group-prepend">
@@ -442,72 +443,39 @@
                             </div>
                             @endforeach
                     <hr>
-                @if (!$count)
-                    <section>
-                        <div class="form-group">
-                            <p style="font-weight:bold;">6. Narration of Facts (Salaysay ng mga Pangyayari) </p>
-                            <textarea id="narrationOfFacts" name="narrationOfFacts"  style="width:100%;font-size:15px;resize:none;" rows="5" ></textarea>
-                        </div>
-                    </section>
-                    <hr>
-                    <section>
-                        <div class="form-group">
-                            <p style="font-weight:bold;">7. Has the matter been reported to any agency, If so, to what people agency? (Ang bagay bang ito ay naulat na sa ibang sangay ng pagsisiyasat? Kung naulat na, saang sangay?) </p>
-                            <textarea name="hasTheMatter" id="hasTheMatter" style="width:100%;font-size:15px;resize:none;" rows="5" ></textarea>
-                            <br>
-                            <p style="font-weight:bold;">Status of investigation, If any (Kalagayan ng pagsisiyasat kung mayroon?)</p>
-                            <textarea name="statusOfInvestigation" id="statusOfInvestigation" style="width:100%;font-size:15px;resize:none;" rows="5" minlength="4" maxlength="65,535"></textarea>
-                        </div>
-                    </section>
-                    <hr>
-                    <section>
-                        <div class="form-group">
-                            <p style="font-weight:bold;">8.Is the matter complained of the subject of any court action of proceedings? If so, where? (Ang bagay bang may kinalaman sa pagsusumbong ay nasa hukuman na? Kung gaanoon, saan?)</p>
-                            <textarea name="isTheMatterComplained" id="isTheMatterComplained" style="width:100%;font-size:15px;resize:none;" rows="5" minlength="4" maxlength="65,535"></textarea>
-                        </div>
-                    </section>
-                    <hr>
-                    <section>
-                        <div class="form-group">
-                            <p style="font-weight:bold;">9.What Consideration/s impelled you to report to the NBI? (Ano ang nag-udyok sa iyo para magreklamo dito sa NBI?)</p>
-                            <textarea name="whatConsidirations" id="whatConsidirations" style="width:100%;font-size:15px;resize:none;" rows="5" minlength="4" maxlength="65,535"></textarea>
-                        </div>
-                    </section>
-                @else
                     @foreach($complaintSheet as $complaintSheet)
                     <section>
                         <input type="hidden" class="form-control" name="complainSheetID" id="complainSheetID" value="{{ $complaintSheet->id }}" readonly>
                         <div class="form-group">
                             <p style="font-weight:bold;">6. Narration of Facts (Salaysay ng mga Pangyayari) </p>
-                            <textarea id="narrationOfFacts" name="narrationOfFacts"  style="width:100%;font-size:15px;resize:none;" rows="5" minlength="4" maxlength="65,535">{{ $complaintSheet->narration_Of_Facts }}</textarea>
+                            <textarea id="narrationOfFacts" name="narrationOfFacts"  style="width:100%;font-size:15px;resize:none;" rows="5" minlength="4" >{{ $complaintSheet->narration_Of_Facts }}</textarea>
                         </div>
                     </section>
                     <hr>
                     <section>
                         <div class="form-group">
                             <p style="font-weight:bold;">7. Has the matter been reported to any agency, If so, to what people agency? (Ang bagay bang ito ay naulat na sa ibang sangay ng pagsisiyasat? Kung naulat na, saang sangay?) </p>
-                            <textarea name="hasTheMatter" id="hasTheMatter" style="width:100%;font-size:15px;resize:none;" rows="5" minlength="4" maxlength="65,535">{{ $complaintSheet->reported_Any_Agency }}</textarea>
+                            <textarea name="hasTheMatter" id="hasTheMatter" style="width:100%;font-size:15px;resize:none;" rows="5" minlength="4" >{{ $complaintSheet->reported_Any_Agency }}</textarea>
                             <br>
                             <p style="font-weight:bold;">Status of investigation, If any (Kalagayan ng pagsisiyasat kung mayroon?)</p>
-                            <textarea name="statusOfInvestigation" id="statusOfInvestigation" style="width:100%;font-size:15px;resize:none;" rows="5" minlength="4" maxlength="65,535">{{ $complaintSheet->status_of_Investigation }}</textarea>
+                            <textarea name="statusOfInvestigation" id="statusOfInvestigation" style="width:100%;font-size:15px;resize:none;" rows="5" minlength="4" >{{ $complaintSheet->status_of_Investigation }}</textarea>
                         </div>
                     </section>
                     <hr>
                     <section>
                         <div class="form-group">
                             <p style="font-weight:bold;">8.Is the matter complained of the subject of any court action of proceedings? If so, where? (Ang bagay bang may kinalaman sa pagsusumbong ay nasa hukuman na? Kung gaanoon, saan?)</p>
-                            <textarea name="isTheMatterComplained" id="isTheMatterComplained" style="width:100%;font-size:15px;resize:none;" rows="5" minlength="4" maxlength="65,535">{{ $complaintSheet->where_court_Proceedings }}</textarea>
+                            <textarea name="isTheMatterComplained" id="isTheMatterComplained" style="width:100%;font-size:15px;resize:none;" rows="5" minlength="4" >{{ $complaintSheet->where_court_Proceedings }}</textarea>
                         </div>
                     </section>
                     <hr>
                     <section>
                         <div class="form-group">
                             <p style="font-weight:bold;">9.What Consideration/s impelled you to report to the NBI? (Ano ang nag-udyok sa iyo para magreklamo dito sa NBI?)</p>
-                            <textarea name="whatConsidirations" id="whatConsidirations" style="width:100%;font-size:15px;resize:none;" rows="5" minlength="4" maxlength="65,535">{{ $complaintSheet->report_Considerations }}</textarea>
+                            <textarea name="whatConsidirations" id="whatConsidirations" style="width:100%;font-size:15px;resize:none;" rows="5" minlength="4" >{{ $complaintSheet->report_Considerations }}</textarea>
                         </div>
                     </section>
                     @endforeach
-                @endif
                 <br>
                     <div class="form-group">
                         <div class="form-row">

@@ -88,10 +88,11 @@
             <span>Manage Case</span>
             </a>
             <div class="dropdown-menu" aria-labelledby="pagesDropdown">
-               <a class="dropdown-item" href="/caseReport">Case Records</a> <!-- add page for case records-->
-               <a class="dropdown-item" href="/caseNature">Case Nature</a>  <!-- add page for case nature -->
-               <a class="dropdown-item" href="/addNewCase">Add New Case</a>
-               <a class="dropdown-item" href="/ComplaintSheet">Complaint Sheet</a>
+                <a class="dropdown-item" href="/caseReport">Case Records</a>
+                <a class="dropdown-item" href="/addNewCase">Add New Case</a>
+                <a class="dropdown-item" href="/ComplaintSheet">Complaint Sheet</a>
+                <a class="dropdown-item" href="/caseNature">Case Nature</a>
+                <a class="dropdown-item" href="/caseStatus">Case Status</a>
             </div>
          </li>
          <li class="nav-item dropdown">
@@ -236,9 +237,8 @@
                                        <tr>
                                           <th>Subject</th>
                                           <th>Complainant</th>
-                                          <th>Agent</th>
+                                          <th>Investigator</th>
                                           <th>Date Assigned</th>
-                                          <th>Nature of Case</th>
                                        </tr>
                                     </thead>
                                     <tbody>
@@ -248,7 +248,6 @@
                                              <td>{{ $pendingCase->complainantname }}</td>
                                              <td>{{ $pendingCase->full_name }}</td>
                                              <td>{{ $pendingCase->dateassigned }}</td>
-                                             <td>{{ $pendingCase->status }}</td>
                                          </tr>
                                      @endforeach
                                     </tbody>

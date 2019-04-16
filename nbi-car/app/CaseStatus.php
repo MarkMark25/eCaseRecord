@@ -9,6 +9,6 @@ class CaseStatus extends Model
     protected $table = 'case_status';
     protected $primaryKey = 'statusid';
     protected $fillable = [
-        'status','caseStatusAvailability'
+        'status'
     ];
 }

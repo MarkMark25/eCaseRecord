@@ -1,15 +1,9 @@
 <div class="form-group">
     <div class="form-row">
-        <div class="col-md-6">
+        <div class="col-md-8">
             <label for="ccn">Nature</label>
             <div class="input-group mb-2">
                 <input type="text" id="nature" name= "nature" autocomplete="off" class="form-control"> {{-- QUERY HERE --}}
-            </div>
-        </div>
-        <div class="col-md-6">
-            <label for="role">Republic Act</label>
-            <div class="input-group mb-2">
-                <input type="text" id="republicAct" name= "republicAct" autocomplete="off" class="form-control"> {{-- QUERY HERE --}}
             </div>
         </div>
     </div>

@@ -49,6 +49,7 @@ Route::group(['middleware' => ['web','admin']], function() {
     route::resource('/userHistory','admin\userHistoryController');
     route::resource('/userLogs','admin\userLogsController');
     route::resource('/caseNature','admin\caseNatureController');
+    route::resource('/caseStatus','admin\CaseStatusController');
     route::resource('/caseReport','admin\caseReportController');
     route::resource('/addNewCase','admin\addCaseController');
     route::resource('/manageAccounts','admin\manageAccountController');
@@ -63,6 +64,8 @@ Route::group(['middleware' => ['web','admin']], function() {
     Route::post('/createNature','admin\caseNatureController@store');
     Route::post('/deleteNature','admin\caseNatureController@delete');
     Route::post('/caseDeleted','admin\caseReportController@delete');
+    Route::post('/updateCaseStatus','admin\CaseStatusController@update');
+    Route::post('/addCaseStatus','admin\CaseStatusController@store');
     //HINDI PA TAPOS
     Route::post('/updatedCase','admin\caseReportController@update');
     Route::post('/userUpdate','admin\manageAccountController@update');
@@ -108,7 +111,7 @@ Route::group(['middleware' => ['web', 'auth']], function(){
             ->get();
             return view ('encoder.home',compact('showData'));
         */
-    } else if(Auth::user()->role == 'Agent') {
+    } else if(Auth::user()->role == 'Investigator') {
 
         $showData = DB::table('nature')
         ->join('casenature','nature.natureid','=','casenature.natureid')

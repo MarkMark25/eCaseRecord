@@ -125,11 +125,10 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="pagesDropdown">
                     <a class="dropdown-item" href="/caseReport">Case Records</a>
-                    <!-- add page for case records-->
-                    <a class="dropdown-item" href="/caseNature">Case Nature</a>
-                    <!-- add page for case nature -->
                     <a class="dropdown-item" href="/addNewCase">Add New Case</a>
                     <a class="dropdown-item" href="/ComplaintSheet">Complaint Sheet</a>
+                    <a class="dropdown-item" href="/caseNature">Case Nature</a>
+                    <a class="dropdown-item" href="/caseStatus">Case Status</a>
                 </div>
             </li>
 

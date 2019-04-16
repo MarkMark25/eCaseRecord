@@ -102,10 +102,11 @@
             <span>Manage Case</span>
           </a>
           <div class="dropdown-menu" aria-labelledby="pagesDropdown">
-            <a class="dropdown-item" href="/caseReport">Case Records</a> <!-- add page for case records-->
-            <a class="dropdown-item" href="/caseNature">Case Nature</a>  <!-- add page for case nature -->
+            <a class="dropdown-item" href="/caseReport">Case Records</a>
             <a class="dropdown-item" href="/addNewCase">Add New Case</a>
             <a class="dropdown-item" href="/ComplaintSheet">Complaint Sheet</a>
+            <a class="dropdown-item" href="/caseNature">Case Nature</a>
+            <a class="dropdown-item" href="/caseStatus">Case Status</a>
             </div>
         </li>
 
@@ -168,7 +169,6 @@
                     <tr>
                         <th >ID</th>
                         <th style="width:10%">Nature</th>
-                        <th style="width:10%">Cases Type</th>
                         <th style="width:70%">Description</th>
                         <th style="width:20%">Actions</th>
                     </tr>
@@ -179,7 +179,6 @@
                         <tr>
                             <td >{{ $showData->natureid }}</td>
                             <td>{{ $showData->nature }}</td>
-                            <td>{{ $showData->republicAct }}</td>
                             <td>{{ $showData->description }}</td>
                             <td>
                               <div>
@@ -188,7 +187,6 @@
                                     data-natureid = "{{ $showData->natureid }}"
                                     data-nature= "{{ $showData->nature }}"
                                     data-description= "{{ $showData->description }}"
-                                    data-casetype= "{{ $showData->republicAct }}"
                                 >
                                      <span style="color:#0460f4;" class="fas fa-edit"></span>
                                 </button>
@@ -198,7 +196,6 @@
                                     data-natureidone = "{{ $showData->natureid }}"
                                     data-natureone= "{{ $showData->nature }}"
                                     data-descriptionone= "{{ $showData->description }}"
-                                    data-casetypeone= "{{ $showData->republicAct }}"
                                 >
                                     <span style="color:#FF0000;" class="fas fa-trash"></span>
                                 </button>
@@ -362,13 +359,11 @@
                 var button = $(event.relatedTarget)
                 var natureid = button.data('natureid')
                 var nature = button.data('nature')
-                var casetype = button.data('casetype')
                 var description = button.data('description')
 
                 var modal = $(this)
                 modal.find('.modal-body #natureid').val(natureid)
                 modal.find('.modal-body #nature').val(nature)
-                modal.find('.modal-body #republicAct').val(casetype)
                 modal.find('.modal-body #description').val(description)
               })
     </script>
@@ -377,13 +372,11 @@
                 var button = $(event.relatedTarget)
                 var natureid = button.data('natureidone')
                 var nature = button.data('natureone')
-                var casetype = button.data('casetypeone')
                 var description = button.data('descriptionone')
 
                 var modal = $(this)
                 modal.find('.modal-body #natureid').val(natureid)
                 modal.find('.modal-body #nature').val(nature)
-                modal.find('.modal-body #republicAct').val(casetype)
                 modal.find('.modal-body #description').val(description)
               })
     </script>

@@ -142,7 +142,7 @@
                         <th>Date Assigned</th>
                         <th>Date Terminated</th>
                         <th>Status</th>
-                        <th>Agent</th>
+                        <th>Investigator</th>
                     </tr>
                     </thead>
                     <tbody>

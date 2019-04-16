@@ -56,9 +56,8 @@
             <label for="role" class="">{{ __('Role') }}</label>
             <div class="">
                 <select name="role" id="role" class="form-control{{ $errors->has('role') ? ' is-invalid' : '' }}" required>
-
-                    <option value="Agent">Agent</option>
                     <option value="Encoder">Encoder</option>
+                    <option value="Investigator">Investigator</option>
                     <option value="Administrator">Administrator</option>
                 </select>
                 @if ($errors->has('role'))

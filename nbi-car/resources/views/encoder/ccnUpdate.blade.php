@@ -156,7 +156,7 @@
                         <th>Complainant</th>
                         <th>Subject</th>
                         <th>Case Nature</th>
-                        <th>Agent</th>
+                        <th>Investigator</th>
                         <th>Action</th>
                     </tr>
                     </thead>

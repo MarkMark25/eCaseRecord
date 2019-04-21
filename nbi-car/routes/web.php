@@ -52,6 +52,8 @@ Route::group(['middleware' => ['web','admin']], function() {
     route::resource('/caseStatus','admin\CaseStatusController');
     route::resource('/caseReport','admin\caseReportController');
     route::resource('/addNewCase','admin\addCaseController');
+    route::resource('/ccnAcmoRequest','admin\ccnAcmoRequestController');
+    Route::post('/ccnAcmoRequest/fetch_data', 'admin\ccnAcmoRequestController@fetch_data')->name('daterange.fetch_data');
     route::resource('/manageAccounts','admin\manageAccountController');
     route::resource('/profile','admin\ProfileController');
     route::resource('/adminChangePassword','admin\changePasswordController');

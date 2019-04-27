@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\admin;
 use DB;
 use Illuminate\Http\Request;
@@ -18,7 +17,6 @@ use App\CaseVictims;
 use App\ComplaintSheet;
 use Carbon\Carbon;
 use function GuzzleHttp\Psr7\readline;
-
 class caseReportController extends Controller
 {
     public function __construct()
@@ -34,27 +32,22 @@ class caseReportController extends Controller
     public function index(Request $caseid)
     {
         $agent = DB::table('users')
-        ->where('role','=','Investigator')
+        ->where('role','=','Agent')
         ->get();
-
         $agent2 = DB::table('users')
-        ->where('role','=','Investigator')
+        ->where('role','=','Agent')
         ->get();
-
         $nature = DB::table('nature')
         ->where('natureAvailability','=','Available')
         ->get();
         $nature2 = DB::table('nature')
         ->where('natureAvailability','=','Available')
         ->get();
-
         $status = DB::table('case_status')
         ->get();
-
         $sample = DB::table('case_suspects')
         ->where('caseid','=',$caseid)
         ->get();
-
         $showData = DB::table('nature')
         ->join('casenature','nature.natureid','=','casenature.natureid')
         ->join('caseagent','casenature.caseid','=','caseagent.caseid')
@@ -77,7 +70,6 @@ class caseReportController extends Controller
         ->orderby('cases.docketnumber','ASC')
         ->where('cases.caseAvailability','=','Available')
         ->get();
-
         return view ('admin.caseReport',compact('showData','agent','nature','status','agent2','nature2', 'sample'));
     }
     /**
@@ -89,7 +81,6 @@ class caseReportController extends Controller
     {
         //
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -103,14 +94,12 @@ class caseReportController extends Controller
             'docketnumber' => 'required|unique:cases|max:255',
             'acmo' => 'nullable|unique:cases|max:255',
         ]);
-
         if ($validator->fails()){
             return redirect()
                 ->back()
                 ->withErrors($validator)
                 ->withInput();
         }else {
-
         }
     }
     /**
@@ -126,14 +115,12 @@ class caseReportController extends Controller
         ,DB::raw("cases.caseid AS caseID"))
         ->where('caseid','=',$caseid)
         ->get();
-
         $casesComplaint = DB::table('cases')
         ->join('case_status', 'case_status.statusid', '=' ,'cases.statusid')
         ->select('cases.*','case_status.*'
         ,DB::raw("cases.caseid AS caseID"))
         ->where('caseid','=',$caseid)
         ->get();
-
         $agent = DB::table('caseagent')
         ->join('cases', 'caseagent.caseid' ,'=' ,'cases.caseid')
         ->join('users' , 'users.userid', '=', 'caseagent.userid')
@@ -143,7 +130,6 @@ class caseReportController extends Controller
         ->where('cases.caseid','=',$caseid)
         ->groupBy('users.userid')
         ->get();
-
         $dateAssigned = DB::table('caseagent')
         ->join('cases', 'caseagent.caseid' ,'=' ,'cases.caseid')
         ->join('users' , 'users.userid', '=', 'caseagent.userid')
@@ -153,49 +139,40 @@ class caseReportController extends Controller
         ->where('cases.caseid','=',$caseid)
         ->groupBy('cases.caseid')
         ->get();
-
         $complaintSheet = DB::table('complaintSheet')
         ->rightJoin('cases','cases.caseid','=','complaintSheet.caseid')
         ->select('cases.*','complaintSheet.*')
         ->where('complaintSheet.caseid','=',$caseid)
         ->get();
-
         $count = DB::table('cases')
         ->leftJoin('complaintSheet','cases.caseid','=','complaintSheet.caseid')
         ->select('cases.*','complaintSheet.*')
         ->where('complaintSheet.caseid','=',$caseid)
         ->count();
-
         $whenAndWhere = DB::table('complaintSheet')
         ->rightJoin('cases','cases.caseid','=','complaintSheet.caseid')
         ->select('cases.*','complaintSheet.*')
         ->where('complaintSheet.caseid','=',$caseid)
         ->get();
-
         $suspect = DB::table('case_suspects')
         ->where('caseid','=',$caseid)
         ->get();
-
         $victim = DB::table('case_victims')
         ->where('caseid','=',$caseid)
         ->get();
-
         $nature = DB::table('cases')
         ->join('casenature' ,'casenature.caseid', '=' ,'cases.caseid')
         ->join('nature' ,'nature.natureid', '=' ,'casenature.natureid')
         ->select('cases.*','casenature.*','nature.*')
         ->where('cases.caseid','=',$caseid)
         ->get();
-
         $status = DB::table('cases')
         ->join('case_status', 'case_status.statusid', '=' ,'cases.statusid')
         ->select('case_status.*','cases.*')
         ->where('cases.caseid','=',$caseid)
         ->get();
-
         return view('admin.deleteCase',compact('cases','agent','complaintSheet','suspect','victim','nature','status','casesComplaint','dateAssigned','whenAndWhere','count'));
     }
-
     /**
      * Display the specified resource.
      *
@@ -210,21 +187,18 @@ class caseReportController extends Controller
         ,DB::raw("cases.caseid AS caseID"))
         ->where('caseid','=',$caseid)
         ->get();
-
         $dateTerminated = DB::table('cases')
         ->join('case_status', 'case_status.statusid', '=' ,'cases.statusid')
         ->select('cases.*','case_status.*'
         ,DB::raw("cases.caseid AS caseID"))
         ->where('caseid','=',$caseid)
         ->get();
-
         $casesComplaint = DB::table('cases')
         ->join('case_status', 'case_status.statusid', '=' ,'cases.statusid')
         ->select('cases.*','case_status.*'
         ,DB::raw("cases.caseid AS caseID"))
         ->where('caseid','=',$caseid)
         ->get();
-
         $agent = DB::table('caseagent')
         ->join('cases', 'caseagent.caseid' ,'=' ,'cases.caseid')
         ->join('users' , 'users.userid', '=', 'caseagent.userid')
@@ -234,12 +208,10 @@ class caseReportController extends Controller
         ->where('cases.caseid','=',$caseid)
         ->groupBy('users.userid')
         ->get();
-
         $agent2 = DB::table('users')
-        ->where('role','=','Investigator')
+        ->where('role','=','Agent')
         ->where('userStatus','=','Active')
         ->get();
-
         $dateAssigned = DB::table('caseagent')
         ->join('cases', 'caseagent.caseid' ,'=' ,'cases.caseid')
         ->join('users' , 'users.userid', '=', 'caseagent.userid')
@@ -249,53 +221,43 @@ class caseReportController extends Controller
         ->where('cases.caseid','=',$caseid)
         ->groupBy('cases.caseid')
         ->get();
-
         $complaintSheet = DB::table('cases')
         ->leftJoin('complaintSheet','cases.caseid','=','complaintSheet.caseid')
         ->select('cases.*','complaintSheet.*')
         ->where('complaintSheet.caseid','=',$caseid)
         ->get();
-
         $whenAndWhere = DB::table('cases')
         ->leftJoin('complaintSheet','cases.caseid','=','complaintSheet.caseid')
         ->select('cases.*','complaintSheet.*')
         ->where('complaintSheet.caseid','=',$caseid)
         ->get();
-
         $count = DB::table('cases')
         ->leftJoin('complaintSheet','cases.caseid','=','complaintSheet.caseid')
         ->select('cases.*','complaintSheet.*')
         ->where('complaintSheet.caseid','=',$caseid)
         ->count();
-
         $suspect = DB::table('case_suspects')
         ->where('caseid','=',$caseid)
         ->get();
-
         $victim = DB::table('case_victims')
         ->where('caseid','=',$caseid)
         ->get();
-
         $nature = DB::table('cases')
         ->join('casenature' ,'casenature.caseid', '=' ,'cases.caseid')
         ->join('nature' ,'nature.natureid', '=' ,'casenature.natureid')
         ->select('cases.*','casenature.*','nature.*')
         ->where('cases.caseid','=',$caseid)
         ->get();
-
         $status = DB::table('cases')
         ->join('case_status', 'case_status.statusid', '=' ,'cases.statusid')
         ->select('case_status.*','cases.*')
         ->where('cases.caseid','=',$caseid)
         ->get();
-
         $statusAll = DB::table('case_status')
         ->get();
-
         $nature2 = DB::table('nature')
         ->where('natureAvailability','=','Available')
         ->get();
-
         return view('admin.caseUpdate',compact('cases','agent','complaintSheet','suspect','victim','nature','status','casesComplaint','dateAssigned','whenAndWhere','dateTerminated','agent2','count','statusAll','nature2'));
     }
     /**
@@ -306,9 +268,7 @@ class caseReportController extends Controller
      */
     public function edit($caseid)
     {
-
     }
-
     /**
      * Remove the specified resource from storage.
      *
@@ -342,7 +302,6 @@ class caseReportController extends Controller
             $deleteCase->update([
                 'caseAvailability'=>$caseStatus,
             ]);
-
             $caseID = $request['caseID'];
             $formDescription = $request['description'];
             $insertDescription = $formDescription. ' '.$caseID;
@@ -360,7 +319,6 @@ class caseReportController extends Controller
         }
         */
     }
-
     /**
      * Update the specified resource in storage.
      *
@@ -375,7 +333,6 @@ class caseReportController extends Controller
             'docketnumber' => 'required|max:255',
             'acmo' => 'nullable|max:255',
         ]);
-
         if ($validator->fails()){
             return redirect('/caseReport')->withErrors($validator)->withInput();
         }else {
@@ -410,8 +367,8 @@ class caseReportController extends Controller
                 }
             }
             //Complaint Sheet Update
-            //$complainSheet = ComplaintSheet::findOrFail($request->complainSheetID);
-            ComplaintSheet::create([
+            $complainSheet = ComplaintSheet::findOrFail($request->complainSheetID);
+            $complainSheet->update([
                     'caseid' => $casesID,
                     'place_Committed' => $request['whereCommitted'],
                     'date_Committed' => $request['whenCommitted'],
@@ -471,7 +428,6 @@ class caseReportController extends Controller
                 'action' => $request['action'],
                 'description' => $insertDescription,
             ]);
-
             $countNature = count($request->caseNatureID);
             $countSuspect = count($request->suspectID);
             $countVictims = count($request->victimID);
@@ -500,14 +456,9 @@ class caseReportController extends Controller
             } else {
                 CaseAgent::whereIn('caseagentid',$request->agentCaseID)->delete();
             }
-            //Delete ComplaintSheet
-            ComplaintSheet::where('id',$request->complainSheetID)->delete();
             return redirect('/caseReport')->with('alert-success', 'Successfully update the case!');
-
         }
-
     }
-
     /**
      * Remove the specified resource from storage.
      *
@@ -516,6 +467,5 @@ class caseReportController extends Controller
      */
     public function destroy(Response $request)
     {
-
     }
 }

@@ -182,16 +182,16 @@
                             <div class="form-row">
                                 <div class="col-md-4">
                                     <label for="ccn">CCN</label>
-                                    <input type="text" id="ccn" name= "ccn" class="ccNumber form-control" value="{{ $cases->ccn }}" placeholder="I-00-00000" maxlength="10" pattern="^\w{1}-\d{2}-\d{5}$" title="Follow the following format. e.g. I-10-00001" onkeypress='validateCCN(event)' autocomplete="off">
+                                    <input type="text" id="ccn" name= "ccn" class="ccNumber form-control" value="{{ $cases->ccn }}" placeholder="C-00-00000" maxlength="10" pattern="^\w{1}-\d{2}-\d{5}$" title="Follow the following format. e.g. C-10-00001" onkeypress='validateCCN(event)' autocomplete="off">
                                 </div>
                                 <div class="col-md-4">
                                     <label for="acmo">ACMO No.</label>
-                                    <input type="text" id="acmo" name= "acmo" value="{{ $cases->acmo}}" placeholder="00-0-00000" title="Follow the following format. e.g. 00-C-00000" maxlength="10" pattern="^\d{2}-\w{1}-\d{5}$"  class="form-control" onkeypress='validateACMO(event)' autocomplete="off">
+                                    <input type="text" id="acmo" name= "acmo" value="{{ $cases->acmo}}" placeholder="00-C-00000" title="Follow the following format. e.g. 00-C-00000" maxlength="10" pattern="^\d{2}-\w{1}-\d{5}$"  class="form-control" onkeypress='validateACMO(event)' autocomplete="off">
                                 </div>
                                 <div class="col-md-4">
                                     <label for="caseNumber">Car Case Number</label>
                                     <div class="input-group mb-2">
-                                            <input type="text" id="docketnumber" name="docketnumber" class="form-control" value="{{ $cases->docketnumber }}" placeholder="C-00-000" maxlength="8" pattern="^\w{1}-\d{2}-\d{3}$" onkeypress='validate(event)' title="Follow the following format. e.g. C-10-001" autocomplete="off" required>
+                                            <input type="text" id="docketnumber" name="docketnumber" class="form-control" value="{{ $cases->docketnumber }}" placeholder="I-00-000" maxlength="8" pattern="^\w{1}-\d{2}-\d{3}$" onkeypress='validate(event)' title="Follow the following format. e.g. I-10-001" autocomplete="off" required>
                                     </div>
                                 </div>
                             </div>
@@ -241,7 +241,7 @@
                                 </div>
                             </div>
                         </div>
-                        <label for="agent">Agent</label>
+                        <label for="agent">Investigator</label>
                         <div class="form-group">
                             <div class="form-row">
                                 <div class="col-md-4">
@@ -273,7 +273,7 @@
                                     <label for="suspectName">Name</label>
                                     <div class="">
                                         <input type="text" id="complainant" name="complainant"  class="form-control" onkeypress='validateComplainant(event)'  value="{{ $casesComplaint->complainantname}}"/>  {{-- QUERY HERE --}}
-                                        <input type="hidden" name="complainantID" id="complainantID" class="form-control" value="{{ $casesComplaint->caseid}}" readonly>
+                                        <input type="hidden" name="" id="" class="form-control" value="{{ $casesComplaint->caseid}}" readonly>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -443,39 +443,72 @@
                             </div>
                             @endforeach
                     <hr>
-                    @foreach($complaintSheet as $complaintSheet)
+                @if (!$count)
                     <section>
-                        <input type="hidden" class="form-control" name="complainSheetID" id="complainSheetID" value="{{ $complaintSheet->id }}" readonly>
                         <div class="form-group">
                             <p style="font-weight:bold;">6. Narration of Facts (Salaysay ng mga Pangyayari) </p>
-                            <textarea id="narrationOfFacts" name="narrationOfFacts"  style="width:100%;font-size:15px;resize:none;" rows="5" minlength="4" >{{ $complaintSheet->narration_Of_Facts }}</textarea>
+                            <textarea id="narrationOfFacts" name="narrationOfFacts"  style="width:100%;font-size:15px;resize:none;" rows="5" ></textarea>
                         </div>
                     </section>
                     <hr>
                     <section>
                         <div class="form-group">
                             <p style="font-weight:bold;">7. Has the matter been reported to any agency, If so, to what people agency? (Ang bagay bang ito ay naulat na sa ibang sangay ng pagsisiyasat? Kung naulat na, saang sangay?) </p>
-                            <textarea name="hasTheMatter" id="hasTheMatter" style="width:100%;font-size:15px;resize:none;" rows="5" minlength="4" >{{ $complaintSheet->reported_Any_Agency }}</textarea>
+                            <textarea name="hasTheMatter" id="hasTheMatter" style="width:100%;font-size:15px;resize:none;" rows="5" ></textarea>
                             <br>
                             <p style="font-weight:bold;">Status of investigation, If any (Kalagayan ng pagsisiyasat kung mayroon?)</p>
-                            <textarea name="statusOfInvestigation" id="statusOfInvestigation" style="width:100%;font-size:15px;resize:none;" rows="5" minlength="4" >{{ $complaintSheet->status_of_Investigation }}</textarea>
+                            <textarea name="statusOfInvestigation" id="statusOfInvestigation" style="width:100%;font-size:15px;resize:none;" rows="5" minlength="4" maxlength="65,535"></textarea>
                         </div>
                     </section>
                     <hr>
                     <section>
                         <div class="form-group">
                             <p style="font-weight:bold;">8.Is the matter complained of the subject of any court action of proceedings? If so, where? (Ang bagay bang may kinalaman sa pagsusumbong ay nasa hukuman na? Kung gaanoon, saan?)</p>
-                            <textarea name="isTheMatterComplained" id="isTheMatterComplained" style="width:100%;font-size:15px;resize:none;" rows="5" minlength="4" >{{ $complaintSheet->where_court_Proceedings }}</textarea>
+                            <textarea name="isTheMatterComplained" id="isTheMatterComplained" style="width:100%;font-size:15px;resize:none;" rows="5" minlength="4" maxlength="65,535"></textarea>
                         </div>
                     </section>
                     <hr>
                     <section>
                         <div class="form-group">
                             <p style="font-weight:bold;">9.What Consideration/s impelled you to report to the NBI? (Ano ang nag-udyok sa iyo para magreklamo dito sa NBI?)</p>
-                            <textarea name="whatConsidirations" id="whatConsidirations" style="width:100%;font-size:15px;resize:none;" rows="5" minlength="4" >{{ $complaintSheet->report_Considerations }}</textarea>
+                            <textarea name="whatConsidirations" id="whatConsidirations" style="width:100%;font-size:15px;resize:none;" rows="5" minlength="4" maxlength="65,535"></textarea>
+                        </div>
+                    </section>
+                @else
+                    @foreach($complaintSheet as $complaintSheet)
+                    <section>
+                        <input type="hidden" class="form-control" name="complainSheetID" id="complainSheetID" value="{{ $complaintSheet->id }}" readonly>
+                        <div class="form-group">
+                            <p style="font-weight:bold;">6. Narration of Facts (Salaysay ng mga Pangyayari) </p>
+                            <textarea id="narrationOfFacts" name="narrationOfFacts"  style="width:100%;font-size:15px;resize:none;" rows="5" minlength="4" maxlength="65,535">{{ $complaintSheet->narration_Of_Facts }}</textarea>
+                        </div>
+                    </section>
+                    <hr>
+                    <section>
+                        <div class="form-group">
+                            <p style="font-weight:bold;">7. Has the matter been reported to any agency, If so, to what people agency? (Ang bagay bang ito ay naulat na sa ibang sangay ng pagsisiyasat? Kung naulat na, saang sangay?) </p>
+                            <textarea name="hasTheMatter" id="hasTheMatter" style="width:100%;font-size:15px;resize:none;" rows="5" minlength="4" maxlength="65,535">{{ $complaintSheet->reported_Any_Agency }}</textarea>
+                            <br>
+                            <p style="font-weight:bold;">Status of investigation, If any (Kalagayan ng pagsisiyasat kung mayroon?)</p>
+                            <textarea name="statusOfInvestigation" id="statusOfInvestigation" style="width:100%;font-size:15px;resize:none;" rows="5" minlength="4" maxlength="65,535">{{ $complaintSheet->status_of_Investigation }}</textarea>
+                        </div>
+                    </section>
+                    <hr>
+                    <section>
+                        <div class="form-group">
+                            <p style="font-weight:bold;">8.Is the matter complained of the subject of any court action of proceedings? If so, where? (Ang bagay bang may kinalaman sa pagsusumbong ay nasa hukuman na? Kung gaanoon, saan?)</p>
+                            <textarea name="isTheMatterComplained" id="isTheMatterComplained" style="width:100%;font-size:15px;resize:none;" rows="5" minlength="4" maxlength="65,535">{{ $complaintSheet->where_court_Proceedings }}</textarea>
+                        </div>
+                    </section>
+                    <hr>
+                    <section>
+                        <div class="form-group">
+                            <p style="font-weight:bold;">9.What Consideration/s impelled you to report to the NBI? (Ano ang nag-udyok sa iyo para magreklamo dito sa NBI?)</p>
+                            <textarea name="whatConsidirations" id="whatConsidirations" style="width:100%;font-size:15px;resize:none;" rows="5" minlength="4" maxlength="65,535">{{ $complaintSheet->report_Considerations }}</textarea>
                         </div>
                     </section>
                     @endforeach
+                @endif
                 <br>
                     <div class="form-group">
                         <div class="form-row">
@@ -499,7 +532,7 @@
                     </div> <!--CLOSING CARD HEADER -->
                 </div> <!--CLOSING CARD REGISTER -->
               </div> <!--CLOSING CONTAINER FLUID -->
-            </form>
+</form>
         </div>
         <!-- Sticky Footer -->
         <footer class="sticky-footer">
@@ -623,7 +656,7 @@
                 var key = theEvent.keyCode || theEvent.which;
                 key = String.fromCharCode(key);
             }
-            var regex = /[0-9,C,-]/;
+            var regex = /[0-9,I,-]/;
             if( !regex.test(key) ) {
                 theEvent.returnValue = false;
                 if(theEvent.preventDefault) theEvent.preventDefault();
@@ -640,7 +673,7 @@
                 var key = theEvent.keyCode || theEvent.which;
                 key = String.fromCharCode(key);
             }
-            var regex = /[0-9,I,-]/;
+            var regex = /[0-9,C,-]/;
             if( !regex.test(key) ) {
                 theEvent.returnValue = false;
                 if(theEvent.preventDefault) theEvent.preventDefault();

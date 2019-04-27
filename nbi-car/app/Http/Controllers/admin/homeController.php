@@ -30,6 +30,8 @@ class homeController extends Controller
         ->groupBy(DB::raw('caseagent.caseid'))
         ->whereNull('cases.dateTerminated')
         ->orWhere('case_status.status','=','Under Investigation')
+        ->orderBy('dateAssigned','DESC')
+        ->limit(10)
         ->get();
 
         $activeUsers = DB::table('users')
@@ -59,6 +61,8 @@ class homeController extends Controller
         ->select('users.*','logs.*'
                 ,DB::raw("CONCAT(users.firstName,' ',users.lastName) AS name")
                 )
+        ->orderBy('logs.created_at','DESC')
+        ->limit(10)
         ->get();
         return view('admin.home',compact('showData','pendingCase','activeUsers','totalRecords','caseRecords','chart'));
     }

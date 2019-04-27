@@ -18,11 +18,13 @@ Auth::routes();
 
 ########################AGENT#######################################################
 Route::group(['middleware' => ['web','agent']], function() {
+    /*
     route::resource('/index','IndexController');
     route::resource('/agentHome','agent\HomeController');
     route::resource('/agentCase','agent\assignedCaseController');
     route::resource('/agentProfile','agent\userProfileController');
     route::resource('/agentChangePassword','agent\changePasswordController');
+    */
 });
 #####################################################################################
 
@@ -48,134 +50,60 @@ Route::group(['middleware' => ['web','admin']], function() {
     route::resource('/ComplaintSheet','admin\ComplaintSheetController');
     route::resource('/userHistory','admin\userHistoryController');
     route::resource('/userLogs','admin\userLogsController');
+    //CASE NATURE
     route::resource('/caseNature','admin\caseNatureController');
-    route::resource('/caseStatus','admin\CaseStatusController');
-    route::resource('/caseReport','admin\caseReportController');
-    route::resource('/addNewCase','admin\addCaseController');
-    route::resource('/ccnAcmoRequest','admin\ccnAcmoRequestController');
-    Route::post('/ccnAcmoRequest/fetch_data', 'admin\ccnAcmoRequestController@fetch_data')->name('daterange.fetch_data');
-    route::resource('/manageAccounts','admin\manageAccountController');
-    route::resource('/profile','admin\ProfileController');
-    route::resource('/adminChangePassword','admin\changePasswordController');
-    Route::resource('/updateCase','admin\caseReportController');
-    Route::resource('/caseReview','admin\caseReviewController');
-    //Route::resource('/deleteCase','admin\caseDeleteController');
-    Route::get('deleteCase/{caseid}','admin\caseReportController@showcase');
-##############################ADMIN UPDATE, DELETE####################################
     Route::post('/natureUpdate','admin\caseNatureController@update');
     Route::post('/createNature','admin\caseNatureController@store');
     Route::post('/deleteNature','admin\caseNatureController@delete');
-    Route::post('/caseDeleted','admin\caseReportController@delete');
+    //CASE STATUS
+    route::resource('/caseStatus','admin\CaseStatusController');
     Route::post('/updateCaseStatus','admin\CaseStatusController@update');
     Route::post('/addCaseStatus','admin\CaseStatusController@store');
-    //HINDI PA TAPOS
-    Route::post('/updatedCase','admin\caseReportController@update');
+    //ADD CASE
+    route::resource('/addNewCase','admin\addCaseController');
+    Route::post('/adminAddCase','admin\addCaseController@store');
+    //MANAGE ACCOUNT
+    route::resource('/manageAccounts','admin\manageAccountController');
     Route::post('/userUpdate','admin\manageAccountController@update');
     Route::post('/addNewUser','admin\manageAccountController@store');
     Route::post('/passwordReset','admin\manageAccountController@edit');
-    Route::post('/adminAddCase','admin\addCaseController@store');
-######################################################################################
-});
-############################USER CHANGEPASSWORD ( Home Controller )####################
-Route::get('/changePassword','HomeController@showChangePasswordForm');
-Route::post('/changePassword','HomeController@changePassword')->name('changePassword');
-######################################################################################
-
-Route::group(['middleware' => ['web', 'auth']], function(){
+    //
+    route::resource('/profile','admin\ProfileController');
+    route::resource('/adminChangePassword','admin\changePasswordController');
+    Route::resource('/caseReview','admin\caseReviewController');
+    //Route::resource('/deleteCase','admin\caseDeleteController');
+    //Route::resource('/updateCase','admin\caseReportController@show');
+    Route::resource('/caseReport','admin\caseReportController');
+    Route::resource('/updateCase','admin\caseReportController');
+    Route::post('/updatedCase','admin\caseReportController@update');
     /*
-    Route::get('/', function () {
-        return view('auth/login');
-    });
+    Route::get('/updateCase/{caseid}','admin\caseReportController@show');
+    //Route::post('/processUpdate','admin\caseReportController@update');
+
+    Route::get('/updateCase/{caseid}','admin\caseUpdateController@show');
+    Route::post('/processUpdate','admin\caseUpdateController@update')->name('processUpdate');
+    Route::post('/test','admin\caseUpdateController@test');
     */
+    Route::get('/deleteCase/{caseid}','admin\caseReportController@showcase');
+    Route::post('/caseDeleted','admin\caseReportController@delete');
+});
+
+    Route::get('/changePassword','HomeController@showChangePasswordForm');
+    Route::post('/changePassword','HomeController@changePassword')->name('changePassword');
+
+    Route::get('/backupdatabase', function () {
+        $exitCode = Artisan::call('mysql:backup');
+    });
+Route::group(['middleware' => ['web', 'auth']], function(){
+
     route::get('/', function(){
     if(Auth::user()->role == 'Encoder'){
         return redirect('/encoderHome');
-        /*
-        $showData = DB::table('nature')
-            ->join('casenature','nature.natureid','=','casenature.natureid')
-            ->join('caseagent','casenature.caseid','=','caseagent.caseid')
-            ->join('users','users.userid','=','caseagent.userid')
-            ->join('cases','caseagent.caseid','=','cases.caseid')
-            ->join('agent','caseagent.userid','=','agent.userid')
-            ->join('case_suspects','case_suspects.caseid','=','cases.caseid')
-            ->join('case_status','case_status.statusid','=','cases.statusid')
-            ->join('case_victims','case_victims.caseid','=','cases.caseid')
-            ->select('nature.*','case_status.*','caseagent.*','users.*','agent.*','cases.*','case_suspects.*','case_victims.*'
-            ,DB::raw("GROUP_CONCAT(DISTINCT CONCAT (agent.position, ' ', users.firstName,' ',users.lastName) SEPARATOR ' and ') as full_name")
-            ,DB::raw("GROUP_CONCAT(DISTINCT CONCAT (nature.nature) SEPARATOR ' and ') as natureName")
-            ,DB::raw("GROUP_CONCAT(DISTINCT CONCAT(case_suspects.suspect_name) SEPARATOR ' and ') as suspectName"))
-            ->groupBy(DB::raw('caseagent.caseid'),
-            DB::raw('case_victims.caseid'),
-            DB::raw('case_suspects.caseid'))
-            ->orderby('cases.docketnumber','ASC')
-            ->where('cases.caseStatus','=','Available')
-            ->where('nature.natureAvailability','=','Available')
-            ->get();
-            return view ('encoder.home',compact('showData'));
-        */
     } else if(Auth::user()->role == 'Investigator') {
-
-        $showData = DB::table('nature')
-        ->join('casenature','nature.natureid','=','casenature.natureid')
-        ->join('caseagent','casenature.caseid','=','caseagent.caseid')
-        ->join('users','users.userid','=','caseagent.userid')
-        ->join('cases','caseagent.caseid','=','cases.caseid')
-        ->join('agent','caseagent.userid','=','agent.userid')
-        ->join('case_suspects','case_suspects.caseid','=','cases.caseid')
-        ->join('case_status','case_status.statusid','=','cases.statusid')
-        ->join('case_victims','case_victims.caseid','=','cases.caseid')
-        ->select('nature.*','case_status.*','caseagent.*','users.*','agent.*','cases.*','case_suspects.*','case_victims.*'
-        ,DB::raw("GROUP_CONCAT(DISTINCT CONCAT (agent.position, ' ', users.firstName,' ',users.lastName) SEPARATOR ' and ') as full_name")
-        ,DB::raw("GROUP_CONCAT(DISTINCT CONCAT (nature.nature) SEPARATOR ' and ') as natureName")
-        ,DB::raw("GROUP_CONCAT(DISTINCT CONCAT(case_suspects.suspect_name) SEPARATOR ' and ') as suspectName"))
-        ->groupBy(DB::raw('caseagent.caseid'),
-        DB::raw('case_victims.caseid'),
-        DB::raw('case_suspects.caseid'))
-        ->orderby('cases.docketnumber','ASC')
-        ->where('cases.caseStatus','=','Available')
-        ->get();
-        return view ('agent.home',compact('showData'));
-
+        //return redirect('/');
     }else {
-        /*
-        $showData = DB::table('users')
-        ->join('logs','users.userid','=','logs.userid')
-        ->select('users.*','logs.*'
-                ,DB::raw("CONCAT(users.firstName,' ',users.lastName) AS name")
-                )
-        ->get();
-        */
         return redirect('/adminHome');
-        //return view ('admin.home',compact('showData'));
     }
     });
 });
-
-
-
-/*Authorization access roles
-
-//AGENT ROLES
-Route::group(['middleware' => '\App\Http\Middleware\AgentMiddleware'], function()
-{
-Route::get( '/agentHome', 'HomeController@agent');
-Route::get( '/agentCase','HomeController@agent');
-Route::get( '/agentProfile','HomeController@agent');
-Route::get( '/agentChangePassword','HomeController@agent');
-});
-
-//ENCODER ROLES
-Route::group(['middleware' => '\App\Http\Middleware\EncoderMiddleware'], function()
-{
-    Route::get( '/encoderHome', 'HomeController@encoder');
-    Route::get( '/encoderProfile','HomeController@encoder');
-    Route::get( '/addCase','HomeController@encoder');
-    Route::get( '/encoderCCN','HomeController@encoder');
-    Route::get( '/encoderChangePassword','HomeController@encoder');
-    Route::get( '/complaintSheet','HomeController@encoder');
-});
-
-*/
-
-//Route::get('/home', 'HomeController@index')->name('home');
 

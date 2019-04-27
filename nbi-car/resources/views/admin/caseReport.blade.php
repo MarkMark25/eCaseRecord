@@ -160,7 +160,7 @@
     </ul>
     <div id="content-wrapper">
     <div class="container-fluid" style="padding-top:3%;padding-bottom:2%;">
-      <a class="btn btn-secondary" style="float: right">Backup Records <i class="fa fa-file-download"></i></a>
+      <a class="btn btn-secondary" style="float: right" href="/backupdatabase">Backup Records <i class="fa fa-file-download"></i></a>
       <br><br>
           <!-- DataTables Example -->
           <div class="card mb-3">
@@ -181,6 +181,7 @@
                     <p class="alert alert-{{ $msg }}">{{ Session::get('alert-' . $msg) }} <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
                     @endif
                 @endforeach
+            </div>
               <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                   <thead>
@@ -300,70 +301,6 @@
       </div>
     </div>
 
-    <!-- More Details
-    <div class="modal fade" id="moreButton-{{ $showData->caseID }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document" >
-            <div class="modal-content">
-                <div class="modal-header" style="background-color:#dd8282;">
-                    <h4 class="modal-title" id="exampleModalLabel">
-                        <center>Case Summary</center>
-                    </h4>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body" style="background-color:#edcbcb;">
-                    <input type="text" id="caseid" name="caseid" class="form-control" value="{{ $showData->caseID }}">
-                    @include('admin.caseReport.showModalForm')
-                </div>
-                <div class="modal-footer" style="background-color:#dd8282;">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
-        </div>
-        </div>
-    </div>
-    -->
-    <!-- Delete Modal
-    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document" >
-            <div class="modal-content">
-                <div class="modal-header" style="background-color:#dd8282;">
-                    <h5 class="modal-title" id="exampleModalLabel">
-                            Review the case and click <strong style="color:red;">"Delete"</strong> in order to process deletion.
-                    </h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-            <form action="/deleteCase" method="POST">
-                <div class="modal-body" style="background-color:#edcbcb;">
-                    <input type="hidden" id="caseid" name="caseid" class="form-control" value="">
-                    @include('admin.caseReport.deleteModalForm')
-                </div>
-                <div class="modal-footer" style="background-color:#dd8282;">
-                    <button type="submit" class="btn btn-danger">DELETE</button>
-                </div>
-            </form>
-          </div>
-        </div>
-    </div>
-    -->
-    <!-- Exit Modal -->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">×</span>
-                </button>
-            </div>
-        </div>
-    </div>
-
-
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-      <i class="fas fa-angle-up"></i>
-    </a>
-
     <!-- Bootstrap core JavaScript-->
     <script src="bower_components/vendor/jquery/jquery.min.js"></script>
     <script src="bower_components/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -422,6 +359,24 @@
             } );
         } );
     </script>
+    var token = $('input[name = _token]').val();
+    function backup() {
+        $.ajax({
+            type: "POST",
+            url: '/admin/system/db-backup',
+            data: {
+                _token: token,
+            },
+            success: function (result) {
+              alert("ok")
+
+            },
+            error: function (errors) {
+
+               alert("error");
+            }
+        });
+    }
   </body>
   @endguest
 </html>

@@ -152,7 +152,7 @@ class ComplaintSheetController extends Controller
                 'reported_Any_Agency' => $request['hasTheMatter'],
                 'status_of_Investigation' => $request['statusOfInvestigation'],
                 'where_court_Proceedings' => $request['isTheMatterComplained'],
-                'report_Considerations' => $request['whatConsidirations '],
+                'report_Considerations' => $request['whatConsidirations'],
             ]);
             $formDescription = $request['description'];
             $insertDescription = $formDescription. ' '.$lastid;

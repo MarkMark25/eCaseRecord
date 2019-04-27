@@ -82,6 +82,10 @@ class addCaseController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         }else {
+            /*
+            $complaintAddress = " ";
+            $complaintContact = " ";
+            */
             $cases = Cases::create([
                 'docketnumber' => $request['docketnumber'],
                 'ccn' => $request['ccn'],
@@ -89,6 +93,10 @@ class addCaseController extends Controller
                 'complainantname' => $request['complainant'],
                 'dateTerminated' =>  $request['dateTerminated'],
                 'statusid' => $request['status'],
+                /*
+                'complainant_Address' => $complaintAddress,
+                'complainant_Contact_Number' => $complaintContact,
+                */
             ])->caseid;
             $lastid = $cases;
 
@@ -111,20 +119,52 @@ class addCaseController extends Controller
                     CaseNature::create($data3);
                 }
             }
+            /*
+            $suspectAdd = " ";
+            $suspectContact = " ";
+            $suspectSex = " ";
+            $suspectAge = " ";
+            $suspectCivil = " ";
+            $suspectOccupation = " ";
+            */
             if(count($request->subject)>0) {
                 foreach($request->subject as $item => $v){
                     $data4 = array(
                         'caseid' => $lastid,
                         'suspect_name' => $request->subject[$item],
+                        /*
+                        'suspect_Address'=> $suspectAdd,
+                        'suspect_Contact_Number'=> $suspectContact,
+                        'suspect_Sex'=> $suspectSex,
+                        'suspect_Age'=> $suspectAge,
+                        'suspect_Civil_Status'=> $suspectCivil,
+                        'suspect_Occupation'=> $suspectOccupation,
+                        */
                     );
                     CaseSuspect::create($data4);
                 }
             }
+            /*
+            $victimAdd = " ";
+            $victimContact = " ";
+            $victimSex = " ";
+            $victimAge = " ";
+            $victimCivil = " ";
+            $victimOccupation = " ";
+            */
             if(count($request->victim)>0) {
                 foreach($request->victim as $item => $v){
                     $data5 = array(
                         'caseid' => $lastid,
                         'victim_name' => $request->victim[$item],
+                        /*
+                        'victim_Address' => $victimAdd,
+                        'victim_Contact_Number' => $victimContact,
+                        'victim_Sex' => $victimSex,
+                        'victim_Age' => $victimAge,
+                        'victim_Civil_Status' => $victimCivil,
+                        'victim_Occupation' => $victimOccupation,
+                        */
                     );
                     CaseVictims::create($data5);
                 }

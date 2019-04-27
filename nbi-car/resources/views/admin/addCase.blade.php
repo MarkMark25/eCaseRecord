@@ -55,6 +55,17 @@
             input::placeholder {
                 font-style: italic;
             }
+            .box{
+                width:600px;
+                margin:0 auto;
+                border:1px solid #ccc;
+               }
+               .has-error
+               {
+                border-color:#cc0000;
+                background-color:#ffff99;
+               }
+
     </style>
 
 
@@ -198,6 +209,7 @@
                                   <input type="text" id="" name="" class="form-control col-md-5" value="NBI-CAR-" readonly>
                                   <input type="text" id="docketnumber" name="docketnumber" class="form-control" value="{{ old('docketnumber') }}" placeholder="I-00-000" maxlength="8" pattern="^\w{1}-\d{2}-\d{3}$" onkeypress='validate(event)' title="Follow the following format. e.g. I-10-001" required> {{-- QUERY HERE --}}
                               </div>
+                              <span id="error_email"></span>
                           </div>
 
                           <div class="col-md-6">

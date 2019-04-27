@@ -169,14 +169,14 @@
                                   <label for="caseNumber">NBI-CAR Case Number</label>
                                   <div class="input-group mb-2">
                                       <input type="text" id="" name="" class="form-control col-md-5" value="NBI-CAR-" readonly>
-                                      <input type="text" id="docketnumber" name="docketnumber" class="form-control" value="{{ old('docketnumber') }}" placeholder="C-00-000" maxlength="8" pattern="^\w{1}-\d{2}-\d{3}$" onkeypress='validate(event)' title="Follow the following format. e.g. C-10-001" autocomplete="off" required> {{-- QUERY HERE --}}
+                                      <input type="text" id="docketnumber" name="docketnumber" class="form-control" value="{{ old('docketnumber') }}" placeholder="I-00-000" maxlength="8" pattern="^\w{1}-\d{2}-\d{3}$" onkeypress='validate(event)' title="Follow the following format. e.g. I-10-001" autocomplete="off" required> {{-- QUERY HERE --}}
                                   </div>
                               </div>
                               <div class="col-md-4">
                                   <label for="ccn">CCN</label>
                                   <div class="input-group mb-2">
                                       <input type="text" id="" name="" class="form-control col-md-5" value="NBI-CCN-" readonly>
-                                      <input type="text" id="ccn" name= "ccn" class="ccNumber form-control" value="{{ old('ccn') }}" placeholder="I-00-00000" maxlength="10" pattern="^\w{1}-\d{2}-\d{5}$" title="Follow the following format. e.g. I-10-00001" onkeypress='validateCCN(event)' autocomplete="off"> {{-- QUERY HERE --}}
+                                      <input type="text" id="ccn" name= "ccn" class="ccNumber form-control" value="{{ old('ccn') }}" placeholder="C-00-00000" maxlength="10" pattern="^\w{1}-\d{2}-\d{5}$" title="Follow the following format. e.g. C-10-00001" onkeypress='validateCCN(event)' autocomplete="off"> {{-- QUERY HERE --}}
                                   </div>
                               </div>
                               <div class="col-md-4">
@@ -532,7 +532,7 @@
                 var key = theEvent.keyCode || theEvent.which;
                 key = String.fromCharCode(key);
             }
-            var regex = /[0-9,C,-]/;
+            var regex = /[0-9,I,-]/;
             if( !regex.test(key) ) {
                 theEvent.returnValue = false;
                 if(theEvent.preventDefault) theEvent.preventDefault();
@@ -549,7 +549,7 @@
                 var key = theEvent.keyCode || theEvent.which;
                 key = String.fromCharCode(key);
             }
-            var regex = /[0-9,I,-]/;
+            var regex = /[0-9,C,-]/;
             if( !regex.test(key) ) {
                 theEvent.returnValue = false;
                 if(theEvent.preventDefault) theEvent.preventDefault();

@@ -225,6 +225,7 @@
                <!-- pending cases -->
                <div class="row">
                   <div class="col-lg-6">
+                        <a href="" style="text-decoration:none;color:black;"> <!-- EDIT HERE -->
                      <div class="card mb-3">
                         <div class="card-header">
                            <i class="fas fa-fw fa-clock"></i>
@@ -232,7 +233,7 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-striped" id="dataTableS" >
+                                <table class="table table-striped" id="" >
                                     <thead>
                                        <tr>
                                           <th>Subject</th>
@@ -255,8 +256,10 @@
                             </div>
                         </div>
                      </div>
+                    </a>
                   </div>
                   <div class="col-lg-6">
+                    <a href="/userLogs" style="text-decoration:none;color:black;">
                      <div class="card mb-3">
                         <div class="card-header">
                            <i class="fas fa-fw fa-users"></i>
@@ -264,7 +267,7 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable">
+                                <table class="table table-striped" id="">
                                     <thead>
                                        <tr>
                                           <th>User</th>
@@ -285,6 +288,7 @@
                             </div>
                         </div>
                      </div>
+                    </a>
                     </div>
                </div>
             </div>

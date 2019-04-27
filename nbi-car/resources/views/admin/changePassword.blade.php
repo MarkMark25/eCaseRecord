@@ -214,7 +214,7 @@
                             <div class="form-row">
                                 <div class="col-md-6">
                                     <div class="form-label-group">
-                                            <input type="password" minlength="6" maxlength="16" name="current-password" id="current-password" class="form-control" required="required" autofocus="autofocus">
+                                            <input type="password" minlength="8" maxlength="16" name="current-password" id="current-password" class="form-control" required="required" autofocus="autofocus">
                                             <label for="current-password">Old Password</label>
 
                                             @if ($errors->has('current-password'))

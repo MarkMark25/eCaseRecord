@@ -220,7 +220,7 @@
                             <div class="form-group">
                                 <div class="form-row">
                                     <div class="col-md-4">
-                                        <label for="agent">Agent</label> @foreach ($agent as $agent)
+                                        <label for="agent">Investigator</label> @foreach ($agent as $agent)
                                         <input type="text" id="full_name" name="full_name" class="form-control" value="{{ $agent->agentName}}" disabled> @endforeach
                                     </div>
                                 </div>

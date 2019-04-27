@@ -15,6 +15,7 @@ return [
 
     'default' => env('DB_CONNECTION', 'mysql'),
 
+
     /*
     |--------------------------------------------------------------------------
     | Database Connections
@@ -54,6 +55,11 @@ return [
             'prefix_indexes' => true,
             'strict' => false,
             'engine' => null,
+
+            'dump' => [
+                'dump_binary_path' => 'C:/xampp/mysql/bin'
+             ],
+
         ],
 
         'pgsql' => [

@@ -10,6 +10,6 @@ class Cases extends Model
     protected $primaryKey = 'caseid';
     //protected $fillable = ['ccn']; linagay ko lang
     protected $fillable = [
-        'ccn','docketnumber','acmo','dateTerminated','statusid','complainantname','caseStatus'
+        'ccn','docketnumber','acmo','dateTerminated','statusid','complainantname','caseStatus','complainant_Address','complainant_Contact_Number',
     ];
 }

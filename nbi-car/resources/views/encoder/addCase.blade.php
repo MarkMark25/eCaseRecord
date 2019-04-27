@@ -169,8 +169,7 @@
                               <div class="input-group mb-2">
                                   <input type="text" id="" name="" class="form-control col-md-5" value="NBI-CAR-" readonly>
                                   <input type="text" id="docketnumber" autofocus name="docketnumber" class="form-control" value="{{ old('docketnumber') }}" placeholder="I-00-000" maxlength="8" pattern="^\w{1}-\d{2}-\d{3}$" onkeypress='validate(event)' title="Follow the following format. e.g. I-10-001" required> {{-- QUERY HERE --}}
-                                  <br>
-                                  <span id="docket_Number"></span>
+                                  <span id="error_email"></span>
                               </div>
                           </div>
 
@@ -329,7 +328,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <center> <button class="btn btn-primary btn-block col-md-3" type="submit">Save</button> </center>
+                    <center> <button class="btn btn-primary btn-block col-md-3" id="submit" type="submit">Save</button> </center>
                 </div>
 
                 </div> <!--CLOSING CARD HEADER -->
@@ -516,14 +515,16 @@
     </script>
 
     <!-- Custom scripts for all pages -->
+
     <script src="bower_components/js/sb-admin.min.js"></script>
     <script src="bower_components/js/demo/datatables-demo.js"></script>
     <script src="bower_components/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 
+
     <!--THIS IS A COMMENT, BELOW ARE COMMENTS AND IT CANNOT RUN
       Bootstrap core JavaScript
-    <script src="bower_components/vendor/jquery/jquery.min.js"></script>
+      <script src="bower_components/vendor/jquery/jquery.min.js"></script>
      Core plugin JavaScript
     <script src="bower_components/vendor/jquery-easing/jquery.easing.min.js"></script>
      Page level plugin JavaScript

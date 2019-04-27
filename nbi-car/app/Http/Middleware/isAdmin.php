@@ -19,7 +19,7 @@ class isAdmin
             return redirect()->guest('encoder.home');
         }else if(auth()->check() && $request->user()->role == 'Administrator'){
             return redirect()->guest('admin.home');
-        }else{
+        }else {
 
         }
         return $next($request);
